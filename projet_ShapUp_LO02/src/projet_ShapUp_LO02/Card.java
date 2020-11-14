@@ -1,26 +1,7 @@
 package projet_ShapUp_LO02;
 import java.lang.Cloneable;
 
-public class Card implements Cloneable{
-	public Card(Color newColor, Shape newShape, boolean newHollow)
-	{
-		color=newColor;
-		shape=newShape;
-		hollow=newHollow;
-	}
-	
-    private Color color;
-    private Shape shape;
-    private boolean hollow;
-    
-    public Color getColor() {return color;}
-    public Shape getShape() {return shape;}
-    public boolean getHollow() {return hollow;}
-    
-    public Card clone() {return new Card(color,shape,hollow);}
-    
-    //partie Félix
-    
+public class Card implements Cloneable{  
     public Card(Color newColor, Shape newShape, boolean newHollow)
 	{
 		color=newColor;
@@ -46,6 +27,8 @@ public class Card implements Cloneable{
     	}
     	return str;
     }
+    public Card clone() {return new Card(color,shape,hollow);}
+	//? implements interface equals
     public boolean equals(Card c) {
     	if (this.color == c.color && this.shape == c.shape && this.hollow == c.hollow) {
     		return true;
