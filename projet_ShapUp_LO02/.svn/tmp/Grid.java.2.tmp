@@ -1,0 +1,16 @@
+package projet_ShapUp_LO02;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Grid {
+	public Grid(int maxSurfaceArea) {
+		this.maxSurfaceArea=maxSurfaceArea;
+	}
+	private int maxSurfaceArea;
+	public List<List<Card>> grid = new ArrayList<List<Card>> ();
+	
+	public List<List<Card>> getGrid() {return grid;};
+	
+	
+}
