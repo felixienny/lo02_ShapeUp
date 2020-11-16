@@ -5,9 +5,15 @@ import java.lang.Cloneable;
 public class Grid implements Cloneable {
 	public Grid(int width, int height)
 	{
-		grid = new Tile[width][height];
 		this.height=height;
 		this.width=width;
+		
+		grid = new Tile[width][height];
+		
+		for(int x=0;x<width;x++)
+			for(int y=0;y<height;y++)
+				grid[x][y] = new Tile();
+		
 	}
 	
 	private Tile grid[][];
@@ -16,6 +22,30 @@ public class Grid implements Cloneable {
 	private int height;
 	public int getWidth() {return width;}
 	public int getHeight() {return height;}
+	public int getNumberOfPlacedCards()
+	{
+		int numberOfCards=0;
+		for(int x=0;x<width;x++)
+			for(int y=0;y<height;y++)
+				if(grid[x][y].currentlyContainsACard()) numberOfCards++;
+		return numberOfCards;
+	}
+	public boolean isFull()
+	{
+		boolean hasAnEmptySpot=false;
+		
+		outerloop:
+		for(int x=0;x<width;x++)
+			for(int y=0;y<height;y++)
+				if(!grid[x][y].isDead() && !grid[x][y].currentlyContainsACard())
+				{
+					hasAnEmptySpot=true;
+					break outerloop;
+					
+				}
+		
+		return hasAnEmptySpot;
+	}
 	
 	//public void setNewGrid(Tile[][] newGrid) {grid=newGrid;}
 	//public Tile[][] getGrid() {return grid;}
@@ -39,14 +69,19 @@ public class Grid implements Cloneable {
 		return (grid[x][y].isDead()
 				&& ! grid[x][y].currentlyContainsACard());
 	}
-	public void setTileDead(int x, int y) {grid[x][y].setTileDead();}//XXX no check on success
+	public void setTileDead(int x, int y) {grid[x][y].setTileDead();}
 	
 	public Grid clone()
 	{
 		Grid clonedGrid = new Grid(this.width,this.height);
 		for(int i=0;i<width;i++)
 			for(int j=0;j<height;j++)
-				clonedGrid.setTile(i, j, this.getTile(i, j).clone());
+			{
+				if(this.getTile(i, j)==null)
+					clonedGrid.setTile(i, j, null);
+				else
+					clonedGrid.setTile(i, j, this.getTile(i, j).clone());
+			}
 			
 		return clonedGrid;
 	}
@@ -96,7 +131,7 @@ public class Grid implements Cloneable {
 		
 		return findScoreOnIndividualLines(lines,victoryCard);
 	}
-	private int findScoreOnIndividualLines(ArrayList<ArrayList<Card>> lines, Card victoryCard)//TODO calcul score selon victory card
+	private int findScoreOnIndividualLines(ArrayList<ArrayList<Card>> lines, Card victoryCard)
 	{
 		int currentScore=0;
 		

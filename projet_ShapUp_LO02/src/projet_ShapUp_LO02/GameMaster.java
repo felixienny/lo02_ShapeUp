@@ -1,5 +1,6 @@
 package projet_ShapUp_LO02;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class GameMaster {
@@ -15,28 +16,41 @@ public class GameMaster {
 	
 	public PlayArea playArea;
     public Tournoi tournoi;
-    public List<Player> player = new ArrayList<Player> ();
+    public List<Player> players = new ArrayList<Player> ();
     
 	private int nPlayerH;
 	private int nPlayerCPU;
 	
 	public void play()
 	{
+		Iterator<Player> he = players.iterator();
+		
+		while(!this.playArea.grid.isFull())
+		{
+			Card tempPickedCard = this.playArea.deck.pickNextCard();
+			Player currentPlayer = he.next();
+		
+			currentPlayer.setPlayingGridAdress(this.playArea.grid);//XXX playingGridAdress is accessible ?!
+			currentPlayer.askMove(tempPickedCard);
+			
+			if(he.hasNext()==false) he = players.iterator();
+		}
 		
 	}
 	
     private void instantiateGameMembers()
     {
-    	for(int i=0;i<nPlayerH;i++)
+    	for(int i=1;i<=nPlayerH;i++)
     	{
     		System.out.println("Nom du joueur humain n°"+String.valueOf(i)+" ?");
     		String playerName=ShapUp.scanner.next();
-    		player.add(new PlayerH(playerName));
+    		players.add(new PlayerH(playerName));
     	}
     	
-    	for(int i=0;i<nPlayerCPU;i++)
-    		player.add(new PlayerCPU(String.valueOf(i+1)));
+    	for(int i=1;i<=nPlayerCPU;i++)
+    		players.add(new PlayerCPU(String.valueOf(i+1)));
     	
+    	playArea = new PlayArea();
     }
 
     
