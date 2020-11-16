@@ -1,7 +1,7 @@
 package projet_ShapUp_LO02;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Deck {
 	public List<Card> cards = new ArrayList<Card> ();
