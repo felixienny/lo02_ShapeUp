@@ -1,6 +1,6 @@
 package projet_ShapUp_LO02;
 public class PlayArea {
-	public PlayArea()
+	public PlayArea(int nPlayers)
 	{
 		System.out.println("Hauteur de la zone de jeu ?");
 		int height = ShapUp.scanner.nextInt();
@@ -8,7 +8,7 @@ public class PlayArea {
 		int width = ShapUp.scanner.nextInt();
 		
 		grid = new Grid(width, height);
-		deck = new Deck(width*height);
+		deck = new Deck(width*height+nPlayers);
 	}
 	
     public Deck deck;

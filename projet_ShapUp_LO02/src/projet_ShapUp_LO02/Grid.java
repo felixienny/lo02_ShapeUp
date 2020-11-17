@@ -46,9 +46,6 @@ public class Grid implements Cloneable {
 		
 		return hasAnEmptySpot;
 	}
-	
-	//public void setNewGrid(Tile[][] newGrid) {grid=newGrid;}
-	//public Tile[][] getGrid() {return grid;}
 	public boolean setTile(int x, int y, Card cardToPlace)
 	{
 		boolean success=true;
@@ -89,44 +86,50 @@ public class Grid implements Cloneable {
 	{
 		ArrayList<ArrayList<Card>> lines = new ArrayList<ArrayList<Card>>();
 		
-		int listPosition=0;
-		for(int i=0;i<this.width;i++)//horizontal
+		for(int x=0;x<this.width;x++)//horizontal
 		{
-			for(int j=0;j<grid[i].length;j++)//vertical
+			boolean skippedInside=false;
+			if(lines.isEmpty()||lines.get(x).size()!=0) lines.add(new ArrayList<Card>());
+			ArrayList<Card> currentCardLine = lines.get(lines.size()-1);
+			
+			for(int y=0;y<grid[x].length;y++)//vertical
 			{
-				boolean skipped=false;
-				if(grid[i][j].currentlyContainsACard())
+				if(grid[x][y].currentlyContainsACard())
 				{
-					lines.get(listPosition).add(grid[i][j].getCardReference());
-					skipped=false;
+					currentCardLine.add(grid[x][y].getCardReference().clone());
 				}
-				else
+				else if(!skippedInside)
 				{
-					listPosition++;
-					if(!skipped) skipped=true;
+					lines.add(new ArrayList<Card>());
+					currentCardLine = lines.get(lines.size()-1);
+					skippedInside=true;
 				}
-				if(!skipped) listPosition++;
+				
 			}
 			
 		}
 		
-		for(int i=0;i<this.height;i++)//vertical
+		for(int x=0;x<this.width;x++)//horizontal
 		{
-			for(int j=0;j<this.width;j++)//horizontal
+			boolean skippedInside=false;
+			if(lines.isEmpty()||lines.get(x).size()!=0)  lines.add(new ArrayList<Card>());
+			ArrayList<Card> currentCardLine = lines.get(lines.size()-1);
+			
+			for(int y=0;y<grid[x].length;y++)//vertical
 			{
-					boolean skipped=false;
-					if(grid[j][i].currentlyContainsACard())
-					{
-						lines.get(listPosition).add(grid[j][i].getCardReference());
-						skipped=false;
-					}
-					else
-					{
-						listPosition++;
-						if(!skipped) skipped=true;
-					}
-					if(!skipped) listPosition++;
+				if(grid[y][x].currentlyContainsACard())
+				{
+					currentCardLine.add(grid[y][x].getCardReference().clone());
+				}
+				else if(!skippedInside)
+				{
+					lines.add(new ArrayList<Card>());
+					currentCardLine = lines.get(lines.size()-1);
+					skippedInside=true;
+				}
+				
 			}
+			
 		}
 		
 		return findScoreOnIndividualLines(lines,victoryCard);
@@ -137,6 +140,7 @@ public class Grid implements Cloneable {
 		
 		for(int i=0;i<lines.size();i++)//line
 		{
+			if(lines.size()==0) break;
 			ArrayList<Card> currentLine=lines.get(i);
 			
 			Shape winningShape=victoryCard.getShape();
@@ -150,7 +154,7 @@ public class Grid implements Cloneable {
 			Shape lastShape=currentLine.get(0).getShape();
 			boolean lastHollow=currentLine.get(0).getHollow();
 			
-			for(int j=1;j<currentLine.size();j++)//card
+			for(int j=0;j<currentLine.size();j++)//card
 			{
 				Card currentCard=currentLine.get(j);
 				

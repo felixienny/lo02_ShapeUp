@@ -23,8 +23,8 @@ public class GameMaster {
 	
 	public void play()
 	{
+		for(Player he : players) he.victoryCard=this.playArea.deck.pickNextCard();
 		Iterator<Player> he = players.iterator();
-		
 		while(!this.playArea.grid.isFull())
 		{
 			Card tempPickedCard = this.playArea.deck.pickNextCard();
@@ -48,9 +48,9 @@ public class GameMaster {
     	}
     	
     	for(int i=1;i<=nPlayerCPU;i++)
-    		players.add(new PlayerCPU(String.valueOf(i+1)));
+    		players.add(new PlayerCPU(String.valueOf(i)));
     	
-    	playArea = new PlayArea();
+    	playArea = new PlayArea(nPlayerH+nPlayerCPU);
     }
 
     
