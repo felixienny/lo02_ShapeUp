@@ -1,7 +1,7 @@
 package projet_ShapUp_LO02;
 import java.lang.Cloneable;
 
-//yghsderhfyuye
+
 public class Card implements Cloneable{  
     public Card(Color newColor, Shape newShape, boolean newHollow)
 	{

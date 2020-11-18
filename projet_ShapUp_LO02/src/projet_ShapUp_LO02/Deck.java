@@ -1,5 +1,6 @@
 package projet_ShapUp_LO02;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -20,11 +21,11 @@ public class Deck {
 					cards.add(new Card(color, shape, true));
 					cards.add(new Card(color, shape, false));
         		}
-        	}
+			}
     	}
     }
 	public Card pickNextCard() {return cards.get(0);};
     public void shuffle() {
-    	Collections.shuffle(this.cards);
-    }
+    	Collections.shuffle(this.cards,new Random());
+	 }
 }
