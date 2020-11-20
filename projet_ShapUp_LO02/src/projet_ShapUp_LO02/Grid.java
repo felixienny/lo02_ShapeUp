@@ -41,7 +41,6 @@ public class Grid implements Cloneable {
 				{
 					hasAnEmptySpot=true;
 					break outerloop;
-					
 				}
 		
 		return hasAnEmptySpot;
@@ -88,8 +87,56 @@ public class Grid implements Cloneable {
 		
 		for(int x=0;x<this.width;x++)//horizontal
 		{
+			lines.add(new ArrayList<Card>());
+			ArrayList<Card> currentCardLine=lines.get(lines.size()-1);
+			for(int y=0;y<grid[x].length;y++)//vertical
+			{
+				if(grid[x][y].getCardReference()!=null)//card à ajouter
+				{
+					currentCardLine.add(grid[x][y].getCardReference().clone());
+				}
+				else//saut à faire
+				{
+					if(!currentCardLine.isEmpty()) 
+					{
+						lines.add(new ArrayList<Card>());
+						currentCardLine=lines.get(lines.size()-1);
+					}
+				}
+			}
+			
+		}
+		
+		for(int y=0;y<this.height;y++)//vertical
+		{
+			lines.add(new ArrayList<Card>());
+			ArrayList<Card> currentCardLine=lines.get(lines.size()-1);
+			for(int x=0;x<grid[y].length;x++)//horizontal
+			{
+				if(grid[x][y].getCardReference()!=null)//card à ajouter
+				{
+					currentCardLine.add(grid[x][y].getCardReference().clone());
+				}
+				else//saut à faire
+				{
+					if(!currentCardLine.isEmpty()) 
+					{
+						lines.add(new ArrayList<Card>());
+						currentCardLine=lines.get(lines.size()-1);
+					}
+				}
+			}
+			
+		}
+		
+		/*
+		//TODO rajoute lignes pas utiles horizontalement
+		for(int x=0;x<this.width;x++)//horizontal
+		{
 			boolean skippedInside=false;
 			if(lines.isEmpty()||lines.get(x).size()!=0) lines.add(new ArrayList<Card>());
+			
+			
 			ArrayList<Card> currentCardLine = lines.get(lines.size()-1);
 			
 			for(int y=0;y<grid[x].length;y++)//vertical
@@ -131,6 +178,7 @@ public class Grid implements Cloneable {
 			}
 			
 		}
+		*/
 		
 		return findScoreOnIndividualLines(lines,victoryCard);
 	}
@@ -185,5 +233,63 @@ public class Grid implements Cloneable {
 			}
 		}
 		return currentScore;
+	}
+	
+	public void display() {
+		
+		int width = this.getWidth();
+		int height = this.getHeight();
+		
+		for(int h=0; h<height; h++) {
+			for(int w=0; w<width; w++) {
+				System.out.print(" ");
+				if(!this.isFreeToPlaceACardOn(w, h)) {
+					Card card = this.getTile(w, h);
+
+					if(card.getHollow()) {
+						System.out.print("F");
+					}
+					else {						
+						System.out.print("H");
+					}
+
+					switch (card.getColor()) {
+					case RED:
+						System.out.print("R");
+						break;
+					case GREEN:
+						System.out.print("G");
+						break;
+					case BLUE:
+						System.out.print("B");
+						break;
+					default:
+						break;
+					}
+
+					switch (card.getShape()) {
+					case CIRCLE:
+						System.out.print("C");
+						break;
+					case TRIANGLE:
+						System.out.print("T");
+						break;
+					case SQUARE:
+						System.out.print("S");
+						break;
+					default:
+						break;
+					}
+					
+				}
+				else{
+					System.out.print("   ");
+				}
+
+				System.out.print(/*ANSI_RESET +*/ " ");
+			}		  
+			System.out.println("\n");
+		}
+		System.out.println("________________");
 	}
 }

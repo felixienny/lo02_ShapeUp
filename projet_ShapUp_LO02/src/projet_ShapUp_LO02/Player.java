@@ -14,4 +14,5 @@ public abstract class Player {
 	public String getName() {return name;};
 	public abstract void askMove(Card pickedCard);
 	public void setPlayingGridAdress(Grid newPlayingGridAdress) {this.playingGridAdress=newPlayingGridAdress;}
+	public int getScore() {return score;}
 }

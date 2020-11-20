@@ -35,7 +35,15 @@ public class GameMaster {
 			Card tempPickedCard = this.playArea.deck.pickNextCard();
 			Player currentPlayer = he.next();
 		
+			ShapUp.scanner.nextLine();
 			currentPlayer.askMove(tempPickedCard);
+			
+			System.out.println(currentPlayer.name+"\n");
+			for(Player she : players) System.out.print(she.getScore()+" ");
+			System.out.println("\n");
+			
+			this.playArea.grid.display();
+			
 			
 			if(he.hasNext()==false) he = players.iterator();
 		}
