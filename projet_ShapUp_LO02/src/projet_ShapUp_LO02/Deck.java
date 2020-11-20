@@ -27,5 +27,5 @@ public class Deck {
 	public Card pickNextCard() {return cards.get(0);};
     public void shuffle() {
     	Collections.shuffle(this.cards,new Random());
-	 }
+	}
 }
