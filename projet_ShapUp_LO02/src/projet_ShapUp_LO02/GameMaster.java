@@ -23,14 +23,18 @@ public class GameMaster {
 	
 	public void play()
 	{
-		for(Player he : players) he.victoryCard=this.playArea.deck.pickNextCard();
+		for(Player he : players)
+		{
+			he.victoryCard=this.playArea.deck.pickNextCard();
+			he.playingGridAdress=this.playArea.grid;
+		}
+		
 		Iterator<Player> he = players.iterator();
 		while(!this.playArea.grid.isFull())
 		{
 			Card tempPickedCard = this.playArea.deck.pickNextCard();
 			Player currentPlayer = he.next();
 		
-			currentPlayer.setPlayingGridAdress(this.playArea.grid);//XXX playingGridAdress is accessible ?!
 			currentPlayer.askMove(tempPickedCard);
 			
 			if(he.hasNext()==false) he = players.iterator();

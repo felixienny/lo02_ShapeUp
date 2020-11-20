@@ -142,6 +142,7 @@ public class Grid implements Cloneable {
 		{
 			if(lines.size()==0) break;
 			ArrayList<Card> currentLine=lines.get(i);
+			if(currentLine.isEmpty()==true) continue;
 			
 			Shape winningShape=victoryCard.getShape();
 			boolean winningHollow=victoryCard.getHollow();
@@ -157,6 +158,7 @@ public class Grid implements Cloneable {
 			for(int j=0;j<currentLine.size();j++)//card
 			{
 				Card currentCard=currentLine.get(j);
+				if(currentCard==null) continue;
 				
 				if(currentCard.getShape()==lastShape && currentCard.getShape()==winningShape ) shapeCombo++;
 				else
