@@ -21,7 +21,7 @@ public class Deck {
 					cards.add(new Card(color, shape, true));
 					cards.add(new Card(color, shape, false));
         		}
-        	}
+			}
     	}
     }
 	public Card pickNextCard() {return cards.remove(0);};
