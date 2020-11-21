@@ -3,13 +3,13 @@ package projet_ShapUp_LO02;
 public class PlayerCPU extends Player {
 	public PlayerCPU(String name) {super(name);}
 	
-	public void askMove(Card pickedCard) {calculateBestMove(pickedCard);}
-	private void calculateBestMove(Card pickedCard)
+	public void askMove(Card pickedCard) {calculateBestMoveAndDo(pickedCard);}
+	private void calculateBestMoveAndDo(Card pickedCard)
 	{
 		int width=this.playingGridAdress.getWidth();
 		int height=this.playingGridAdress.getHeight();
 		
-		int scoreOfBestPossibility=0;
+		int scoreOfBestPossibility=-1;
 		int xOfBestPossibility=0;
 		int yOfBestPossibility=0;
 		
@@ -20,8 +20,13 @@ public class PlayerCPU extends Player {
 				if(this.playingGridAdress.isFreeToPlaceACardOn(i, j))
 				{
 					Grid newPossibility=(Grid)this.playingGridAdress.clone();//clone
+					
 					newPossibility.setTile(i, j, pickedCard);//pose carte
-					int scoreOfNewPossibility=newPossibility.calculateScore(this.victoryCard);//c score
+					int scoreOfNewPossibility=newPossibility.calculateScore(this.victoryCard.clone());//c score
+					
+					//System.out.println("-->"+scoreOfNewPossibility);
+					//newPossibility.display();
+					
 					if(scoreOfBestPossibility<scoreOfNewPossibility)
 					{
 						scoreOfBestPossibility=scoreOfNewPossibility;
@@ -32,6 +37,7 @@ public class PlayerCPU extends Player {
 				}
 			}
 		}
+		
 		this.playingGridAdress.setTile(xOfBestPossibility, yOfBestPossibility, pickedCard);
 		this.score=scoreOfBestPossibility;
 	}

@@ -43,7 +43,7 @@ public class Tile implements Cloneable{
 		return tempCard;
 	}
 	public Card getCardReference() {return containedCard;}
-	public boolean currentlyContainsACard() {return containedCard == null ? true : false;}
+	public boolean currentlyContainsACard() {return containedCard == null ? false : true;}
 	public boolean isDead() {return canContainACard;}
 	public Tile clone()
 	{
