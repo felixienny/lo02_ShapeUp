@@ -1,4 +1,4 @@
-package projet_ShapUp_LO02.src.projet_ShapUp_LO02;
+package projet_ShapUp_LO02;
 import java.util.Scanner;
 
 public class PlayerH extends Player {
@@ -10,19 +10,19 @@ public class PlayerH extends Player {
 		int choix;
 		do {
 			System.out.println("Que veux-tu faire :");
-			System.out.println("1 - Jouer la carte que tu as pioché");
-			System.out.println("2 - Déplacer une carte déjà sur le jeu");
+			System.out.println("1 - Jouer la carte que tu as piochï¿½");
+			System.out.println("2 - DÃ©placer une carte dÃ©jÃ  sur le jeu");
 			choix = scannerChoix.nextInt();
 		} while (!(choix==1 || choix==2));
 		if (choix==1) {
 			int x;
 			int y;
 			do {
-				System.out.println("Où veux-tu la jouer ?");
+				System.out.println("OÃ¹ veux-tu la jouer ?");
 				String choixPlace = scannerChoix.next().trim();
 				
 				while (!choixPlace.matches("^[0-9],[0-9]$")) {
-					System.out.println("Mauvaise saisie, où veux-tu la jouer ?");
+					System.out.println("Mauvaise saisie, oÃ¹ veux-tu la jouer ?");
 					System.out.println("Exemple : 1,7");
 					choixPlace = scannerChoix.next().trim();
 				}
@@ -38,11 +38,11 @@ public class PlayerH extends Player {
 			int xDest;
 			int yDest;
 			do { 
-				System.out.println("Quelle carte veux-tu déplacer ?");
+				System.out.println("Quelle carte veux-tu dÃ©placer ?");
 				String choixMove = scannerChoix.next().trim();
 				
 				while (!choixMove.matches("^[0-9],[0-9]:[0-9],[0-9]$")) {
-					System.out.println("Mauvaise saisie, quel carte veux-tu déplacer ?");
+					System.out.println("Mauvaise saisie, quel carte veux-tu dÃ©placer ?");
 					System.out.println("Exemple : 1,3:6,7");
 					choixMove = scannerChoix.next().trim();
 				}
@@ -117,66 +117,4 @@ public class PlayerH extends Player {
 		}
 		System.out.println(ANSI_RESET);
 	}
-	
-	// public static void main(String args[]) {
-	// 	int width = 20; //this.playingGridAdress.getWidth();
-	// 	int height = 5;
-	// 	Deck d = new Deck(178);
-	// 	String ANSI_BLACK  = "\u001B[30m";
-	// 	String ANSI_RESET  = "\u001B[0m";
-	// 	String ANSI_BG_RED    = "\u001B[41m";
-	// 	String ANSI_BG_GREEN  = "\u001B[42m";
-	// 	String ANSI_BG_BLUE   = "\u001B[44m";
-	// 	for(int h=0; h<=height; h++) {
-	// 		for(int w=0; w<=width; w++) {
-	// 			System.out.print(" ");
-	// 			// if(!this.playingGridAdress.isFreeToPlaceACardOn(w, h)) {
-	// 				Card card = d.pickNextCard();
-	// 				if(card.getHollow()) {
-	// 					System.out.print(ANSI_BLACK);
-	// 				}
-	// 				else {						
-	// 					System.out.print(ANSI_RESET);
-	// 				}
-
-	// 				switch (card.getColor()) {
-	// 				case RED:
-	// 					System.out.print(ANSI_BG_RED);
-	// 					break;
-	// 				case GREEN:
-	// 					System.out.print(ANSI_BG_GREEN);
-	// 					break;
-	// 				case BLUE:
-	// 					System.out.print(ANSI_BG_BLUE);
-	// 					break;
-	// 				default:
-	// 					break;
-	// 				}
-
-	// 				switch (card.getShape()) {
-	// 				case CIRCLE:
-	// 					System.out.print(" â€¢ ");
-	// 					break;
-	// 				case TRIANGLE:
-	// 					System.out.print(" â–² ");
-	// 					break;
-	// 				case SQUARE:
-	// 					System.out.print(" â–  ");
-	// 					break;
-	// 				default:
-	// 					break;
-	// 				}
-					
-	// 			// }
-	// 			// else{
-	// 			// 	System.out.print("   ");
-	// 			// }
-
-	// 			System.out.print(ANSI_RESET + " ");
-	// 		}		  
-	// 		System.out.println("\n");
-	// 	}
-	// 	System.out.println(ANSI_RESET);
-	// }
-	// }
 }
