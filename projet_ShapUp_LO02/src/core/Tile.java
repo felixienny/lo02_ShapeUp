@@ -1,4 +1,4 @@
-package projet_ShapUp_LO02;
+package core;
 import java.lang.Cloneable;
 
 public class Tile implements Cloneable{

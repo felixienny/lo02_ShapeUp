@@ -1,4 +1,4 @@
-package projet_ShapUp_LO02;
+package core;
 public class PlayArea {
 	public PlayArea(int nPlayers)
 	{

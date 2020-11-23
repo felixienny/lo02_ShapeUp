@@ -1,4 +1,4 @@
-package projet_ShapUp_LO02;
+package core;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,20 +37,4 @@ public class Tournoi {
         return scoreOnPlayer;
     }
 
-
-
-
-    public static void main(String[] args) {
-        List<Player> players = new ArrayList<Player>();
-        Player a = new PlayerH("a");
-        players.add(a); 
-        Tournoi t = new Tournoi(players, 2);
-        
-        System.out.println(t.getScoresOnMatch(0));
-
-        System.out.println(t.getScoreOnPlayer(a));
-        t.setScoreOnPlayer(0, a, 536);
-        System.out.println(t.getScoreOnPlayer(a));
-
-    }
 }

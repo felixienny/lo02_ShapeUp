@@ -1,4 +1,4 @@
-package projet_ShapUp_LO02;
+package core;
 import java.util.Scanner;
 
 public class PlayerH extends Player {

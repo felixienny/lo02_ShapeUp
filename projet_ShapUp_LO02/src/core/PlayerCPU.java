@@ -1,4 +1,4 @@
-package projet_ShapUp_LO02;
+package core;
 
 public class PlayerCPU extends Player {
 	public PlayerCPU(String name) {super(name);}
