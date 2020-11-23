@@ -1,5 +1,5 @@
 package core;
-public enum Shape {
+enum Shape {
 	TRIANGLE,
 	SQUARE,
 	CIRCLE

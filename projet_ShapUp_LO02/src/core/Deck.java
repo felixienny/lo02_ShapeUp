@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Deck {
+class Deck {
 	public List<Card> cards = new ArrayList<Card> ();
     
     public Deck (float nbcartes) {

@@ -2,7 +2,7 @@ package core;
 import java.util.ArrayList;
 import java.lang.Cloneable;
 
-public class Grid implements Cloneable {
+class Grid implements Cloneable {
 	public Grid(int width, int height)
 	{
 		this.height=height;
@@ -12,8 +12,7 @@ public class Grid implements Cloneable {
 		
 		for(int x=0;x<width;x++)
 			for(int y=0;y<height;y++)
-				grid[x][y] = new Tile();
-		
+				grid[x][y] = new Tile();		
 	}
 	
 	private Tile grid[][];
@@ -109,11 +108,11 @@ public class Grid implements Cloneable {
 			ArrayList<Card> currentCardLine=lines.get(lines.size()-1);
 			for(int y=0;y<grid[x].length;y++)//vertical
 			{
-				if(grid[x][y].getCardReference()!=null)//card à ajouter
+				if(grid[x][y].getCardReference()!=null)//card Ã  ajouter
 				{
 					currentCardLine.add(grid[x][y].getCardReference().clone());
 				}
-				else//saut à faire
+				else//saut Ã  faire
 				{
 					if(!currentCardLine.isEmpty()) 
 					{
@@ -131,11 +130,11 @@ public class Grid implements Cloneable {
 			ArrayList<Card> currentCardLine=lines.get(lines.size()-1);
 			for(int x=0;x<grid[y].length;x++)//horizontal
 			{
-				if(grid[x][y].getCardReference()!=null)//card à ajouter
+				if(grid[x][y].getCardReference()!=null)//card Ã  ajouter
 				{
 					currentCardLine.add(grid[x][y].getCardReference().clone());
 				}
-				else//saut à faire
+				else//saut Ã  faire
 				{
 					if(!currentCardLine.isEmpty()) 
 					{
@@ -145,59 +144,7 @@ public class Grid implements Cloneable {
 				}
 			}
 			
-		}
-		
-		/*
-		//TODO rajoute lignes pas utiles horizontalement
-		for(int x=0;x<this.width;x++)//horizontal
-		{
-			boolean skippedInside=false;
-			if(lines.isEmpty()||lines.get(x).size()!=0) lines.add(new ArrayList<Card>());
-			
-			
-			ArrayList<Card> currentCardLine = lines.get(lines.size()-1);
-			
-			for(int y=0;y<grid[x].length;y++)//vertical
-			{
-				if(grid[x][y].currentlyContainsACard())
-				{
-					currentCardLine.add(grid[x][y].getCardReference().clone());
-				}
-				else if(!skippedInside)
-				{
-					lines.add(new ArrayList<Card>());
-					currentCardLine = lines.get(lines.size()-1);
-					skippedInside=true;
-				}
-				
-			}
-			
-		}
-		
-		for(int x=0;x<this.width;x++)//horizontal
-		{
-			boolean skippedInside=false;
-			if(lines.isEmpty()||lines.get(x).size()!=0)  lines.add(new ArrayList<Card>());
-			ArrayList<Card> currentCardLine = lines.get(lines.size()-1);
-			
-			for(int y=0;y<grid[x].length;y++)//vertical
-			{
-				if(grid[y][x].currentlyContainsACard())
-				{
-					currentCardLine.add(grid[y][x].getCardReference().clone());
-				}
-				else if(!skippedInside)
-				{
-					lines.add(new ArrayList<Card>());
-					currentCardLine = lines.get(lines.size()-1);
-					skippedInside=true;
-				}
-				
-			}
-			
-		}
-		*/
-		
+		}		
 		return findScoreOnIndividualLines(lines,victoryCard);
 	}
 	private int findScoreOnIndividualLines(ArrayList<ArrayList<Card>> lines, Card victoryCard)
@@ -257,8 +204,10 @@ public class Grid implements Cloneable {
 		
 		int width = this.getWidth();
 		int height = this.getHeight();
-		
+		for(int i=0;i<(3*width)+(2*(width-1))+2;i++) System.out.print("_");
+		System.out.println();
 		for(int h=0; h<height; h++) {
+			System.out.print("|");
 			for(int w=0; w<width; w++) {
 				System.out.print(" ");
 				if(!this.isFreeToPlaceACardOn(w, h)) {
@@ -304,10 +253,73 @@ public class Grid implements Cloneable {
 					System.out.print("   ");
 				}
 
-				System.out.print(/*ANSI_RESET +*/ " ");
+				System.out.print(" ");
+			}
+			System.out.println("|");
+		}
+		for(int i=0;i<(3*width)+(2*(width-1))+2;i++) System.out.print("_");
+	}
+	
+	/*
+	public void displayColorized() {
+		int width = this.getWidth();
+		int height = this.getHeight();
+		String ANSI_BLACK  = "\u001B[30m";
+		String ANSI_RESET  = "\u001B[0m";
+		String ANSI_BG_RED    = "\u001B[41m";
+		String ANSI_BG_GREEN  = "\u001B[42m";
+		String ANSI_BG_BLUE   = "\u001B[44m";
+		for(int h=0; h<=height; h++) {
+			for(int w=0; w<=width; w++) {
+				System.out.print(" ");
+				if(!this.isFreeToPlaceACardOn(w, h)) {
+					Card card = this.getTile(w, h);
+
+					if(card.getHollow()) {
+						System.out.print(ANSI_BLACK);
+					}
+					else {						
+						System.out.print(ANSI_RESET);
+					}
+
+					switch (card.getColor()) {
+					case RED:
+						System.out.print(ANSI_BG_RED);
+						break;
+					case GREEN:
+						System.out.print(ANSI_BG_GREEN);
+						break;
+					case BLUE:
+						System.out.print(ANSI_BG_BLUE);
+						break;
+					default:
+						break;
+					}
+
+					switch (card.getShape()) {
+					case CIRCLE:
+						System.out.print(" • ");
+						break;
+					case TRIANGLE:
+						System.out.print(" ▲ ");
+						break;
+					case SQUARE:
+						System.out.print(" ■ ");
+						break;
+					default:
+						break;
+					}
+					
+				}
+				else{
+					System.out.print("   ");
+				}
+
+				System.out.print(ANSI_RESET + " ");
 			}		  
 			System.out.println("\n");
 		}
-		System.out.println("________________");
+		System.out.println(ANSI_RESET);
 	}
+	*/
 }
