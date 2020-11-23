@@ -51,8 +51,7 @@ public class PlayerH extends Player {
 				xDest = Integer.valueOf(choixMove.split(":")[1].split(",")[1]);
 				yDest = Integer.valueOf(choixMove.split(":")[1].split(",")[1]);
 			} while(!this.playingGridAdress.isFreeToPlaceACardOn(xSrc, ySrc) && this.playingGridAdress.isFreeToPlaceACardOn(xDest, yDest));
-			this.playingGridAdress.setTile(xDest, yDest, this.playingGridAdress.getTile(xSrc, ySrc));
-			// TODO Remove the card placed before
+			this.playingGridAdress.moveTile(xSrc, ySrc, xDest, yDest);
 		}
 		scannerChoix.close();
 	}

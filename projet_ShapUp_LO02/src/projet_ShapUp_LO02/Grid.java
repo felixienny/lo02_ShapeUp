@@ -59,6 +59,24 @@ public class Grid implements Cloneable {
 		}
 		return success;
 	}
+	public boolean moveTile(int xSrc, int ySrc, int xDest, int yDest){
+		boolean success=true;
+		if(xSrc>=width || ySrc>=height || xDest>=width || yDest>=height) success=false;
+		else
+		{
+			if(grid[xSrc][ySrc] == null) success=false;
+			else
+			{
+				if (grid[xSrc][ySrc].getCardReference() != null && !grid[xDest][yDest].isDead()){
+					success = grid[xDest][yDest].setCard(grid[xSrc][ySrc].getAndRemoveCard());
+				}
+				else {
+					success = false;
+				}
+			}
+		}
+		return success;
+	}
 	public Card getTile(int x, int y) {return grid[x][y].getCardReference();}
 	public boolean isFreeToPlaceACardOn(int x, int y)
 	{
