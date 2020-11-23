@@ -14,7 +14,7 @@ public class Tournoi {
             for(Player player : players){
                 playersScores.put(player, 0);
             }
-            scores.add(m, (HashMap<Player, Integer>) playersScores.clone());
+            scores.add(m, (HashMap<Player, Integer>)playersScores.clone());
             playersScores.clear();
         }
     }
