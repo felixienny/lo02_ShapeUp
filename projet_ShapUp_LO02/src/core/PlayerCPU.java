@@ -2,7 +2,8 @@ package core;
 
 class PlayerCPU extends Player {
 	public PlayerCPU(String name) {super(name);}
-	
+//methods
+	//job specific
 	public void askMove(Card pickedCard) {calculateBestMoveAndDo(pickedCard);}
 	private void calculateBestMoveAndDo(Card pickedCard)
 	{
@@ -17,7 +18,7 @@ class PlayerCPU extends Player {
 		{
 			for(int j=0;j<height;j++)
 			{
-				if(this.playingGridAdress.isFreeToPlaceACardOn(i, j))
+				if(this.playingGridAdress.isPlayable(i, j))
 				{
 					Grid newPossibility=this.playingGridAdress.clone();//clone
 					

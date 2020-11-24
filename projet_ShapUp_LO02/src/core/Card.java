@@ -9,62 +9,43 @@ class Card implements Cloneable{
 		shape=newShape;
 		hollow=newHollow;
 	}
-	
-    private Color color;
-    private Shape shape;
-    private boolean hollow;
+//methods
     
+    //setter
+    
+    //getter
     public Color getColor() {return color;}
     public Shape getShape() {return shape;}
     public boolean getHollow() {return hollow;}
+    
+    //job specific
     public String toString() {
-    	String str = new String();
-    	str = this.shape + " " + this.color;
-    	if(this.hollow) {
-    		str += " HOLLOW\n";
-    	}
-    	else {
-    		str += " FILLED\n";
-    	}
-    	return str;
-    }
-    public void display()
-    {
-    	if(this.getHollow()) {
-			System.out.print("F");
-		}
-		else {						
-			System.out.print("H");
+    	String returnString = new String();
+
+		if (hollow) returnString+="H";
+		else returnString+="F";
+
+		switch (color) {
+			case RED: returnString+="R"; break;
+			case GREEN: returnString+="G"; break;
+			case BLUE: returnString+="B"; break;
+			default: break;
 		}
 
-		switch (this.getColor()) {
-		case RED:
-			System.out.print("R");
-			break;
-		case GREEN:
-			System.out.print("G");
-			break;
-		case BLUE:
-			System.out.print("B");
-			break;
-		default:
-			break;
+		switch (shape) {
+			case CIRCLE: returnString+="C"; break;
+			case TRIANGLE: returnString+="T"; break;
+			case SQUARE: returnString+="S"; break;
+			default: break;
 		}
-
-		switch (this.getShape()) {
-		case CIRCLE:
-			System.out.print("C");
-			break;
-		case TRIANGLE:
-			System.out.print("T");
-			break;
-		case SQUARE:
-			System.out.print("S");
-			break;
-		default:
-			break;
-		}
+		return returnString;
     }
+    public void display()  {System.out.print(this.toString());}
     public Card clone() {return new Card(color,shape,hollow);}
-	
+    
+//attributes
+    //private
+    private Color color;
+    private Shape shape;
+    private boolean hollow;
 }

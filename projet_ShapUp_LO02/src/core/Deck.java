@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 class Deck {
-	public List<Card> cards = new ArrayList<Card> ();
-    
-    public Deck (float nbcartes) {
+	public Deck (float nbcartes) {
     	int nbloops;
     	if (nbcartes % 18 != 0) { 
     		if (nbcartes % 18 < 9) { nbloops = Math.round(nbcartes/18) + 1; }
@@ -30,8 +28,16 @@ class Deck {
 			}
     	}
     }
-	public Card pickNextCard() {return cards.remove(0);};
-    public void shuffle() {
-    	Collections.shuffle(this.cards, new Random(System.currentTimeMillis()));
-    }
+//methods
+	//setter
+	
+	//getter
+	public Card pickNextCard() {return cards.remove(0);}
+	
+	//job specific
+	public void shuffle() {Collections.shuffle(this.cards, new Random(System.currentTimeMillis()));}
+	
+//attributes
+	//public
+	public List<Card> cards = new ArrayList<Card> ();
 }

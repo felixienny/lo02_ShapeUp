@@ -1,7 +1,0 @@
-package projet_ShapUp_LO02;
-public class Card {
-    public Color color;
-
-    public Shape shape;
-    private boolean hollow;
-}
