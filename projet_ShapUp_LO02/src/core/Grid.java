@@ -112,7 +112,7 @@ public class Grid implements Cloneable {
 		
 		for(int i=x-1 ; i<=x+1 ; i++){
 			for (int j=y-1; j<=y+1; j++) {
-				if (Math.abs(i+j)==1 && this.canContainACard(i, j)){
+				if (Math.abs(i+j)==1 && this.containsACard(i, j)){
 					return true;
 				}
 			}
@@ -141,7 +141,7 @@ public class Grid implements Cloneable {
 		}
 		return clonedGrid;
 	}
-	public int calculateScore(Card victoryCard){//TODO à refaire
+	public int calculateScore(Card victoryCard){
 		int currentScore = 0;
 		int shapeCombo,hollowCombo,colorCombo;		
 
