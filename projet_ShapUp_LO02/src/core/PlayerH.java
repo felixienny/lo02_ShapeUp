@@ -51,7 +51,7 @@ class PlayerH extends Player {
 					}
 					x = Integer.valueOf(choicePlace.split(",")[0]);
 					y = Integer.valueOf(choicePlace.split(",")[1]);
-				} while (!this.playingGridAdress.isFreeToPlaceACardOn(x, y));
+				} while (!this.playingGridAdress.isPlayable(x, y));
 				
 				this.playingGridAdress.setTile(x, y, pickedCard);
 				choice1done=true;
@@ -77,7 +77,7 @@ class PlayerH extends Player {
 					ySrc = Integer.valueOf(choiceMove.split(":")[0].split(",")[1]);
 					xDest = Integer.valueOf(choiceMove.split(":")[1].split(",")[0]);
 					yDest = Integer.valueOf(choiceMove.split(":")[1].split(",")[1]);
-				} while(!this.playingGridAdress.isFreeToPlaceACardOn(xDest, yDest));
+				} while(!this.playingGridAdress.isPlayable(xDest, yDest));
 				this.playingGridAdress.moveTile(xSrc, ySrc, xDest, yDest);
 				choice2done=true;
 			}
