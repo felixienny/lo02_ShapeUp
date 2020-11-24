@@ -169,46 +169,23 @@ public class Grid implements Cloneable {
 
 
 	public int calculateScore(Card victoryCard){
-		ArrayList<ArrayList<Card>> lines = new ArrayList<ArrayList<Card>>();
-		for(int x=0;x<this.width;x++){
-			lines.add(new ArrayList<Card>());
-			ArrayList<Card> currentCardLine = lines.get(lines.size()-1);
-			for(int y=0;y<this.height;y++){   
-				currentCardLine.add(gridTiles[x][y].clone());
-			}
-		}
-		for(int y=0;y<this.height;y++){
-			lines.add(new ArrayList<Card>());
-			ArrayList<Card> currentCardLine=lines.get(lines.size()-1);
-			for(int x=0;x<this.width;x++){
-				currentCardLine.add(gridTiles[x][y].clone());
-			}
-		}
-		return findScoreOnIndividualLines(lines,victoryCard);
-	}
+		int currentScore = 0;
+		int shapeCombo,hollowCombo,colorCombo;		
 
-	private int findScoreOnIndividualLines(ArrayList<ArrayList<Card>> lines, Card victoryCard){
-		int currentScore=0;
+		for(int y=0;y<this.width;y++){
+			shapeCombo=0;
+			hollowCombo=0;
+			colorCombo=0;
 
-		for (int i=0; i<lines.size();i++) {
-			ArrayList<Card> currentLine=lines.get(i);
-
-			int shapeCombo=0;
-			int hollowCombo=0;
-			int colorCombo=0;
-
-			Card lastCard = currentLine.get(0); 
-
-			for (int j=1;j<lines.get(i).size();j++) {
-				Card currentCard = currentLine.get(j);
-
+			Card lastCard = this.gridTiles[0][y];
+			for(int x=1;x<this.height;x++){   
+				Card currentCard = this.gridTiles[x][y];
+				
 				if (currentCard == null) {
 					shapeCombo=0;
 					hollowCombo=0;
 					colorCombo=0;
 				}
-
-				
 
 				if (currentCard.getShape() == victoryCard.getShape() && currentCard.getShape() == lastCard.getShape()) shapeCombo++;
 				else if (currentCard.getShape() == victoryCard.getShape()) {
@@ -231,13 +208,51 @@ public class Grid implements Cloneable {
 				}
 				else colorCombo=0;
 
-				lastCard = currentLine.get(j);
+				lastCard = currentCard;
 			}
 		}
+		for(int x=0;x<this.height;x++){
+			shapeCombo=0;
+			hollowCombo=0;
+			colorCombo=0;
+
+			Card lastCard = this.gridTiles[x][0];
+			for(int y=1;y<this.width;y++){   
+				Card currentCard = this.gridTiles[x][y];
+				
+				if (currentCard == null) {
+					shapeCombo=0;
+					hollowCombo=0;
+					colorCombo=0;
+				}
+
+				if (currentCard.getShape() == victoryCard.getShape() && currentCard.getShape() == lastCard.getShape()) shapeCombo++;
+				else if (currentCard.getShape() == victoryCard.getShape()) {
+					if (shapeCombo>=2) currentScore+=(shapeCombo-1);
+					shapeCombo=0;
+				}
+				else shapeCombo=0;
+
+				if (currentCard.getHollow() == victoryCard.getHollow() && currentCard.getHollow() == lastCard.getHollow()) hollowCombo++;
+				else if (currentCard.getHollow() == victoryCard.getHollow()) {
+					if (hollowCombo>=3) currentScore+=hollowCombo;
+					hollowCombo=0;
+				}
+				else hollowCombo=0;
+
+				if (currentCard.getColor() == victoryCard.getColor() && currentCard.getColor() == lastCard.getColor()) colorCombo++;
+				else if (currentCard.getColor() == victoryCard.getColor()) {
+					if (colorCombo>=3) currentScore+=(colorCombo+1);
+					colorCombo=0;
+				}
+				else colorCombo=0;
+
+				lastCard = currentCard;
+			}
+		}
+
 		return currentScore;
 	}
-
-
 
 
 	public void displayCard(Card card) {
