@@ -69,9 +69,8 @@ class Grid implements Cloneable {
 				if (grid[xSrc][ySrc].getCardReference() != null && !grid[xDest][yDest].isDead()){
 					success = grid[xDest][yDest].setCard(grid[xSrc][ySrc].getAndRemoveCard());
 				}
-				else {
-					success = false;
-				}
+				else success = false;
+				
 			}
 		}
 		return success;
@@ -173,7 +172,7 @@ class Grid implements Cloneable {
 				Card currentCard=currentLine.get(j);
 				if(currentCard==null) continue;
 				
-				if(currentCard.getShape()==lastShape && currentCard.getShape()==winningShape ) shapeCombo++;
+				if(currentCard.getShape()==lastShape && currentCard.getShape()==winningShape) shapeCombo++;
 				else
 				{
 					if(shapeCombo>=2) currentScore+=shapeCombo-1;
@@ -191,11 +190,12 @@ class Grid implements Cloneable {
 				
 				if(currentCard.getColor()==lastColor && currentCard.getColor()==winningColor) colorCombo++;
 				else
-				{	
+				{
 					if(colorCombo>=3) currentScore+=colorCombo+1;
 					colorCombo=0;
 				}
 			}
+			//TODO donner score malgré fin de ligne
 		}
 		return currentScore;
 	}

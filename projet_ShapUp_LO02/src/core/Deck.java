@@ -11,9 +11,15 @@ class Deck {
     	int nbloops;
     	if (nbcartes % 18 != 0) { 
     		if (nbcartes % 18 < 9) { nbloops = Math.round(nbcartes/18) + 1; }
-    		else { nbloops = Math.round(nbcartes/18); }
+    		else
+    		{
+    			nbloops = Math.round(nbcartes/18);
+    		}
     	}
-    	else { nbloops = Math.round(nbcartes/18); }
+    	else
+    	{
+    		nbloops = Math.round(nbcartes/18);
+    	}
 
     	for (int i=1; i<=nbloops; i++) {
     		for (Color color : Color.values()) { 

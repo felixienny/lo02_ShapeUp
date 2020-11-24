@@ -66,13 +66,5 @@ class Card implements Cloneable{
 		}
     }
     public Card clone() {return new Card(color,shape,hollow);}
-	//? implements interface equals
-    public boolean equals(Card c) {
-    	if (this.color == c.color && this.shape == c.shape && this.hollow == c.hollow) {
-    		return true;
-    	}
-    	else {
-    		return false;
-    	}
-    }
+	
 }

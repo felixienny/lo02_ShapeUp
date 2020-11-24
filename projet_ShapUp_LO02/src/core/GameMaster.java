@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class GameMaster {
+//methods
 	public GameMaster()
 	{
 		System.out.println("Combien de joueur humain ?");
@@ -16,14 +17,11 @@ public class GameMaster {
 		instantiatePlayers();
 	}
 	
-    public List<Player> players = new ArrayList<Player> ();
-    public Deck deck;
-    public Grid grid;
-    
-	private int nPlayerH;
-	private int nPlayerCPU;
-	private int numberOfMatch;
+	//setter
 	
+	//getter
+	
+	//job specific
 	public void play()
 	{
 		for(int matchNumber=0;matchNumber<numberOfMatch;matchNumber++)//match loop
@@ -43,14 +41,12 @@ public class GameMaster {
 				System.out.println("\n");
 				this.grid.display();
 				
-				
 				if(he2.hasNext()==false) he2 = players.iterator();
 			}
 			
 			for(Player he3 : players) he3.gameEnds();//end
 		}
 	}
-	
     private void instantiatePlayers()
     {
     	for(int i=1;i<=nPlayerH;i++)
@@ -74,5 +70,17 @@ public class GameMaster {
 		grid = new Grid(width, height);
 		deck = new Deck(width*height+players.size());
     }
+	
+    
+//attributes
+    //private
+	private int nPlayerH;
+	private int nPlayerCPU;
+	private int numberOfMatch;
+	
+    //public
+    public List<Player> players = new ArrayList<Player> ();
+    public Deck deck;
+    public Grid grid;
 
 }
