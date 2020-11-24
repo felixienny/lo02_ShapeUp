@@ -141,7 +141,7 @@ public class Grid implements Cloneable {
 		}
 		return clonedGrid;
 	}
-	public int calculateScore(Card victoryCard){
+	public int calculateScore(Card victoryCard){//TODO à refaire
 		int currentScore = 0;
 		int shapeCombo,hollowCombo,colorCombo;		
 
@@ -166,7 +166,7 @@ public class Grid implements Cloneable {
 					shapeCombo=0;
 				}
 				else shapeCombo=0;
-
+				
 				if (currentCard.getHollow() == victoryCard.getHollow() && currentCard.getHollow() == lastCard.getHollow()) hollowCombo++;
 				else if (currentCard.getHollow() == victoryCard.getHollow()) {
 					if (hollowCombo>=3) currentScore+=hollowCombo;
