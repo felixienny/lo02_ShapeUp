@@ -1,6 +1,6 @@
 package core;
 
-public class PlayerCPU extends Player {
+class PlayerCPU extends Player {
 	public PlayerCPU(String name) {super(name);}
 	
 	public void askMove(Card pickedCard) {calculateBestMoveAndDo(pickedCard);}
@@ -19,13 +19,10 @@ public class PlayerCPU extends Player {
 			{
 				if(this.playingGridAdress.isFreeToPlaceACardOn(i, j))
 				{
-					Grid newPossibility=(Grid)this.playingGridAdress.clone();//clone
+					Grid newPossibility=this.playingGridAdress.clone();//clone
 					
 					newPossibility.setTile(i, j, pickedCard);//pose carte
-					int scoreOfNewPossibility=newPossibility.calculateScore(this.victoryCard.clone());//c score
-					
-					//System.out.println("-->"+scoreOfNewPossibility);
-					//newPossibility.display();
+					int scoreOfNewPossibility=newPossibility.calculateScore(this.victoryCard.clone());//calc score
 					
 					if(scoreOfBestPossibility<scoreOfNewPossibility)
 					{
@@ -39,7 +36,6 @@ public class PlayerCPU extends Player {
 		}
 		
 		this.playingGridAdress.setTile(xOfBestPossibility, yOfBestPossibility, pickedCard);
-		this.score=scoreOfBestPossibility;
+		this.currentScore=scoreOfBestPossibility;
 	}
-	
 }

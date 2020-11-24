@@ -4,16 +4,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Deck {
+class Deck {
 	public List<Card> cards = new ArrayList<Card> ();
     
     public Deck (float nbcartes) {
     	int nbloops;
     	if (nbcartes % 18 != 0) { 
     		if (nbcartes % 18 < 9) { nbloops = Math.round(nbcartes/18) + 1; }
-    		else { nbloops = Math.round(nbcartes/18); }
+    		else
+    		{
+    			nbloops = Math.round(nbcartes/18);
+    		}
     	}
-    	else { nbloops = Math.round(nbcartes/18); }
+    	else
+    	{
+    		nbloops = Math.round(nbcartes/18);
+    	}
 
     	for (int i=1; i<=nbloops; i++) {
     		for (Color color : Color.values()) { 

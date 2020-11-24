@@ -1,7 +1,7 @@
 package core;
 import java.lang.Cloneable;
 
-public class Tile implements Cloneable{
+class Tile implements Cloneable{
 	public Tile()
 	{
 		canContainACard=true;

@@ -1,18 +1,41 @@
 package core;
 
+import java.util.ArrayList;
+
 public abstract class Player {
-	public Player(String name)
-	{
-		this.name=name;
-	}
+//methods
+	public Player(String name) {this.name=name;}
 	
-	protected Grid playingGridAdress;
-	protected String name;
-	protected int score;
-	protected Card victoryCard;
+	//setter
 	
+	
+	//getter
 	public String getName() {return name;};
+	public int getCurrentScore() {return currentScore;}
+	
+	
+	//job specific
 	public abstract void askMove(Card pickedCard);
-	public void setPlayingGridAdress(Grid newPlayingGridAdress) {this.playingGridAdress=newPlayingGridAdress;}
-	public int getScore() {return score;}
+	public void gameStarts(Grid newPlayingGridAdress, Card newVictoryCard)
+	{
+		this.playingGridAdress=newPlayingGridAdress;
+		this.victoryCard=newVictoryCard;
+	}
+	public void gameEnds()
+	{
+		scores.add(this.currentScore);
+		currentScore=0;
+		playingGridAdress=null;
+	}
+
+//attributes
+	//private
+	private final String name;
+	private ArrayList<Integer> scores = new ArrayList<Integer>();
+	
+	//protected
+	protected int currentScore;
+	protected Grid playingGridAdress;
+	protected Card victoryCard;
+
 }
