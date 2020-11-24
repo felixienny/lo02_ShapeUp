@@ -154,32 +154,34 @@ public class Grid implements Cloneable {
 			for(int x=1;x<this.height;x++){   
 				Card currentCard = this.gridTiles[x][y];
 				
-				if (currentCard == null) {
+				if (currentCard == null || lastCard == null) {
 					shapeCombo=0;
 					hollowCombo=0;
 					colorCombo=0;
+					continue;
 				}
+				else {
+					if (currentCard.getShape() == victoryCard.getShape() && currentCard.getShape() == lastCard.getShape()) shapeCombo++;
+					else if (currentCard.getShape() == victoryCard.getShape()) {
+						if (shapeCombo>=2) currentScore+=(shapeCombo-1);
+						shapeCombo=1;
+					}
+					else shapeCombo=0;
 
-				if (currentCard.getShape() == victoryCard.getShape() && currentCard.getShape() == lastCard.getShape()) shapeCombo++;
-				else if (currentCard.getShape() == victoryCard.getShape()) {
-					if (shapeCombo>=2) currentScore+=(shapeCombo-1);
-					shapeCombo=0;
-				}
-				else shapeCombo=0;
-				
-				if (currentCard.getHollow() == victoryCard.getHollow() && currentCard.getHollow() == lastCard.getHollow()) hollowCombo++;
-				else if (currentCard.getHollow() == victoryCard.getHollow()) {
-					if (hollowCombo>=3) currentScore+=hollowCombo;
-					hollowCombo=0;
-				}
-				else hollowCombo=0;
+					if (currentCard.getHollow() == victoryCard.getHollow() && currentCard.getHollow() == lastCard.getHollow()) hollowCombo++;
+					else if (currentCard.getHollow() == victoryCard.getHollow()) {
+						if (hollowCombo>=3) currentScore+=hollowCombo;
+						hollowCombo=1;
+					}
+					else hollowCombo=0;
 
-				if (currentCard.getColor() == victoryCard.getColor() && currentCard.getColor() == lastCard.getColor()) colorCombo++;
-				else if (currentCard.getColor() == victoryCard.getColor()) {
-					if (colorCombo>=3) currentScore+=(colorCombo+1);
-					colorCombo=0;
+					if (currentCard.getColor() == victoryCard.getColor() && currentCard.getColor() == lastCard.getColor()) colorCombo++;
+					else if (currentCard.getColor() == victoryCard.getColor()) {
+						if (colorCombo>=3) currentScore+=(colorCombo+1);
+						colorCombo=1;
+					}
+					else colorCombo=0;
 				}
-				else colorCombo=0;
 
 				lastCard = currentCard;
 			}
@@ -194,33 +196,35 @@ public class Grid implements Cloneable {
 			for(int y=1;y<this.width;y++){   
 				Card currentCard = this.gridTiles[x][y];
 				
-				if (currentCard == null) {
+				if (currentCard == null || lastCard == null) {
 					shapeCombo=0;
 					hollowCombo=0;
 					colorCombo=0;
+					continue;
 				}
+				else {
+					if (currentCard.getShape() == victoryCard.getShape() && currentCard.getShape() == lastCard.getShape()) shapeCombo++;
+					else if (currentCard.getShape() == victoryCard.getShape()) {
+						if (shapeCombo>=2) currentScore+=(shapeCombo-1);
+						shapeCombo=1;
+					}
+					else shapeCombo=0;
 
-				if (currentCard.getShape() == victoryCard.getShape() && currentCard.getShape() == lastCard.getShape()) shapeCombo++;
-				else if (currentCard.getShape() == victoryCard.getShape()) {
-					if (shapeCombo>=2) currentScore+=(shapeCombo-1);
-					shapeCombo=0;
+					if (currentCard.getHollow() == victoryCard.getHollow() && currentCard.getHollow() == lastCard.getHollow()) hollowCombo++;
+					else if (currentCard.getHollow() == victoryCard.getHollow()) {
+						if (hollowCombo>=3) currentScore+=hollowCombo;
+						hollowCombo=1;
+					}
+					else hollowCombo=0;
+
+					if (currentCard.getColor() == victoryCard.getColor() && currentCard.getColor() == lastCard.getColor()) colorCombo++;
+					else if (currentCard.getColor() == victoryCard.getColor()) {
+						if (colorCombo>=3) currentScore+=(colorCombo+1);
+						colorCombo=1;
+					}
+					else colorCombo=0;
 				}
-				else shapeCombo=0;
-
-				if (currentCard.getHollow() == victoryCard.getHollow() && currentCard.getHollow() == lastCard.getHollow()) hollowCombo++;
-				else if (currentCard.getHollow() == victoryCard.getHollow()) {
-					if (hollowCombo>=3) currentScore+=hollowCombo;
-					hollowCombo=0;
-				}
-				else hollowCombo=0;
-
-				if (currentCard.getColor() == victoryCard.getColor() && currentCard.getColor() == lastCard.getColor()) colorCombo++;
-				else if (currentCard.getColor() == victoryCard.getColor()) {
-					if (colorCombo>=3) currentScore+=(colorCombo+1);
-					colorCombo=0;
-				}
-				else colorCombo=0;
-
+				
 				lastCard = currentCard;
 			}
 		}
