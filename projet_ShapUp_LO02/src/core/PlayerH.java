@@ -2,7 +2,8 @@ package core;
 
 class PlayerH extends Player {
 	public PlayerH(String name) {super(name);}
-	
+//methods
+	//job specific
 	public void askMove(Card pickedCard) {
 		this.playingGridAdress.display();
 		System.out.print("\ncarte piochée :");

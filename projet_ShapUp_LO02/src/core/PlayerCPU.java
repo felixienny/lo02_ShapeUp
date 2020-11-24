@@ -2,7 +2,8 @@ package core;
 
 class PlayerCPU extends Player {
 	public PlayerCPU(String name) {super(name);}
-	
+//methods
+	//job specific
 	public void askMove(Card pickedCard) {calculateBestMoveAndDo(pickedCard);}
 	private void calculateBestMoveAndDo(Card pickedCard)
 	{
