@@ -27,6 +27,7 @@ class Deck {
         		}
 			}
     	}
+    	Collections.shuffle(this.cards, new Random(System.currentTimeMillis()));
     }
 //methods
 	//setter
@@ -35,9 +36,8 @@ class Deck {
 	public Card pickNextCard() {return cards.remove(0);}
 	
 	//job specific
-	public void shuffle() {Collections.shuffle(this.cards, new Random(System.currentTimeMillis()));}
 	
 //attributes
 	//public
-	public List<Card> cards = new ArrayList<Card> ();
+	private List<Card> cards = new ArrayList<Card> ();
 }
