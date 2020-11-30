@@ -5,7 +5,7 @@ class PlayerH extends Player {
 //methods
 	//job specific
 	public void askMove(Card pickedCard) {
-		this.playingGridAdress.display();
+		System.out.println(this.playingGridAdress.toString());
 		System.out.print("\ncarte piochée :");
 		pickedCard.display();
 		System.out.println();
@@ -20,7 +20,7 @@ class PlayerH extends Player {
 			if(choice1done)
 			{
 				do {
-					this.playingGridAdress.display();
+					System.out.println(this.playingGridAdress.toString());
 					System.out.println("Que veux-tu faire :");
 					System.out.println("2 - Déplacer une carte déjà sur le jeu");
 					System.out.println("3 - Finir mon tour");
@@ -52,7 +52,7 @@ class PlayerH extends Player {
 					}
 					x = Integer.valueOf(choicePlace.split(",")[0]);
 					y = Integer.valueOf(choicePlace.split(",")[1]);
-				} while (!this.playingGridAdress.isPlayable(x, y));
+				} while (!this.playingGridAdress.cardCanBePlacedHere(x, y));
 				
 				this.playingGridAdress.setTile(x, y, pickedCard);
 				choice1done=true;
@@ -60,7 +60,7 @@ class PlayerH extends Player {
 			
 			if(choice==2 && !choice2done)
 			{
-				this.playingGridAdress.display();
+				System.out.println(this.playingGridAdress.toString());
 				int xSrc;
 				int ySrc;
 				int xDest;
@@ -78,7 +78,7 @@ class PlayerH extends Player {
 					ySrc = Integer.valueOf(choiceMove.split(":")[0].split(",")[1]);
 					xDest = Integer.valueOf(choiceMove.split(":")[1].split(",")[0]);
 					yDest = Integer.valueOf(choiceMove.split(":")[1].split(",")[1]);
-				} while(!this.playingGridAdress.isPlayable(xDest, yDest));
+				} while(!this.playingGridAdress.cardCanBePlacedHere(xDest, yDest));//TODO appel fonc à changer
 				this.playingGridAdress.moveTile(xSrc, ySrc, xDest, yDest);
 				choice2done=true;
 			}
