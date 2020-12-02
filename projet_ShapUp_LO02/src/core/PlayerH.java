@@ -52,7 +52,7 @@ class PlayerH extends Player {
 					}
 					x = Integer.valueOf(choicePlace.split(",")[0]);
 					y = Integer.valueOf(choicePlace.split(",")[1]);
-				} while (!this.playingGridAdress.cardCanBePlacedHere(x, y));
+				} while (!this.playingGridAdress.testSettingTile(x, y));
 				
 				this.playingGridAdress.setTile(x, y, pickedCard);
 				choice1done=true;
@@ -78,11 +78,12 @@ class PlayerH extends Player {
 					ySrc = Integer.valueOf(choiceMove.split(":")[0].split(",")[1]);
 					xDest = Integer.valueOf(choiceMove.split(":")[1].split(",")[0]);
 					yDest = Integer.valueOf(choiceMove.split(":")[1].split(",")[1]);
-				} while(!this.playingGridAdress.cardCanBePlacedHere(xDest, yDest));//TODO appel fonc à changer
+				} while(!this.playingGridAdress.testSettingTile(xDest, yDest));//TODO appel fonc à changer
 				this.playingGridAdress.moveTile(xSrc, ySrc, xDest, yDest);
 				choice2done=true;
 			}
 			
 		}while(!(choice1done && turnFinished));
+		this.currentScore=this.playingGridAdress.calculateScore(victoryCard);
 	}
 }

@@ -18,7 +18,7 @@ class PlayerCPU extends Player {
 		{
 			for(int j=0;j<height;j++)
 			{
-				if(this.playingGridAdress.cardCanBePlacedHere(i, j))
+				if(this.playingGridAdress.testSettingTile(i, j))
 				{
 					Grid newPossibility=this.playingGridAdress.clone();//clone
 					
