@@ -6,15 +6,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Grid implements Cloneable, Iterable<Card> {
+public class Grid implements Cloneable, Iterable<Grid.Tile> {
 
-	public Iterator<Card> iterator() {
+	public Iterator<Grid.Tile> iterator() {
 		return new GridIterator(this);
 	}
-	public Iterator<Card> columnIterator(int column) {
+	public Iterator<Grid.Tile> columnIterator(int column) {
 		return new GridIterator(this, true, false, column);
 	}
-	public Iterator<Card> rowIterator(int row) {
+	public Iterator<Grid.Tile> rowIterator(int row) {
 		return new GridIterator(this, false, true, row);
 	}
 
@@ -24,77 +24,45 @@ public class Grid implements Cloneable, Iterable<Card> {
 	 */
 	public static void main(String[] args) {
 		String[] gridDeadTiles = {"0,0","1,1","2,2","3,3","4,4","6,6","7,7","5,5"};
-		Grid g = new Grid(8,8);
-		Deck d = new Deck(36);
-		// Grid g = new Grid(11,11,gridDeadTiles);
+		// Grid g = new Grid(8,8);
+		Deck d = new Deck(400);
+		Grid g = new Grid(11,11,gridDeadTiles);
 		// Grid g = new Grid(11,11,"CIRCLE");
 		// Grid g = new Grid(4,8,"TRIANGLE"); 
-		// Grid g = new Grid(12,15,"WRAP"); 
+		// Grid g = new Grid(6,8,"WRAP"); 
 
-		g.setTile(0, 0, d.pickNextCard());
-		g.setTile(0, 1, d.pickNextCard());
-		g.setTile(0, 2, d.pickNextCard());
-		g.setTile(0, 3, d.pickNextCard());
-		g.setTile(0, 4, d.pickNextCard());
-		g.setTile(0, 5, d.pickNextCard());
-		g.setTile(0, 6, d.pickNextCard());
-		g.setTile(0, 7, d.pickNextCard());
-		
-		g.setTile(1, 1, d.pickNextCard());
-		g.setTile(1, 2, d.pickNextCard());
-		g.setTile(1, 3, d.pickNextCard());
-		g.setTile(1, 4, d.pickNextCard());
-		g.setTile(1, 5, d.pickNextCard());
-		g.setTile(1, 6, d.pickNextCard());
-		g.setTile(1, 7, d.pickNextCard());
-		
-		g.setTile(2, 1, d.pickNextCard());
-		g.setTile(2, 2, d.pickNextCard());
-		g.setTile(2, 3, d.pickNextCard());
-		g.setTile(2, 4, d.pickNextCard());
-		g.setTile(2, 5, d.pickNextCard());
-		g.setTile(2, 6, d.pickNextCard());
-		g.setTile(2, 7, d.pickNextCard());
-		
-		g.setTile(3, 1, d.pickNextCard());
-		g.setTile(3, 2, d.pickNextCard());
-		g.setTile(3, 3, d.pickNextCard());
-		g.setTile(3, 4, d.pickNextCard());
-		g.setTile(3, 5, d.pickNextCard());
-		g.setTile(3, 6, d.pickNextCard());
-		g.setTile(3, 7, d.pickNextCard());
-		
-		g.setTile(4, 1, d.pickNextCard());
-		g.setTile(4, 2, d.pickNextCard());
-		g.setTile(4, 3, d.pickNextCard());
-		g.setTile(4, 4, d.pickNextCard());
-		g.setTile(4, 5, d.pickNextCard());
-		g.setTile(4, 6, d.pickNextCard());
-		g.setTile(4, 7, d.pickNextCard());
-		
 		g.display();
+		
 
-		System.out.println("\nit over row");
-		Iterator<Card> itr = g.rowIterator(1);
-		while (itr.hasNext()){
-			System.out.println(itr.next());
-		}
 
-		System.out.println("\nit over col");
-		Iterator<Card> itc = g.columnIterator(1);
-		while (itc.hasNext()){
-			System.out.println(itc.next());
-		}
+		// System.out.println("\nit over row");
+		// Iterator<Tile> itr = g.rowIterator(1);
+		// while (itr.hasNext()){
+		// 	System.out.println(itr.next().card);
+		// }
 
-		System.out.println("\nit over all");
-		Iterator<Card> ita = g.iterator();
-		while (ita.hasNext()){
-			System.out.println(ita.next());
-		}
+		// System.out.println("\nit over col");
+		// Iterator<Tile> itc = g.columnIterator(1);
+		// while (itc.hasNext()){
+		// 	System.out.println(itc.next().card);
+		// }
+
+		// System.out.println("\nit over all");
+		// Iterator<Tile> ita = g.iterator();
+		// while (ita.hasNext()){
+		// 	System.out.println(ita.next().card);
+		// }
+
+		g.display();
+		System.out.println(g.getNumberOfDeadTiles());
+		System.out.println(g.getNumberOfPlacedCards());
+		System.out.println(g.isFull());
+
+
 
 	}
 
-	private class Tile {
+	public class Tile implements Cloneable {
         private Card card;
         private boolean alive;
         public Tile(Card card, boolean alive) {
@@ -105,6 +73,9 @@ public class Grid implements Cloneable, Iterable<Card> {
 			Card cardToRemove = this.card.clone();
 			this.card = null;
 			return cardToRemove; 
+		}
+		public Tile clone(){
+			return new Tile(this.card.clone(), this.alive);
 		}
     }
 
@@ -271,27 +242,30 @@ public class Grid implements Cloneable, Iterable<Card> {
 		if (this.checkBounds(x, y) && this.containsACard(x, y)) return this.gridTiles.get(x).get(y).card;
 		return null;
 	}
+
+	public Tile getTile(int x, int y) {
+		if (this.checkBounds(x, y)) return this.gridTiles.get(x).get(y);
+		return null;
+	}
 	
 	/** 
 	 * @return int
 	 */
 	public int getNumberOfPlacedCards(){
-		int numberOfCards=0;
-		for(int x=0;x<this.gridTiles.size(); x++){
-			for(int y=0;y<this.gridTiles.get(x).size();y++){
-				if(this.containsACard(x,y)) { numberOfCards++; }
-			}
-		}	
-		return numberOfCards;
+		int numberOfPlacedCards=0;
+		Iterator<Tile> iterator = this.iterator();
+		while (iterator.hasNext()){
+			if(iterator.next().card != null) numberOfPlacedCards++;
+		}
+		return numberOfPlacedCards;
 	}
 
 	public int getNumberOfDeadTiles(){
 		int numberOfDeadTiles=0;
-		for(int x=0;x<this.gridTiles.size(); x++){
-			for(int y=0;y<this.gridTiles.get(x).size();y++){
-				if(this.gridTiles.get(x).get(y).alive == false) { numberOfDeadTiles++; }
-			}
-		}	
+		Iterator<Tile> iterator = this.iterator();
+		while (iterator.hasNext()){
+			if(!iterator.next().alive) numberOfDeadTiles++;
+		}
 		return numberOfDeadTiles;
 	}
 
@@ -358,41 +332,14 @@ public class Grid implements Cloneable, Iterable<Card> {
 	 * @return boolean
 	 */
 	public boolean isFull(){
-		if (this.getHeight() != this.height) return false;
-		for(int x=0;x<this.gridTiles.size();x++) {
-			if (this.gridTiles.get(x).size() != this.width)
-				return false;
-			for(int y=0;y<this.gridTiles.get(x).size();y++) {
-				if (this.shiftable) {
-					if(this.gridTiles.get(x).get(y).card == null) 
-						return false;
-				}
-				else {
-					if(this.isAlive(x, y) && this.gridTiles.get(x).get(y).card == null) 
-						return false;
-				}
-			}
-		}
-		return true;
+		return ((this.height)*(this.width) == this.getNumberOfPlacedCards()+this.getNumberOfDeadTiles());
 	}
 	
 	/** 
 	 * @return boolean
 	 */
 	public boolean isEmpty(){
-		if (this.shiftable) {
-			this.checkForDeallocating();
-			if(this.gridTiles.size() == 0) return true;
-			else return false;
-		}
-		else {
-			for(int x=0;x<this.height;x++) {
-				for(int y=0;y<this.width;y++) {
-					if(this.isAlive(x,y) && this.containsACard(x,y)) return false;
-				}
-			}
-			return true;
-		}
+		return (this.getNumberOfPlacedCards() == 0);
 	}
 	
 	/** 
