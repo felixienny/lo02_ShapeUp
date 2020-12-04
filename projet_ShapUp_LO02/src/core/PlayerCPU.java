@@ -1,3 +1,4 @@
+/*
 package core;
 
 class PlayerCPU extends Player {
@@ -18,7 +19,7 @@ class PlayerCPU extends Player {
 		{
 			for(int j=0;j<height;j++)
 			{
-				if(this.playingGridAdress.isPlayable(i, j))
+				if(this.playingGridAdress.testSettingTile(i, j))
 				{
 					Grid newPossibility=this.playingGridAdress.clone();//clone
 					
@@ -40,3 +41,4 @@ class PlayerCPU extends Player {
 		this.currentScore=scoreOfBestPossibility;
 	}
 }
+*/
