@@ -1,12 +1,14 @@
 package core;
 
+import java.util.ArrayList;
+
 class StrategyCPU extends Strategy {//decision tree
 	
 	public void computeBestMove(Card VictoryCard, Card cardToPlace)//classic
 	{
 		computeBestSequence(cardToPlace, VictoryCard);
 	}
-	public void computeBestMove(Card[] playerCards)//advanced
+	public void computeBestMove(ArrayList<Card> playerCards)//advanced
 	{
 		int bestScore=0;
 		int bestI=-1;
@@ -14,13 +16,13 @@ class StrategyCPU extends Strategy {//decision tree
 		
 		int currentScore;
 		
-		for(int i=0;i<playerCards.length;i++)//card to place
+		for(int i=0;i<playerCards.size()-1;i++)//card to place
 		{
-			for(int j=0;j<playerCards.length;j++)//VCard
+			for(int j=0;j<playerCards.size()-1;j++)//VCard
 			{
 				if(i != j)
 				{
-					currentScore = computeBestSequence(playerCards[i], playerCards[j]);
+					currentScore = computeBestSequence(playerCards.get(i), playerCards.get(j));
 					if(currentScore>bestScore)
 					{
 						bestI=i;
@@ -32,7 +34,7 @@ class StrategyCPU extends Strategy {//decision tree
 		
 		if(bestI == -1 || bestJ == -1) throw new RuntimeException("Pas de BestMove trouvé");
 		
-		int result=computeBestSequence(playerCards[bestI], playerCards[bestJ]);
+		int result=computeBestSequence(playerCards.get(bestI), playerCards.get(bestJ));
 		if(result==0)
 		{
 			this.moveFirst=false;
@@ -58,7 +60,8 @@ class StrategyCPU extends Strategy {//decision tree
 //possibility computers
 	private int computeBestSequence(Card cardToPlace, Card VCard)//split engagement sequence
 	{
-		int[] bestSequence = new int[3];
+		int[] bestSequence = new int[4];
+		ArrayList<StringBuffer> answers = new ArrayList<StringBuffer>();
 		/**	  moveFirst moveAtAll
 		 * 0 : false false
 		 * 1 : false true
@@ -66,17 +69,19 @@ class StrategyCPU extends Strategy {//decision tree
 		 * 3 : true true
 		 */
 		
-		bestSequence[0]=computeSequencesPossibilities(cardToPlace,VCard,false,false);
-		bestSequence[1]=computeSequencesPossibilities(cardToPlace,VCard,false,true);
-		bestSequence[2]=computeSequencesPossibilities(cardToPlace,VCard,true,false);
-		bestSequence[3]=computeSequencesPossibilities(cardToPlace,VCard,true,true);
+		bestSequence[0]=computeSequencesPossibilities(cardToPlace,VCard,false,false, answers, 0);
+		bestSequence[1]=computeSequencesPossibilities(cardToPlace,VCard,false,true, answers, 1);
+		bestSequence[2]=computeSequencesPossibilities(cardToPlace,VCard,true,false, answers, 2);
+		bestSequence[3]=computeSequencesPossibilities(cardToPlace,VCard,true,true, answers, 3);
 		
 		int result=findIndexMaxValue(bestSequence);
-		
+		this.whereToWhereMove=answers.get(result);
+		this.WhereToSetCard=answers.get(result+1);
+
 		return result;
 	}
 	
-	private int computeSequencesPossibilities(Card cardToPlace, Card VCard, boolean moveFirst, boolean moveAtAll)
+	private int computeSequencesPossibilities(Card cardToPlace, Card VCard, boolean moveFirst, boolean moveAtAll, ArrayList<StringBuffer> answers, int index)
 	{
 		StringBuffer answerBestPlacement = new StringBuffer();
 		StringBuffer answerBestMove = new StringBuffer();
@@ -84,8 +89,8 @@ class StrategyCPU extends Strategy {//decision tree
 		
 		if(moveFirst)
 		{
-			this.doBestCardMove(computer, VCard);
-			this.doBestCardSet(computer, cardToPlace, VCard);
+			answers.add(this.doBestCardMove(computer, VCard));
+			answers.add(this.doBestCardSet(computer, cardToPlace, VCard));
 		}
 		
 		

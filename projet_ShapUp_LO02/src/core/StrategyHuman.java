@@ -1,5 +1,7 @@
 package core;
 
+import java.util.ArrayList;
+
 class StrategyHuman extends Strategy {
 
 	public void computeBestMove(Card[] victoryCards)//advanced
@@ -16,6 +18,12 @@ class StrategyHuman extends Strategy {
 	
 	public void setGrid(Grid actualGrid)
 	{
+		
+	}
+
+	@Override
+	public void computeBestMove(ArrayList<Card> victoryCards) {
+		// TODO Auto-generated method stub
 		
 	}
 }

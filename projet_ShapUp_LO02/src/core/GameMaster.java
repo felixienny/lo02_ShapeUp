@@ -27,25 +27,55 @@ public class GameMaster {
 		for(int matchNumber=0;matchNumber<numberOfMatch;matchNumber++)//match loop
 		{
 			instantiatePlayArea();
-			for(Player he : players) he.gameStarts(this.grid, this.deck.pickNextCard());//setup
+			this.startGame();
 		
 			Iterator<Player> he2 = players.iterator();
 			while(!this.grid.isFull())//game loop
 			{
-				Card tempPickedCard = this.deck.pickNextCard();
-				Player currentPlayer = he2.next();
-				
-				ShapUp.scanner.nextLine();//wait between turns ?
-				System.out.println(currentPlayer.getName()+"\n");
-				for(Player she : players) System.out.print(she.getCurrentScore()+" ");
-				System.out.println("\n");
-				
-				currentPlayer.askMove(tempPickedCard);
+				this.playOneTurn(he2);
 				
 				if(he2.hasNext()==false) he2 = players.iterator();
 			}
 			
 			for(Player he3 : players) he3.gameEnds();//end
+		}
+	}
+	private void playOneTurn(Iterator<Player> he)
+	{
+		Player currentPlayer = he.next();
+		
+		Card tempPickedCard = this.deck.pickNextCard();
+		if(this.grid.isAdvancedGame())
+		{
+			currentPlayer.askMove();			
+			currentPlayer.giveCard(tempPickedCard);
+		}
+		else
+		{
+			currentPlayer.giveCard(tempPickedCard);
+			currentPlayer.askMove();			
+		}
+
+	}
+	private void startGame()
+	{
+		if(this.grid.isAdvancedGame())
+		{
+			for(Player he : players)
+			{
+				he.gameStarts(this.grid);
+				he.giveCard(this.deck.pickNextCard());
+				he.giveCard(this.deck.pickNextCard());
+				he.giveCard(this.deck.pickNextCard());
+			}
+		}
+		else
+		{
+			for(Player he : players)
+			{
+				he.gameStarts(this.grid);
+				he.giveCard(this.deck.pickNextCard());				
+			}
 		}
 	}
     private void instantiatePlayers()
@@ -57,9 +87,7 @@ public class GameMaster {
     		players.add(new Player(playerName, "Human"));
     	}
     	
-    	for(int i=1;i<=nPlayerCPU;i++)
-    		players.add(new Player(String.valueOf(i), "Bot"));
-    	
+    	for(int i=1;i<=nPlayerCPU;i++) players.add(new Player(String.valueOf(i), "Bot"));    	
     }
     private void instantiatePlayArea()
     {
