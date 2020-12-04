@@ -1,5 +1,5 @@
 package core;
 
 public interface Visitor {
-	public void visit(Card cardHere);
+    public void visit(Tile currentTile);
 }

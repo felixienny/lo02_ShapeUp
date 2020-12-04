@@ -11,45 +11,65 @@ class ScoreCounter implements Visitor{
 	int colorCombo;
 	int hollowCombo;
 	
-	public ScoreCounter(Card winningCard)
-	{
-		this.vCardShape=winningCard.getShape();
-		this.vCardColor=winningCard.getColor();
-		this.vCardHollow=winningCard.getHollow();
-		
+	public ScoreCounter(Card victoryCard) {
+		this.vCardShape=victoryCard.getShape();
+		this.vCardColor=victoryCard.getColor();
+        this.vCardHollow=victoryCard.getHollow();
+
 		this.shapeCombo=0;
 		this.colorCombo=0;
 		this.hollowCombo=0;
 	}
 	
-	public void visit(Card cardHere)
-	{
-		if(cardHere!=null && cardHere.getShape()!=vCardShape) shapeCombo++;
-		{
-			if(shapeCombo>=2) score+=shapeCombo-1;
-			
-			colorCombo=0;
-		}
-		
-		if(cardHere!=null && cardHere.getColor()==vCardColor) colorCombo++;
-		else
-		{
-			if(colorCombo>=3) score+=colorCombo+1;
-			
-			colorCombo=0;
-		}
-
-		if(cardHere!=null && cardHere.getHollow()==vCardHollow) hollowCombo++;
-		else
-		{
-			if(hollowCombo>=3) score+=hollowCombo;
-			
-			hollowCombo=0;
-		}
-	}
 	
-	public int kill()
-	{
-		return score>0 ? score : 0;
-	}
+    /** 
+     * @param currentTile
+     */
+    public void visit(Tile currentTile) {
+
+        if(currentTile!=null && currentTile.getCard()!=null) {
+            Card currentCard = currentTile.getCard();
+
+            if (currentCard.getColor() == vCardColor) colorCombo++;
+            else {
+                if(colorCombo>=3) score+=(colorCombo+1); 
+                colorCombo=0;
+            }
+
+            if (currentCard.getShape() == vCardShape) shapeCombo++;
+            else {
+                if(shapeCombo>=2) score+=(shapeCombo-1); 
+                shapeCombo=0;
+            }
+            
+            if (currentCard.getHollow() == vCardHollow) hollowCombo++;
+            else {
+                if(hollowCombo>=3) score+=hollowCombo; 
+                hollowCombo=0;
+            }
+        }
+        else {
+            colorCombo=0;
+            shapeCombo=0;
+            hollowCombo=0;
+        }
+    }
+    
+    
+    /** 
+     * @return int
+     */
+    public int getScore() { 
+        if(colorCombo>=3) score+=(colorCombo+1); 
+        if(shapeCombo>=2) score+=(shapeCombo-1); 
+        if(hollowCombo>=3) score+=hollowCombo; 
+        return score; 
+    }
+
+    public void reset() {
+        this.score=0;
+        this.colorCombo=0;
+        this.shapeCombo=0;
+        this.hollowCombo=0;
+    }
 }
