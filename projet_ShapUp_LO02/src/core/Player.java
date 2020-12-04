@@ -38,30 +38,31 @@ public class Player {
 		}
 		else
 		{
-			this.strategyType.computeBestMove(playerHand.get(1), playerHand.get(0));
+			this.strategyType.computeBestMove(playerHand.get(0), playerHand.remove(1));
 		}
-		
-		if(this.strategyType.getMoveFirst())
-        {
-            this.playingGridAdress.moveTile(this.strategyType.getWhereToWhereMove());
-            if(isAdvancedGame) this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(this.strategyType.getbestVCardToUse()));
-            else this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(1));
-        }
-        else
-        {
-			if(isAdvancedGame) this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(this.strategyType.getbestVCardToUse()));
-			else this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(1));
-			if(this.strategyType.getMoveAtAll()) this.playingGridAdress.moveTile(this.strategyType.getWhereToWhereMove());
-        }
+
+		// if(this.strategyType.getMoveFirst())
+		// {
+		// 	this.playingGridAdress.moveTile(this.strategyType.getWhereToWhereMove());
+		// 	if(isAdvancedGame) this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(this.strategyType.getbestVCardToUse()));
+		// 	else this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(1));
+		// }
+		// else
+		// {
+		// 	if(isAdvancedGame) this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(this.strategyType.getbestVCardToUse()));
+		// 	else this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(1));
+			
+		// 	if(this.strategyType.getMoveAtAll()) this.playingGridAdress.moveTile(this.strategyType.getWhereToWhereMove());
+		// }
 	}
 	
 	public void giveCard(Card pickedCard)
 	{
 		this.playerHand.add(pickedCard);
-		if(isAdvancedGame && playerHand.size() > 4) throw new RuntimeException("Player has too many cards : Classic");
+		if(isAdvancedGame && playerHand.size() > 3) throw new RuntimeException("Player has too many cards : Classic");
 		if(!isAdvancedGame && playerHand.size() > 2) throw new RuntimeException("Player has too many cards : Advanced");
 	}
-	public void gameStarts(Grid newPlayingGridAdress, Card newVictoryCard)
+	public void gameStarts(Grid newPlayingGridAdress)
 	{
 		this.playingGridAdress=newPlayingGridAdress;
 		this.strategyType.setGrid(this.playingGridAdress);

@@ -124,10 +124,6 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		// }
 
 		System.out.println(g.calculateScore(new Card(Color.RED,Shape.CIRCLE,true)));
-
-
-
-
 	}
 
 	public Grid(int height, int width){
@@ -352,6 +348,8 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		if (this.shiftable){
 			if (!checkBounds(x, y)){
 				boolean result = false;
+				if (x==-1 && y==-1) return false;
+
 				if (x>=0 && x<=this.getHeight() && this.getHeight()<=this.height) result = true;
 				else if (x==-1 && this.getHeight()<this.height) result = true;
 				else result = false;
@@ -544,7 +542,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @return boolean
 	 */
 	public boolean testSettingTile(String coordinates) {
-		if (coordinates.matches("^[0-9],[0-9]$")) {
+		if (coordinates.matches("^(-1|[0-9]),(-1|[0-9])$")) {
 			int x = Integer.valueOf(coordinates.split(",")[0]);
 			int y = Integer.valueOf(coordinates.split(",")[1]);
 			return testSettingTile(x,y);
@@ -559,7 +557,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @return boolean
 	 */
 	public boolean setTile(String coordinates, Card card) {
-		if (coordinates.matches("^[0-9],[0-9]$")) {
+		if (coordinates.matches("^(-1|[0-9]),(-1|[0-9])$")) {
 			int x = Integer.valueOf(coordinates.split(",")[0]);
 			int y = Integer.valueOf(coordinates.split(",")[1]);
 			return this.setTile(x, y, card);
@@ -611,7 +609,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @return boolean
 	 */
 	public boolean testMovingTile(String coordinates) {
-		if (coordinates.matches("^[0-9],[0-9]:[0-9],[0-9]$")) {
+		if (coordinates.matches("^[0-9],[0-9]:(-1|[0-9]),(-1|[0-9])$")) {
 			int xSrc = Integer.valueOf(coordinates.split(":")[0].split(",")[0]);
 			int ySrc = Integer.valueOf(coordinates.split(":")[0].split(",")[1]);
 			int xDest = Integer.valueOf(coordinates.split(":")[1].split(",")[0]);
@@ -627,7 +625,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @return boolean
 	 */
 	public boolean moveTile(String coordinates) {
-		if (coordinates.matches("^[0-9],[0-9]:[0-9],[0-9]$")) {
+		if (coordinates.matches("^[0-9],[0-9]:(-1|[0-9]),(-1|[0-9])$")) {
 			int xSrc = Integer.valueOf(coordinates.split(":")[0].split(",")[0]);
 			int ySrc = Integer.valueOf(coordinates.split(":")[0].split(",")[1]);
 			int xDest = Integer.valueOf(coordinates.split(":")[1].split(",")[0]);
