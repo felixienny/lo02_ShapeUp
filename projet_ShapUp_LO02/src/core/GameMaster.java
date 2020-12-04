@@ -35,7 +35,7 @@ public class GameMaster {
 				Card tempPickedCard = this.deck.pickNextCard();
 				Player currentPlayer = he2.next();
 				
-				//ShapUp.scanner.nextLine();//wait between turns ?
+				ShapUp.scanner.nextLine();//wait between turns ?
 				System.out.println(currentPlayer.getName()+"\n");
 				for(Player she : players) System.out.print(she.getCurrentScore()+" ");
 				System.out.println("\n");
@@ -54,11 +54,11 @@ public class GameMaster {
     	{
     		System.out.println("Nom du joueur humain n°"+String.valueOf(i)+" ?");
     		String playerName=ShapUp.scanner.next();
-    		players.add(new PlayerH(playerName));
+    		players.add(new Player(playerName, "Human"));
     	}
     	
     	for(int i=1;i<=nPlayerCPU;i++)
-    		players.add(new PlayerCPU(String.valueOf(i)));
+    		players.add(new Player(String.valueOf(i), "Bot"));
     	
     }
     private void instantiatePlayArea()

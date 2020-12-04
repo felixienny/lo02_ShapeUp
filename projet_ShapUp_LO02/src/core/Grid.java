@@ -616,5 +616,7 @@ public class Grid implements Cloneable, Iterable<Card> {
 	private int width;
 	private int height;
 	private boolean shiftable;
+	private boolean advancedGame;
+	public boolean isAdvancedGame() {return advancedGame;}
 	private ArrayList<ArrayList<Tile>> gridTiles;
 }

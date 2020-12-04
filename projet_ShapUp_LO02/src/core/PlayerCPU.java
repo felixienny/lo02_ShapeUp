@@ -1,3 +1,4 @@
+/*
 package core;
 
 class PlayerCPU extends Player {
@@ -40,3 +41,4 @@ class PlayerCPU extends Player {
 		this.currentScore=scoreOfBestPossibility;
 	}
 }
+*/

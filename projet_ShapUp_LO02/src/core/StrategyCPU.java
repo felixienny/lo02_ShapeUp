@@ -1,59 +1,38 @@
 package core;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-public class StrategyCPU implements Strategy {//decision tree
-//Results
-	boolean moveFirst;
-		StringBuffer whereToWhereMove;
-	int bestVCardToUse;
-		StringBuffer WhereToSetCard;
-	boolean moveAtAll;
+class StrategyCPU extends Strategy {//decision tree
 	
-//Results getters
-	public boolean isMoveFirst() {return moveFirst;}
-	public String getWhereToWhereMove() {return whereToWhereMove.toString();}
-	public int getbestVCardToUse() {	return bestVCardToUse;}
-	public String getWhereToSetCard() {return WhereToSetCard.toString();}
-	public boolean isMoveAtAll() {return moveAtAll;}
-
-//Resources
-	Grid actualGrid;
-	
-//main
-	public void computeBestMove(Grid currentGrid, Card[] victoryCards)//split V Card
+	public void computeBestMove(Card VictoryCard, Card cardToPlace)//classic
 	{
-		int[] bestVCard = new int[victoryCards.length];
+		computeBestSequence(cardToPlace, VictoryCard);
+	}
+	public void computeBestMove(Card[] playerCards)//advanced
+	{
+		int bestScore=0;
+		int bestI=-1;
+		int bestJ=-1;
 		
-		for(int i=0;i<bestVCard.length;i++)
+		int currentScore;
+		
+		for(int i=0;i<playerCards.length;i++)//card to place
 		{
-			bestVCard[i]=computeBestSequence(victoryCards[i]);
+			for(int j=0;j<playerCards.length;j++)//VCard
+			{
+				if(i != j)
+				{
+					currentScore = computeBestSequence(playerCards[i], playerCards[j]);
+					if(currentScore>bestScore)
+					{
+						bestI=i;
+						bestJ=j;
+					}
+				}
+			}
 		}
 		
-		//find max value
+		if(bestI == -1 || bestJ == -1) throw new RuntimeException("Pas de BestMove trouvé");
 		
-		this.bestVCardToUse=findIndexMaxValue(bestVCard);
-		computeBestSequence(victoryCards[bestVCardToUse]);
-	}
-	
-//possibility computers
-	private int computeBestSequence(Card chosenVCard)//split engagement sequence
-	{
-		int[] bestSequence = new int[3];
-		/**	  moveFirst moveAtAll
-		 * 0 : false false
-		 * 1 : false true
-		 * 2 : true false
-		 * 3 : true true
-		 */
-		
-		bestSequence[0]=computeSequencesPossibilities(chosenVCard,false,false);
-		bestSequence[1]=computeSequencesPossibilities(chosenVCard,false,true);
-		bestSequence[2]=computeSequencesPossibilities(chosenVCard,true,false);
-		bestSequence[3]=computeSequencesPossibilities(chosenVCard,true,true);
-		
-		int result=findIndexMaxValue(bestSequence);
-	
+		int result=computeBestSequence(playerCards[bestI], playerCards[bestJ]);
 		if(result==0)
 		{
 			this.moveFirst=false;
@@ -74,43 +53,46 @@ public class StrategyCPU implements Strategy {//decision tree
 			this.moveFirst=true;
 			this.moveAtAll=true;
 		}
+	}
+	
+//possibility computers
+	private int computeBestSequence(Card cardToPlace, Card VCard)//split engagement sequence
+	{
+		int[] bestSequence = new int[3];
+		/**	  moveFirst moveAtAll
+		 * 0 : false false
+		 * 1 : false true
+		 * 2 : true false
+		 * 3 : true true
+		 */
+		
+		bestSequence[0]=computeSequencesPossibilities(cardToPlace,VCard,false,false);
+		bestSequence[1]=computeSequencesPossibilities(cardToPlace,VCard,false,true);
+		bestSequence[2]=computeSequencesPossibilities(cardToPlace,VCard,true,false);
+		bestSequence[3]=computeSequencesPossibilities(cardToPlace,VCard,true,true);
+		
+		int result=findIndexMaxValue(bestSequence);
 		
 		return result;
 	}
 	
-	private int computeSequencesPossibilities(Card chosenVCard, boolean moveFirst, boolean moveAtAll)
+	private int computeSequencesPossibilities(Card cardToPlace, Card VCard, boolean moveFirst, boolean moveAtAll)
 	{
-		//TODO ça
-		int[] bestScore = new int[3];
+		StringBuffer answerBestPlacement = new StringBuffer();
+		StringBuffer answerBestMove = new StringBuffer();
+		Grid computer = this.actualGrid.clone();
 		
 		if(moveFirst)
 		{
-			Grid T=this.actualGrid.clone();
-
-			AtomicInteger TPossBScore = new AtomicInteger();
-			StringBuffer answerT = findBestCardMove(T, chosenVCard, TPossBScore);
-			bestScore[0]=TPossBScore.get();
-			
-			if(moveAtAll)
-			{
-				Grid TT=T.clone();
-				
-				AtomicInteger TTPossBScore = new AtomicInteger();
-				StringBuffer answerTT = findBestCardMove(TT, chosenVCard, TTPossBScore);
-				bestScore[1]=TPossBScore.get();
-			}
-		}
-		else
-		{
-			
+			this.doBestCardMove(computer, VCard);
+			this.doBestCardSet(computer, cardToPlace, VCard);
 		}
 		
-		int bestI=0;
 		
-		return bestScore[bestI];
+		return computer.calculateScore(VCard);
 	}
 	
-	private StringBuffer findBestCardMove(Grid currentGrid, Card chosenCard, AtomicInteger bestScoreReturn)
+	private StringBuffer doBestCardMove(Grid currentGrid, Card VCard)
 	{
 		StringBuffer answer = new StringBuffer();
 		
@@ -136,7 +118,7 @@ public class StrategyCPU implements Strategy {//decision tree
 							{
 								Grid newPoss = currentGrid.clone();
 								newPoss.moveTile(xSrc, ySrc, xDest, yDest);
-								currentScore=newPoss.calculateScore(chosenCard);
+								currentScore=newPoss.calculateScore(VCard);
 								
 								if(currentScore>bestScore)
 								{
@@ -164,11 +146,11 @@ public class StrategyCPU implements Strategy {//decision tree
 			answer.append(',');
 			answer.append(bestYDest);
 		}
-		bestScoreReturn.set(bestScore);
+
 		return answer;
 	}
 	
-	private StringBuffer findBestCardSet(Grid currentGrid, Card cardToPlace, Card chosenCard, AtomicInteger bestScoreReturn)
+	private StringBuffer doBestCardSet(Grid currentGrid, Card cardToPlace, Card VCard)
 	{
 		StringBuffer answer = new StringBuffer();
 
@@ -185,7 +167,7 @@ public class StrategyCPU implements Strategy {//decision tree
 				if(newPoss.testSettingTile(x, y))
 				{
 					newPoss.setTile(x, y, cardToPlace);
-					currentScore=newPoss.calculateScore(chosenCard);
+					currentScore=newPoss.calculateScore(VCard);
 					
 					if(currentScore>bestScore)
 					{
@@ -201,7 +183,7 @@ public class StrategyCPU implements Strategy {//decision tree
 			answer.append(',');
 			answer.append(bestY);			
 		}
-		bestScoreReturn.set(bestScore);
+
 		return answer;
 	}
 	
