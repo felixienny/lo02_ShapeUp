@@ -40,7 +40,8 @@ public class GameMaster {
 				for(Player she : players) System.out.print(she.getCurrentScore()+" ");
 				System.out.println("\n");
 				
-				currentPlayer.askMove(tempPickedCard);
+				currentPlayer.giveCard(tempPickedCard);
+                currentPlayer.askMove();
 				
 				if(he2.hasNext()==false) he2 = players.iterator();
 			}
@@ -52,7 +53,7 @@ public class GameMaster {
     {
     	for(int i=1;i<=nPlayerH;i++)
     	{
-    		System.out.println("Nom du joueur humain n°"+String.valueOf(i)+" ?");
+    		System.out.println("Nom du joueur humain nï¿½"+String.valueOf(i)+" ?");
     		String playerName=ShapUp.scanner.next();
     		players.add(new Player(playerName, "Human"));
     	}

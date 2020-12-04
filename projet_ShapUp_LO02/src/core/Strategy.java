@@ -1,13 +1,15 @@
 package core;
 
+import java.util.ArrayList;
+
 public abstract class Strategy {
-	private boolean moveFirst;
-	private 	StringBuffer whereToWhereMove;
-	private int bestVCardToUse;
-	private 	StringBuffer WhereToSetCard;
-	private boolean moveAtAll;
+	protected boolean moveFirst;
+	protected StringBuffer whereToWhereMove;
+	protected int bestVCardToUse;
+	protected StringBuffer WhereToSetCard;
+	protected boolean moveAtAll;
 	
-	private Grid actualGrid;
+	protected Grid actualGrid;
 	
 	public boolean getMoveFirst() {return moveFirst;}
 	public String getWhereToWhereMove() {return whereToWhereMove.toString();}
@@ -16,8 +18,7 @@ public abstract class Strategy {
 	public boolean getMoveAtAll() {return moveAtAll;}
 	
 	public abstract void computeBestMove(Card VictoryCard, Card cardToPlace);//advanced
-	public abstract void computeBestMove(Card[] victoryCards);//classic
-	public abstract void setGrid(Grid actualGrid);
+	public abstract void computeBestMove(ArrayList<Card> victoryCards);//classic
 	public void setGrid(Grid actualGrid)
 	{
 		this.actualGrid=actualGrid;

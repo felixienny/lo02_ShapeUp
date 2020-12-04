@@ -1,12 +1,14 @@
 package core;
 
+import java.util.ArrayList;
+
 class StrategyCPU extends Strategy {//decision tree
 	
 	public void computeBestMove(Card VictoryCard, Card cardToPlace)//classic
 	{
 		computeBestSequence(cardToPlace, VictoryCard);
 	}
-	public void computeBestMove(Card[] playerCards)//advanced
+	public void computeBestMove(ArrayList<Card> playerCards)//advanced
 	{
 		int bestScore=0;
 		int bestI=-1;
@@ -14,13 +16,13 @@ class StrategyCPU extends Strategy {//decision tree
 		
 		int currentScore;
 		
-		for(int i=0;i<playerCards.length;i++)//card to place
+		for(int i=0;i<playerCards.size();i++)//card to place
 		{
-			for(int j=0;j<playerCards.length;j++)//VCard
+			for(int j=0;j<playerCards.size();j++)//VCard
 			{
 				if(i != j)
 				{
-					currentScore = computeBestSequence(playerCards[i], playerCards[j]);
+					currentScore = computeBestSequence(playerCards.get(i), playerCards.get(j));
 					if(currentScore>bestScore)
 					{
 						bestI=i;
@@ -30,9 +32,9 @@ class StrategyCPU extends Strategy {//decision tree
 			}
 		}
 		
-		if(bestI == -1 || bestJ == -1) throw new RuntimeException("Pas de BestMove trouvé");
+		if(bestI == -1 || bestJ == -1) throw new RuntimeException("Pas de BestMove trouvï¿½");
 		
-		int result=computeBestSequence(playerCards[bestI], playerCards[bestJ]);
+		int result=computeBestSequence(playerCards.get(bestI), playerCards.get(bestJ));
 		if(result==0)
 		{
 			this.moveFirst=false;

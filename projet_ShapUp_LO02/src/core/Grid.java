@@ -42,59 +42,60 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		Deck d = new Deck(40);
 		// Grid g = new Grid(11,11,gridDeadTiles);
 		// Grid g = new Grid(11,11,"CIRCLE");
-		Grid g = new Grid(8,8,"TRIANGLE"); 
+		Grid g = new Grid(11,11,"DIAMOND");
+		// Grid g = new Grid(8,8,"TRIANGLE"); 
 		// Grid g = new Grid(6,8,"WRAP"); 
 
 		g.display();
 		
-		g.setTile(0, 0, d.pickNextCard());
-		g.setTile(0, 1, d.pickNextCard());
-		g.setTile(0, 2, d.pickNextCard());
-		g.setTile(0, 3, d.pickNextCard());
-		g.setTile(0, 4, d.pickNextCard());
-		g.setTile(0, 5, d.pickNextCard());
-		g.setTile(0, 6, d.pickNextCard());
-		g.setTile(0, 7, d.pickNextCard());
-		g.setTile(1, 0, d.pickNextCard());
-		g.setTile(1, 1, d.pickNextCard());
-		g.setTile(1, 2, d.pickNextCard());
-		g.setTile(1, 3, d.pickNextCard());
-		g.setTile(1, 4, d.pickNextCard());
-		g.setTile(1, 5, d.pickNextCard());
-		g.setTile(1, 6, d.pickNextCard());
-		g.setTile(1, 7, d.pickNextCard());
-		g.setTile(2, 0, d.pickNextCard());
-		g.setTile(2, 1, d.pickNextCard());
-		g.setTile(2, 2, d.pickNextCard());
-		g.setTile(2, 3, d.pickNextCard());
-		g.setTile(2, 4, d.pickNextCard());
-		g.setTile(2, 5, d.pickNextCard());
-		g.setTile(2, 6, d.pickNextCard());
-		g.setTile(2, 7, d.pickNextCard());
-		g.setTile(3, 0, d.pickNextCard());
-		g.setTile(3, 1, d.pickNextCard());
-		g.setTile(3, 2, d.pickNextCard());
-		g.setTile(3, 3, d.pickNextCard());
-		g.setTile(3, 4, d.pickNextCard());
-		g.setTile(3, 5, d.pickNextCard());
-		g.setTile(3, 6, d.pickNextCard());
-		g.setTile(3, 7, d.pickNextCard());
-		g.setTile(4, 0, d.pickNextCard());
-		g.setTile(4, 1, d.pickNextCard());
-		g.setTile(4, 2, d.pickNextCard());
-		g.setTile(4, 3, d.pickNextCard());
-		g.setTile(4, 4, d.pickNextCard());
-		g.setTile(4, 5, d.pickNextCard());
-		g.setTile(4, 6, d.pickNextCard());
-		g.setTile(4, 7, d.pickNextCard());
-		g.setTile(5, 0, d.pickNextCard());
-		g.setTile(5, 1, d.pickNextCard());
-		g.setTile(5, 2, d.pickNextCard());
-		g.setTile(5, 3, d.pickNextCard());
-		g.setTile(5, 4, d.pickNextCard());
-		g.setTile(5, 5, d.pickNextCard());
-		g.setTile(5, 6, d.pickNextCard());
-		g.setTile(5, 7, d.pickNextCard());
+		// g.setTile(0, 0, d.pickNextCard());
+		// g.setTile(0, 1, d.pickNextCard());
+		// g.setTile(0, 2, d.pickNextCard());
+		// g.setTile(0, 3, d.pickNextCard());
+		// g.setTile(0, 4, d.pickNextCard());
+		// g.setTile(0, 5, d.pickNextCard());
+		// g.setTile(0, 6, d.pickNextCard());
+		// g.setTile(0, 7, d.pickNextCard());
+		// g.setTile(1, 0, d.pickNextCard());
+		// g.setTile(1, 1, d.pickNextCard());
+		// g.setTile(1, 2, d.pickNextCard());
+		// g.setTile(1, 3, d.pickNextCard());
+		// g.setTile(1, 4, d.pickNextCard());
+		// g.setTile(1, 5, d.pickNextCard());
+		// g.setTile(1, 6, d.pickNextCard());
+		// g.setTile(1, 7, d.pickNextCard());
+		// g.setTile(2, 0, d.pickNextCard());
+		// g.setTile(2, 1, d.pickNextCard());
+		// g.setTile(2, 2, d.pickNextCard());
+		// g.setTile(2, 3, d.pickNextCard());
+		// g.setTile(2, 4, d.pickNextCard());
+		// g.setTile(2, 5, d.pickNextCard());
+		// g.setTile(2, 6, d.pickNextCard());
+		// g.setTile(2, 7, d.pickNextCard());
+		// g.setTile(3, 0, d.pickNextCard());
+		// g.setTile(3, 1, d.pickNextCard());
+		// g.setTile(3, 2, d.pickNextCard());
+		// g.setTile(3, 3, d.pickNextCard());
+		// g.setTile(3, 4, d.pickNextCard());
+		// g.setTile(3, 5, d.pickNextCard());
+		// g.setTile(3, 6, d.pickNextCard());
+		// g.setTile(3, 7, d.pickNextCard());
+		// g.setTile(4, 0, d.pickNextCard());
+		// g.setTile(4, 1, d.pickNextCard());
+		// g.setTile(4, 2, d.pickNextCard());
+		// g.setTile(4, 3, d.pickNextCard());
+		// g.setTile(4, 4, d.pickNextCard());
+		// g.setTile(4, 5, d.pickNextCard());
+		// g.setTile(4, 6, d.pickNextCard());
+		// g.setTile(4, 7, d.pickNextCard());
+		// g.setTile(5, 0, d.pickNextCard());
+		// g.setTile(5, 1, d.pickNextCard());
+		// g.setTile(5, 2, d.pickNextCard());
+		// g.setTile(5, 3, d.pickNextCard());
+		// g.setTile(5, 4, d.pickNextCard());
+		// g.setTile(5, 5, d.pickNextCard());
+		// g.setTile(5, 6, d.pickNextCard());
+		// g.setTile(5, 7, d.pickNextCard());
 
 		g.display();
 
@@ -174,10 +175,34 @@ public class Grid implements Cloneable, Iterable<Tile> {
 			case "CIRCLE":
 				for(int x=0;x<this.height;x++){
 					for(int y=0;y<this.width;y++){
-						if((Math.pow((x+1-(this.height/2)),2)+Math.pow((y-(this.width/2)),2)) >= Math.min(this.height,this.width)+1) {
+						if((Math.pow((x-((this.height)/2)),2)+Math.pow((y-((this.width)/2)),2)) >= Math.min(this.height,this.width)+1) {
 							this.gridTiles.get(x).get(y).setAlive(false);;
 						}
 					}
+				}
+				break;
+			case "DIAMOND":
+				int ca = this.width/2;
+				int cb = this.width/2;
+				for(int x=0;x<this.height/2;x++){
+					for (int y=0; y<ca; y++) {
+						this.gridTiles.get(x).get(y).setAlive(false);
+					}
+					for (int y=this.width-1; y>cb; y--) {
+						this.gridTiles.get(x).get(y).setAlive(false);
+					}
+					ca--;
+					cb++;
+				}
+				for(int x=this.height/2;x<this.height;x++){
+					for (int y=0; y<ca; y++) {
+						this.gridTiles.get(x).get(y).setAlive(false);
+					}
+					for (int y=this.width-1; y>cb; y--) {
+						this.gridTiles.get(x).get(y).setAlive(false);
+					}
+					ca++;
+					cb--;
 				}
 				break;
 			case "TRIANGLE":
@@ -209,7 +234,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	}
 
 //methods
-	
+	public boolean isAdvancedGame() {return this.isAdvancedGame; }
 	/** 
 	 * @return int
 	 */
@@ -407,7 +432,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @param y
 	 * @return boolean
 	 */
-	public boolean isPlayable(int x, int y){
+	private boolean isPlayable(int x, int y){
 		if(this.shiftable) {
 			if (this.isEmpty()) return true;
 			for(int i=x-1 ; i<=x+1 ; i++){
@@ -827,5 +852,6 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	private int width;
 	private int height;
 	private boolean shiftable;
+	private boolean isAdvancedGame;
 	private ArrayList<ArrayList<Tile>> gridTiles;
 }
