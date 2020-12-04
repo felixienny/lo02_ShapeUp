@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public abstract class Strategy {
 	protected boolean moveFirst;
-	protected 	StringBuffer whereToWhereMove;
+	protected 	StringBuffer whereToWhereMove = new StringBuffer();
 	protected int bestVCardToUse;
-	protected 	StringBuffer WhereToSetCard;
+	protected 	StringBuffer WhereToSetCard = new StringBuffer();
 	protected boolean moveAtAll;
 	protected Grid actualGrid;
 	

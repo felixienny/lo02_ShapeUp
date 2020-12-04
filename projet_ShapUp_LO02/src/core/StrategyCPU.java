@@ -83,8 +83,6 @@ class StrategyCPU extends Strategy {//decision tree
 	
 	private int computeSequencesPossibilities(Card cardToPlace, Card VCard, boolean moveFirst, boolean moveAtAll, ArrayList<StringBuffer> answers, int index)
 	{
-		StringBuffer answerBestPlacement = new StringBuffer();
-		StringBuffer answerBestMove = new StringBuffer();
 		Grid computer = this.actualGrid.clone();
 		
 		if(moveFirst)

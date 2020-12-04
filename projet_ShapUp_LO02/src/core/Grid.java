@@ -368,6 +368,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 */
 	public boolean testSettingTile(int x, int y) {
 		boolean result=false;
+		if(this.isEmpty()) return true;
 		if (this.shiftable) {
 			if (!this.checkBounds(x,y)){
 				boolean shift=false;
@@ -444,7 +445,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @return boolean
 	 */
 	public boolean testSettingTile(String coordinates) {
-		if (coordinates.matches("^[0-9],[0-9]$")) {
+		if (coordinates.matches("^(-1|[0-9]),(-1|[0-9])$")) {
 			int x = Integer.valueOf(coordinates.split(",")[0]);
 			int y = Integer.valueOf(coordinates.split(",")[1]);
 			return testSettingTile(x,y);
@@ -459,7 +460,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @return boolean
 	 */
 	public boolean setTile(String coordinates, Card card) {
-		if (coordinates.matches("^[0-9],[0-9]$")) {
+		if (coordinates.matches("^(-1|[0-9]),(-1|[0-9])$")) {
 			int x = Integer.valueOf(coordinates.split(",")[0]);
 			int y = Integer.valueOf(coordinates.split(",")[1]);
 			return this.setTile(x, y, card);
@@ -511,7 +512,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @return boolean
 	 */
 	public boolean testMovingTile(String coordinates) {
-		if (coordinates.matches("^[0-9],[0-9]:[0-9],[0-9]$")) {
+		if (coordinates.matches("^(-1|[0-9]),(-1|[0-9]):(-1|[0-9]),(-1|[0-9])$")) {
 			int xSrc = Integer.valueOf(coordinates.split(":")[0].split(",")[0]);
 			int ySrc = Integer.valueOf(coordinates.split(":")[0].split(",")[1]);
 			int xDest = Integer.valueOf(coordinates.split(":")[1].split(",")[0]);
@@ -527,7 +528,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @return boolean
 	 */
 	public boolean moveTile(String coordinates) {
-		if (coordinates.matches("^[0-9],[0-9]:[0-9],[0-9]$")) {
+		if (coordinates.matches("^(-1|[0-9]),(-1|[0-9]):(-1|[0-9]),(-1|[0-9])$")) {
 			int xSrc = Integer.valueOf(coordinates.split(":")[0].split(",")[0]);
 			int ySrc = Integer.valueOf(coordinates.split(":")[0].split(",")[1]);
 			int xDest = Integer.valueOf(coordinates.split(":")[1].split(",")[0]);
@@ -547,12 +548,14 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	private boolean checkForDiconnectingGraphByRemovingCard(int xRemove, int yRemove) {
 		int xStart=0, yStart=0;
 		AtomicInteger countedCards = new AtomicInteger(0);
+		/*
 		if((xStart==xRemove && yStart==yRemove) || !this.containsACard(xStart,yStart)){
 			do {
 				yStart++;
 				while (!this.containsACard(xStart,yStart) && xStart<this.gridTiles.size()) xStart++;
 			} while (!this.containsACard(xStart,yStart) && yStart<this.gridTiles.get(xStart).size());
 		}
+		*/
 		checkForDiconnectingGraphByRemovingCard(xStart, yStart, xRemove, yRemove, countedCards, new HashSet<Tile>());
 		return (countedCards.get() == this.getNumberOfPlacedCards()-1);
 	}
@@ -754,5 +757,4 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	private boolean shiftable;
 	private boolean isAdvancedGame;
 	private ArrayList<ArrayList<Tile>> gridTiles;
-	public boolean isAdvancedGame() {return isAdvancedGame;}
 }

@@ -33,7 +33,8 @@ public class GameMaster {
 			while(!this.grid.isFull())//game loop
 			{
 				this.playOneTurn(he2);
-				
+				this.grid.display();
+				for(Player she : players) System.out.print(she.getCurrentScore()+" ");
 				if(he2.hasNext()==false) he2 = players.iterator();
 			}
 			
@@ -44,15 +45,14 @@ public class GameMaster {
 	{
 		Player currentPlayer = he.next();
 		
-		Card tempPickedCard = this.deck.pickNextCard();
 		if(this.grid.isAdvancedGame())
 		{
 			currentPlayer.askMove();			
-			currentPlayer.giveCard(tempPickedCard);
+			currentPlayer.giveCard(this.deck.pickNextCard());
 		}
 		else
 		{
-			currentPlayer.giveCard(tempPickedCard);
+			currentPlayer.giveCard(this.deck.pickNextCard());
 			currentPlayer.askMove();			
 		}
 
@@ -82,7 +82,7 @@ public class GameMaster {
     {
     	for(int i=1;i<=nPlayerH;i++)
     	{
-    		System.out.println("Nom du joueur humain nï¿½"+String.valueOf(i)+" ?");
+    		System.out.println("Nom du joueur humain n°"+String.valueOf(i)+" ?");
     		String playerName=ShapUp.scanner.next();
     		players.add(new Player(playerName, "Human"));
     	}

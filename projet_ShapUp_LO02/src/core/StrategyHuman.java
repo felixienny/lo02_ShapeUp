@@ -23,7 +23,7 @@ class StrategyHuman extends Strategy {
 				do {
 					this.actualGrid.display();
 					System.out.println("Que veux-tu faire :");
-					System.out.println("2 - D√©placer une carte d√©j√† sur le jeu");
+					System.out.println("2 - DÈplacer une carte dÈj‡† sur le jeu");
 					System.out.println("3 - Finir mon tour");
 					choice = ShapUp.scanner.nextInt();
 				}while(!(choice==2 || choice==3));
@@ -34,7 +34,7 @@ class StrategyHuman extends Strategy {
 				do {
 					System.out.println("Que veux-tu faire :");
 					System.out.println("1 - Jouer une de tes cartes victoires");
-					System.out.println("2 - D√©placer une carte d√©j√† sur le jeu");
+					System.out.println("2 - DÈplacer une carte dÈj‡† sur le jeu");
 					choice = ShapUp.scanner.nextInt();
 				}while(!(choice==1 || choice==2));
 			
@@ -44,7 +44,7 @@ class StrategyHuman extends Strategy {
 					System.out.println("Quelle carte veux tu jouer et o√π ?");
 					String choicePlace = ShapUp.scanner.next().trim();
 					this.WhereToSetCard.delete(0, this.WhereToSetCard.length());
-					while (!choicePlace.matches("^[0-2]:[0-9],[0-9]$")) {
+					while (!choicePlace.matches("^[0-2]:(-1|[0-9]),(-1|[0-9])$")) {
 						System.out.println("Mauvaise saisie, indique le num√©ro de ta carte (0-2) et l'endroit auquel tu veux la poser.");
 						System.out.println("Exemple : 0-2:1,7");
 						choicePlace = ShapUp.scanner.next().trim();
@@ -60,10 +60,10 @@ class StrategyHuman extends Strategy {
 			{
 				System.out.println(this.actualGrid.toString());
 				do {
-					System.out.println("\nQuelle carte veux-tu d√©placer et o√π ?");
+					System.out.println("\nQuelle carte veux-tu dÈplacer et o˘ ?");
 					String choiceMove = ShapUp.scanner.next().trim();
 					this.whereToWhereMove.delete(0, this.whereToWhereMove.length());
-					while (!choiceMove.matches("^[0-9],[0-9]:[0-9],[0-9]$")) {
+					while (!choiceMove.matches("^(-1|[0-9]):(-1|[0-9])$")) {
 						System.out.println("Mauvaise saisie, quel carte veux-tu d√©placer ?");
 						System.out.println("Exemple : 1,3:(vers)6,7");
 						choiceMove = ShapUp.scanner.next().trim();
@@ -96,7 +96,7 @@ class StrategyHuman extends Strategy {
 				do {
 					this.actualGrid.display();
 					System.out.println("Que veux-tu faire :");
-					System.out.println("2 - D√©placer une carte d√©j√† sur le jeu");
+					System.out.println("2 - DÈplacer une carte dÈj‡† sur le jeu");
 					System.out.println("3 - Finir mon tour");
 					choice = ShapUp.scanner.nextInt();
 				}while(!(choice==2 || choice==3));
@@ -106,8 +106,8 @@ class StrategyHuman extends Strategy {
 			if(!choice1done)
 				do {
 					System.out.println("Que veux-tu faire :");
-					System.out.println("1 - Jouer la carte que tu as pioch√©");
-					System.out.println("2 - D√©placer une carte d√©j√† sur le jeu");
+					System.out.println("1 - Jouer la carte que tu as piochÈ");
+					System.out.println("2 - DÈplacer une carte dÈj‡† sur le jeu");
 					choice = ShapUp.scanner.nextInt();
 				}while(!(choice==1 || choice==2));
 			
@@ -117,8 +117,8 @@ class StrategyHuman extends Strategy {
 					System.out.println("O√π veux-tu la jouer ?");
 					String choicePlace = ShapUp.scanner.next().trim();
 					this.WhereToSetCard.delete(0, this.WhereToSetCard.length());
-					while (!choicePlace.matches("^[0-9],[0-9]$")) {
-						System.out.println("Mauvaise saisie, o√π veux-tu la jouer ?");
+					while (!choicePlace.matches("^(-1|[0-9]),(-1|[0-9])$")) {
+						System.out.println("Mauvaise saisie, o˘ veux-tu la jouer ?");
 						System.out.println("Exemple : 1,7");
 						choicePlace = ShapUp.scanner.next().trim();
 					}
@@ -135,9 +135,9 @@ class StrategyHuman extends Strategy {
 					System.out.println("\nQuelle carte veux-tu d√©placer ?");
 					String choiceMove = ShapUp.scanner.next().trim();
 					this.whereToWhereMove.delete(0, this.whereToWhereMove.length());
-					while (!choiceMove.matches("^[0-9],[0-9]:[0-9],[0-9]$")) {
-						System.out.println("Mauvaise saisie, quel carte veux-tu d√©placer ?");
-						System.out.println("Exemple : 1,3:(vers)6,7");
+					while (!choiceMove.matches("^(-1|[0-9]),(-1|[0-9]):(-1|[0-9]),(-1|[0-9])$")) {
+						System.out.println("Mauvaise saisie, quel carte veux-tu dÈplacer ?");
+						System.out.println("Exemple : -1,3:(vers)6,7");
 						choiceMove = ShapUp.scanner.next().trim();
 					}
 					this.whereToWhereMove.append(choiceMove);
@@ -146,11 +146,7 @@ class StrategyHuman extends Strategy {
 				choice2done=true;
 			}
 		}while(!(choice1done && turnFinished));
-	}
-
-	@Override
-	public void computeBestMove(ArrayList<Card> victoryCards) {
-		// TODO Auto-generated method stub
 		
 	}
+	
 }
