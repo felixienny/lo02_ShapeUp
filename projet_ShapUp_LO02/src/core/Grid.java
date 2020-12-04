@@ -77,10 +77,34 @@ public class Grid implements Cloneable, Iterable<Tile> {
 			case "CIRCLE":
 				for(int x=0;x<this.height;x++){
 					for(int y=0;y<this.width;y++){
-						if((Math.pow((x+1-(this.height/2)),2)+Math.pow((y-(this.width/2)),2)) >= Math.min(this.height,this.width)+1) {
+						if((Math.pow((x-((this.height)/2)),2)+Math.pow((y-((this.width)/2)),2)) >= Math.min(this.height,this.width)+1) {
 							this.gridTiles.get(x).get(y).setAlive(false);;
 						}
 					}
+				}
+				break;
+			case "DIAMOND":
+				int ca = this.width/2;
+				int cb = this.width/2;
+				for(int x=0;x<this.height/2;x++){
+					for (int y=0; y<ca; y++) {
+						this.gridTiles.get(x).get(y).setAlive(false);
+					}
+					for (int y=this.width-1; y>cb; y--) {
+						this.gridTiles.get(x).get(y).setAlive(false);
+					}
+					ca--;
+					cb++;
+				}
+				for(int x=this.height/2;x<this.height;x++){
+					for (int y=0; y<ca; y++) {
+						this.gridTiles.get(x).get(y).setAlive(false);
+					}
+					for (int y=this.width-1; y>cb; y--) {
+						this.gridTiles.get(x).get(y).setAlive(false);
+					}
+					ca++;
+					cb--;
 				}
 				break;
 			case "TRIANGLE":
@@ -112,7 +136,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	}
 
 //methods
-	
+	public boolean isAdvancedGame() {return this.isAdvancedGame; }
 	/** 
 	 * @return int
 	 */
@@ -308,7 +332,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @param y
 	 * @return boolean
 	 */
-	public boolean isPlayable(int x, int y){
+	private boolean isPlayable(int x, int y){
 		if(this.shiftable) {
 			if (this.isEmpty()) return true;
 			for(int i=x-1 ; i<=x+1 ; i++){

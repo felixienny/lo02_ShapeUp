@@ -82,7 +82,7 @@ public class GameMaster {
     {
     	for(int i=1;i<=nPlayerH;i++)
     	{
-    		System.out.println("Nom du joueur humain n°"+String.valueOf(i)+" ?");
+    		System.out.println("Nom du joueur humain nï¿½"+String.valueOf(i)+" ?");
     		String playerName=ShapUp.scanner.next();
     		players.add(new Player(playerName, "Human"));
     	}

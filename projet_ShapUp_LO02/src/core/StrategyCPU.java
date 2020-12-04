@@ -32,7 +32,7 @@ class StrategyCPU extends Strategy {//decision tree
 			}
 		}
 		
-		if(bestI == -1 || bestJ == -1) throw new RuntimeException("Pas de BestMove trouvé");
+		if(bestI == -1 || bestJ == -1) throw new RuntimeException("Pas de BestMove trouvï¿½");
 		
 		int result=computeBestSequence(playerCards.get(bestI), playerCards.get(bestJ));
 		if(result==0)
