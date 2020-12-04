@@ -2,7 +2,7 @@ package core;
 
 import java.util.Iterator;
 
-public class GridIterator implements Iterator<Grid.Tile> {
+public class GridIterator implements Iterator<Tile> {
 	boolean iterateOverEverything;
     boolean iterateOverX;
     boolean iterateOverY;
@@ -18,12 +18,6 @@ public class GridIterator implements Iterator<Grid.Tile> {
 		this.x=0;
         this.y=0;
 		this.gridAdress=gridAdress;
-        // if (!this.gridAdress.containsACard(x,y)) {
-        //     do {
-        //         y++;
-        //     } while (!this.gridAdress.containsACard(x,y) || y>=this.gridAdress.getWidthOnSpecificLine(x));
-        //     if (!this.gridAdress.containsACard(x,y)) y=0;
-        // }
     }
     
 	public GridIterator(Grid gridAdress, boolean iterateOverX, boolean iterateOverY, int line) {
@@ -35,22 +29,10 @@ public class GridIterator implements Iterator<Grid.Tile> {
 		if(iterateOverX) {
 			this.x=0;
             this.y=line;
-            // if (!this.gridAdress.containsACard(x,y)) {
-            //     do {
-            //         x++;
-            //     } while (!this.gridAdress.containsACard(x,y) || x>=this.gridAdress.getHeight());
-            //     if (!this.gridAdress.containsACard(x,y)) x=0;
-            // }
 		}
 		else if (iterateOverY) {
 			this.x=line;
             this.y=0;
-            // if (!this.gridAdress.containsACard(x,y)) {
-            //     do {
-            //         y++;
-            //     } while (!this.gridAdress.containsACard(x,y) || y>=this.gridAdress.getWidthOnSpecificLine(x));
-            //     if (!this.gridAdress.containsACard(x,y)) y=0;
-            // }
 		}
 	}
 	
@@ -76,9 +58,8 @@ public class GridIterator implements Iterator<Grid.Tile> {
 
 		return answer;
 	}
-	public Grid.Tile next() {
-		//! getCard private
-        Grid.Tile nextTile = this.gridAdress.getTile(x, y);
+	public Tile next() {
+        Tile nextTile = this.gridAdress.getTile(x, y);
 		
 		if(iterateOverEverything) {
 			if (y+1>=this.gridAdress.getWidthOnSpecificLine(x)) {
