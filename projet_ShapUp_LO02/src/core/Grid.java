@@ -8,12 +8,26 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Grid implements Cloneable, Iterable<Tile> {
 
+	
+	/** 
+	 * @return Iterator<Tile>
+	 */
 	public Iterator<Tile> iterator() {
 		return new GridIterator(this);
 	}
+	
+	/** 
+	 * @param column
+	 * @return Iterator<Tile>
+	 */
 	public Iterator<Tile> columnIterator(int column) {
 		return new GridIterator(this, true, false, column);
 	}
+	
+	/** 
+	 * @param row
+	 * @return Iterator<Tile>
+	 */
 	public Iterator<Tile> rowIterator(int row) {
 		return new GridIterator(this, false, true, row);
 	}
@@ -24,11 +38,11 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 */
 	public static void main(String[] args) {
 		// String[] gridDeadTiles = {"0,0","1,1","2,2","3,3","4,4","6,6","7,7","5,5"};
-		Grid g = new Grid(4,4);
-		Deck d = new Deck(400);
+		// Grid g = new Grid(6,8);
+		Deck d = new Deck(40);
 		// Grid g = new Grid(11,11,gridDeadTiles);
 		// Grid g = new Grid(11,11,"CIRCLE");
-		// Grid g = new Grid(4,8,"TRIANGLE"); 
+		Grid g = new Grid(8,8,"TRIANGLE"); 
 		// Grid g = new Grid(6,8,"WRAP"); 
 
 		g.display();
@@ -65,8 +79,29 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		g.setTile(3, 5, d.pickNextCard());
 		g.setTile(3, 6, d.pickNextCard());
 		g.setTile(3, 7, d.pickNextCard());
+		g.setTile(4, 0, d.pickNextCard());
+		g.setTile(4, 1, d.pickNextCard());
+		g.setTile(4, 2, d.pickNextCard());
+		g.setTile(4, 3, d.pickNextCard());
+		g.setTile(4, 4, d.pickNextCard());
+		g.setTile(4, 5, d.pickNextCard());
+		g.setTile(4, 6, d.pickNextCard());
+		g.setTile(4, 7, d.pickNextCard());
+		g.setTile(5, 0, d.pickNextCard());
+		g.setTile(5, 1, d.pickNextCard());
+		g.setTile(5, 2, d.pickNextCard());
+		g.setTile(5, 3, d.pickNextCard());
+		g.setTile(5, 4, d.pickNextCard());
+		g.setTile(5, 5, d.pickNextCard());
+		g.setTile(5, 6, d.pickNextCard());
+		g.setTile(5, 7, d.pickNextCard());
 
 		g.display();
+
+
+		g.moveTile("2,7:1,2");
+		g.display();
+
 		// System.out.println("\nit over row");
 		// Iterator<Tile> itr = g.rowIterator(0);
 		// while (itr.hasNext()){
@@ -88,10 +123,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		// }
 
 		System.out.println(g.calculateScore(new Card(Color.RED,Shape.CIRCLE,true)));
-		// g.display();
-		// System.out.println(g.getNumberOfDeadTiles());
-		// System.out.println(g.getNumberOfPlacedCards());
-		// System.out.println(g.isFull());
+
 
 
 
@@ -142,7 +174,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 			case "CIRCLE":
 				for(int x=0;x<this.height;x++){
 					for(int y=0;y<this.width;y++){
-						if((Math.pow((x-(this.height/2)),2)+Math.pow((y-(this.width/2)),2)) >= Math.min(this.height,this.width)+1) {
+						if((Math.pow((x+1-(this.height/2)),2)+Math.pow((y-(this.width/2)),2)) >= Math.min(this.height,this.width)+1) {
 							this.gridTiles.get(x).get(y).setAlive(false);;
 						}
 					}
@@ -157,15 +189,15 @@ public class Grid implements Cloneable, Iterable<Tile> {
 				}
 				break;
 			case "WRAP":
+				int c1 = 0;
+				int c2 = this.width;
 				for(int x=0;x<this.height;x++){
-					for(int y=0;y<=(this.width/2);y++){
-						if(x-y<=0)
-							this.gridTiles.get(x).get(y).setAlive(false);;
+					if (c2<=c1) break;
+					for (int y=c1; y<c2; y++) {
+						this.gridTiles.get(x).get(y).setAlive(false);
 					}
-					for(int y=this.width/2;y<this.width;y++){
-						if(x+y<=this.width-1)
-							this.gridTiles.get(x).get(y).setAlive(false);;
-					}
+					c1++;
+					c2--;
 				}
 				break;
 			default:
@@ -197,12 +229,23 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		return width;
 	}
 
+	
+	/** 
+	 * @param x
+	 * @return int
+	 */
 	public int getWidthOnSpecificLine(int x) {
 		if (x<this.gridTiles.size()) return this.gridTiles.get(x).size();
 		else return 0;
 	}
 	
 
+	
+	/** 
+	 * @param x
+	 * @param y
+	 * @return Tile
+	 */
 	public Tile getTile(int x, int y) {
 		if (this.checkBounds(x, y)) return this.gridTiles.get(x).get(y);
 		return null;
@@ -221,6 +264,10 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		return numberOfPlacedCards;
 	}
 
+	
+	/** 
+	 * @return int
+	 */
 	public int getNumberOfDeadTiles(){
 		int numberOfDeadTiles=0;
 		Iterator<Tile> iterator = this.iterator();
@@ -245,6 +292,12 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	}
 
 	
+	
+	/** 
+	 * @param x
+	 * @param y
+	 * @return boolean
+	 */
 	public boolean isOnEdge(int x, int y) {
 		if (this.checkBounds(x,y)) {
 			if (x==this.gridTiles.size()-1 || y==this.gridTiles.get(x).size()-1) return true;
@@ -460,6 +513,11 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		return false;
 	}
 
+	
+	/** 
+	 * @param coordinates
+	 * @return boolean
+	 */
 	public boolean testSettingTile(String coordinates) {
 		if (coordinates.matches("^[0-9],[0-9]$")) {
 			int x = Integer.valueOf(coordinates.split(",")[0]);
@@ -469,6 +527,12 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		return false;
 	}
 
+	
+	/** 
+	 * @param coordinates
+	 * @param card
+	 * @return boolean
+	 */
 	public boolean setTile(String coordinates, Card card) {
 		if (coordinates.matches("^[0-9],[0-9]$")) {
 			int x = Integer.valueOf(coordinates.split(",")[0]);
@@ -516,6 +580,11 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		return false;
 	}
 
+	
+	/** 
+	 * @param coordinates
+	 * @return boolean
+	 */
 	public boolean testMovingTile(String coordinates) {
 		if (coordinates.matches("^[0-9],[0-9]:[0-9],[0-9]$")) {
 			int xSrc = Integer.valueOf(coordinates.split(":")[0].split(",")[0]);
@@ -527,6 +596,11 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		return false;
 	}
 
+	
+	/** 
+	 * @param coordinates
+	 * @return boolean
+	 */
 	public boolean moveTile(String coordinates) {
 		if (coordinates.matches("^[0-9],[0-9]:[0-9],[0-9]$")) {
 			int xSrc = Integer.valueOf(coordinates.split(":")[0].split(",")[0]);
@@ -729,7 +803,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	public String toString() {
 		StringBuffer gridToString = new StringBuffer();
 		
-		for(int i=0;i<((3*width)+(2*width-1)+2);i++) gridToString.append("_");
+		for(int i=0;i<(5*getWidth()+2);i++) gridToString.append("_");
 		gridToString.append("\n");
 		
 		for (int x=0; x<this.gridTiles.size(); x++) {
@@ -741,8 +815,8 @@ public class Grid implements Cloneable, Iterable<Tile> {
 			}
 			gridToString.append("|\n");
 		}
-		
-		for(int i=0;i<((3*width)+(2*width-1)+2);i++) gridToString.append("_");
+
+		for(int i=0;i<(5*getWidth()+2);i++) gridToString.append("_");
 		
 		return gridToString.toString();
 	}

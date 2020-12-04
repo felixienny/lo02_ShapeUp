@@ -36,6 +36,10 @@ public class GridIterator implements Iterator<Tile> {
 		}
 	}
 	
+	
+	/** 
+	 * @return boolean
+	 */
 	public boolean hasNext() {
 		boolean answer=false;
 		
@@ -58,6 +62,10 @@ public class GridIterator implements Iterator<Tile> {
 
 		return answer;
 	}
+	
+	/** 
+	 * @return Tile
+	 */
 	public Tile next() {
         Tile nextTile = this.gridAdress.getTile(x, y);
 		

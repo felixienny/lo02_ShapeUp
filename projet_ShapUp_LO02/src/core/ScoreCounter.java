@@ -21,7 +21,11 @@ class ScoreCounter implements Visitor{
 		this.hollowCombo=0;
 	}
 	
-	public void visit(Tile currentTile) {
+	
+    /** 
+     * @param currentTile
+     */
+    public void visit(Tile currentTile) {
 
         if(currentTile!=null && currentTile.getCard()!=null) {
             Card currentCard = currentTile.getCard();
@@ -51,6 +55,10 @@ class ScoreCounter implements Visitor{
         }
     }
     
+    
+    /** 
+     * @return int
+     */
     public int getScore() { 
         if(colorCombo>=3) score+=(colorCombo+1); 
         if(shapeCombo>=2) score+=(shapeCombo-1); 
