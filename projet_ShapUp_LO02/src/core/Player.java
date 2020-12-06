@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Player {
 //attributes
@@ -27,49 +28,37 @@ public class Player {
 	
 	//getter
 	public String getName() {return name;};
-	public int getCurrentScore() {return currentScore;}
+	public int getCurrentScore() { return currentScore; }
 	
 	//job specific
-	public void askMove()
-	{
-		if(isAdvancedGame)
-		{
-			this.strategyType.computeBestMove(playerHand);
+	public void askMove() {
+		if(isAdvancedGame) {
+			this.strategyType.makeBestMove(playerHand);
+			this.currentScore = 0;
+			Iterator<Card> VCardIterator = playerHand.iterator();
+			while (VCardIterator.hasNext()) {
+				this.currentScore += this.playingGridAdress.calculateScore(VCardIterator.next());
+			}
 		}
-		else
-		{
-			this.strategyType.computeBestMove(playerHand.get(0), playerHand.remove(1));
+		else {
+			this.strategyType.makeBestMove(playerHand.get(0), playerHand.remove(1));
+			this.currentScore = this.playingGridAdress.calculateScore(playerHand.get(0));
 		}
-
-		// if(this.strategyType.getMoveFirst())
-		// {
-		// 	this.playingGridAdress.moveTile(this.strategyType.getWhereToWhereMove());
-		// 	if(isAdvancedGame) this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(this.strategyType.getbestVCardToUse()));
-		// 	else this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(1));
-		// }
-		// else
-		// {
-		// 	if(isAdvancedGame) this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(this.strategyType.getbestVCardToUse()));
-		// 	else this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(1));
-			
-		// 	if(this.strategyType.getMoveAtAll()) this.playingGridAdress.moveTile(this.strategyType.getWhereToWhereMove());
-		// }
 	}
 	
-	public void giveCard(Card pickedCard)
-	{
+	public void giveCard(Card pickedCard) {
 		this.playerHand.add(pickedCard);
 		if(isAdvancedGame && playerHand.size() > 3) throw new RuntimeException("Player has too many cards : Classic");
 		if(!isAdvancedGame && playerHand.size() > 2) throw new RuntimeException("Player has too many cards : Advanced");
 	}
-	public void gameStarts(Grid newPlayingGridAdress)
-	{
+
+	public void gameStarts(Grid newPlayingGridAdress) {
 		this.playingGridAdress=newPlayingGridAdress;
 		this.strategyType.setGrid(this.playingGridAdress);
 		this.isAdvancedGame=this.playingGridAdress.isAdvancedGame();
 	}
-	public void gameEnds()
-	{
+
+	public void gameEnds() {
 		scores.add(this.currentScore);
 		currentScore=0;
 		
