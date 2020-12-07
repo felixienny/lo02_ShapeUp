@@ -15,13 +15,10 @@ public class GameMaster {
 		
 		instantiatePlayers();
 	}
+
 //methods
-	
-	//setter
-	
-	//getter
-	
 	//job specific
+
 	public void play() {
 		for(int matchNumber=0;matchNumber<numberOfMatch;matchNumber++) {//match loop
 			instantiatePlayArea();
@@ -44,6 +41,7 @@ public class GameMaster {
 			for(Player he3 : players) he3.gameEnds();//end
 		}
 	}
+	
 	private void playOneTurn(Iterator<Player> he) {
 		Player currentPlayer = he.next();
 		System.out.println("\n\n\nC'est au tour de "+currentPlayer.getName()+" !");
@@ -58,6 +56,7 @@ public class GameMaster {
 		}
 
 	}
+	
 	private void startGame() {
 		if(this.grid.isAdvancedGame()) {
 			for(Player he : players) {
@@ -74,7 +73,8 @@ public class GameMaster {
 			}
 		}
 	}
-    private void instantiatePlayers() {
+	
+	private void instantiatePlayers() {
     	for(int i=1;i<=nPlayerH;i++) {
     		System.out.println("Nom du joueur humain n°"+String.valueOf(i)+" ?");
     		String playerName=ShapUp.scanner.next();
@@ -138,7 +138,8 @@ public class GameMaster {
 	
     
 //attributes
-    //private
+	//private
+
 	private int nPlayerH;
 	private int nPlayerCPU;
 	private int numberOfMatch;
