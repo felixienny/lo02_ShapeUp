@@ -2,7 +2,6 @@ package core;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 public class GameMaster {
 	public GameMaster()
 	{
@@ -26,12 +25,18 @@ public class GameMaster {
 		for(int matchNumber=0;matchNumber<numberOfMatch;matchNumber++) {//match loop
 			instantiatePlayArea();
 			this.startGame();
-		
+				int turn=0;
+				long firstTime=System.nanoTime();
 			Iterator<Player> he2 = players.iterator();
 			while(!this.grid.isFull())//game loop
 			{
+				turn++;
+					long startTime=System.nanoTime();
 				this.playOneTurn(he2);
+					long endTime=System.nanoTime();
+				
 				this.grid.display();
+				System.out.println(turn + " : " + (endTime-startTime)/1000000+" ms/ "+(endTime-firstTime)/1000000000+" s");
 				System.out.println("\nREMPLISSAGE DU PLATEAU = "+(this.grid.getNumberOfPlacedCards()*100/(this.grid.getRealHeight()*this.grid.getRealWidth()-this.grid.getNumberOfDeadTiles()))+"%");
 				System.out.println("\nTABLEAU DES SCORES : ");
 
@@ -130,9 +135,7 @@ public class GameMaster {
 			} while (!(choiceDeadTile.matches("^q$")));
 			this.grid = new Grid(width, height, false, isAdvancedGame, deadTiles.toString());
 		}
-
-		if(isAdvancedGame) this.deck = new Deck(height*width+players.size()*3);
-		else this.deck = new Deck(width*height+players.size());
+		this.deck = new Deck();
 
     }
 	

@@ -138,7 +138,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	}
 
 //methods
-	public boolean isAdvancedGame() {return this.isAdvancedGame; }
+	public boolean isAdvancedGame() {return this.isAdvancedGame;}
 
 	public int getRealHeight() {return this.height;}
 	public int getRealWidth() {return this.width;}

@@ -7,14 +7,14 @@ public class Player {
 //attributes
 	//private
 	//common
+	boolean isAdvancedGame;
 	private int currentScore;
-	private ArrayList<Integer> scores = new ArrayList<Integer>();
 	private final String name;
 	private Strategy strategyType;
 	private Grid playingGridAdress;
-	boolean isAdvancedGame;
 	
 	//advanced
+	private ArrayList<Integer> scores = new ArrayList<Integer>();
 	private ArrayList<Card> playerHand = new ArrayList<Card>();
 	
 //methods

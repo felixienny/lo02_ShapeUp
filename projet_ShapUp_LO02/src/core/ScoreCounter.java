@@ -59,7 +59,7 @@ class ScoreCounter implements Visitor{
     /** 
      * @return int
      */
-    public int getScore() { 
+    public int getScore() {
         if(colorCombo>=3) score+=(colorCombo+1); 
         if(shapeCombo>=2) score+=(shapeCombo-1); 
         if(hollowCombo>=3) score+=hollowCombo; 

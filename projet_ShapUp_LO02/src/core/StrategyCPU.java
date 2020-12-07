@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 class StrategyCPU extends Strategy {//decision tree
 
-	public void makeBestMove(ArrayList<Card> victoryCards) {		
+	public void makeBestMove(ArrayList<Card> victoryCards) {
 		int bestScore=-1,bestSolution=-1, bestI=-1, bestJ=-1, jTemp=-1,maxIndex=0,maxValue=-1;
 
 		for(int i=0;i<victoryCards.size();i++) {
@@ -32,7 +32,7 @@ class StrategyCPU extends Strategy {//decision tree
 				bestJ = jTemp;
 			}
 		}
-
+		
 		if (bestSolution == -1) {
 			this.actualGrid.setTile(this.doBestCardSet(this.actualGrid, victoryCards.get(0), victoryCards.get(1)),  victoryCards.remove(0));
 		}
@@ -47,10 +47,11 @@ class StrategyCPU extends Strategy {//decision tree
 			this.actualGrid.moveTile(this.doBestCardMove(this.actualGrid, victoryCards.get(bestJ)));
 			this.actualGrid.setTile(this.doBestCardSet(this.actualGrid, victoryCards.get(bestI), victoryCards.get(bestJ)),  victoryCards.remove(bestI));
 		}
-
+		
 	}
 	
 	public void makeBestMove(Card victoryCard, Card cardToPlace) {
+		
 		if(this.getScoreSet(cardToPlace, victoryCard) >= Math.max(this.getScoreSetFirst(cardToPlace, victoryCard),this.getScoreMoveFirst(cardToPlace, victoryCard))) {
 			this.actualGrid.setTile(this.doBestCardSet(this.actualGrid, cardToPlace, victoryCard), cardToPlace);
 		}
