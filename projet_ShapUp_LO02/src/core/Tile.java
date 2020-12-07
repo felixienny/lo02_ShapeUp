@@ -3,11 +3,11 @@ package core;
 public class Tile implements Cloneable {
     private Card card;
     private boolean alive;
+
     public Tile(Card card, boolean alive) {
         this.card = card;
         this.alive = alive;
     }
-    
     
     /** 
      * @return Card
@@ -48,7 +48,5 @@ public class Tile implements Cloneable {
     /** 
      * @return Tile
      */
-    public Tile clone(){
-        return new Tile(this.card.clone(), this.alive);
-    }
+    public Tile clone(){ return new Tile(this.card.clone(), this.alive); }
 }
