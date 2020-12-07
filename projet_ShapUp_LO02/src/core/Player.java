@@ -38,8 +38,9 @@ public class Player {
 		}
 		else
 		{
-			this.strategyType.computeBestMove(playerHand.get(1), playerHand.get(0));
+			this.strategyType.computeBestMove(playerHand.get(0), playerHand.remove(1));
 		}
+<<<<<<< HEAD
 		
 		if(this.strategyType.getMoveFirst())
 		{
@@ -54,6 +55,22 @@ public class Player {
 			
 			if(this.strategyType.getMoveAtAll()) this.playingGridAdress.moveTile(this.strategyType.getWhereToWhereMove());
 		}
+=======
+
+		// if(this.strategyType.getMoveFirst())
+		// {
+		// 	this.playingGridAdress.moveTile(this.strategyType.getWhereToWhereMove());
+		// 	if(isAdvancedGame) this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(this.strategyType.getbestVCardToUse()));
+		// 	else this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(1));
+		// }
+		// else
+		// {
+		// 	if(isAdvancedGame) this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(this.strategyType.getbestVCardToUse()));
+		// 	else this.playingGridAdress.setTile(this.strategyType.getWhereToSetCard(), this.playerHand.remove(1));
+			
+		// 	if(this.strategyType.getMoveAtAll()) this.playingGridAdress.moveTile(this.strategyType.getWhereToWhereMove());
+		// }
+>>>>>>> felixienny
 	}
 	
 	public void giveCard(Card pickedCard)

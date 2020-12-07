@@ -44,6 +44,10 @@ public class GameMaster {
 	private void playOneTurn(Iterator<Player> he)
 	{
 		Player currentPlayer = he.next();
+<<<<<<< HEAD
+=======
+		System.out.println("\n\n\nC'est au tour de "+currentPlayer.getName()+" !");
+>>>>>>> felixienny
 		
 		if(this.grid.isAdvancedGame())
 		{
@@ -80,14 +84,23 @@ public class GameMaster {
 	}
     private void instantiatePlayers()
     {
+<<<<<<< HEAD
     	for(int i=1;i<=nPlayerH;i++)
     	{
     		System.out.println("Nom du joueur humain n°"+String.valueOf(i)+" ?");
+=======
+    	for(int i=1;i<=nPlayerH;i++) {
+    		System.out.println("Nom du joueur humain nÂ°"+String.valueOf(i)+" ?");
+>>>>>>> felixienny
     		String playerName=ShapUp.scanner.next();
     		players.add(new Player(playerName, "Human"));
     	}
     	
+<<<<<<< HEAD
     	for(int i=1;i<=nPlayerCPU;i++) players.add(new Player(String.valueOf(i), "Bot"));    	
+=======
+    	for(int i=1;i<=nPlayerCPU;i++) players.add(new Player("Bot"+String.valueOf(i), "Bot"));    	
+>>>>>>> felixienny
     }
     private void instantiatePlayArea()
     {

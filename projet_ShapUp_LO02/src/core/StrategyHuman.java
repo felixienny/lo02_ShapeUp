@@ -13,11 +13,12 @@ class StrategyHuman extends Strategy {
 		this.actualGrid.display();
 		
 		boolean choice1done=false;
-		boolean choice2done=false;
 		boolean turnFinished=false;
 		
-		int choice=-1;
+		String choice;
+
 		do {
+<<<<<<< HEAD
 			if(choice1done)
 			{
 				do {
@@ -72,12 +73,39 @@ class StrategyHuman extends Strategy {
 				} while(!this.actualGrid.testMovingTile(this.whereToWhereMove.toString()));
 				
 				choice2done=true;
+=======
+			if (!choice1done) {
+				System.out.println("\t0,1 - Poser une de tes cartes victoires sur le jeu sur le jeu");
 			}
-		}while(!(choice1done && turnFinished));
+			else {
+				this.actualGrid.display();
+				System.out.println("\t1,2:2,1 - Déplacer une carte déjà sur le jeu");
+				System.out.println("\t3 - Finir ton tour");
+			}
+			
+			choice = ShapUp.scanner.next().trim();
+
+			if (choice.matches("^3$")) turnFinished = true;
+
+			else if (choice.matches("^[0-2]:(-1|[0-9]),(-1|[0-9])$")) {
+				if (this.actualGrid.testSettingTile(choice.split(":")[1])) {
+					this.actualGrid.setTile(choice.split(":")[1], victoryCards.get(Integer.valueOf(choice.split(":")[0])));
+					choice1done = true;
+				}
+			}
+
+			else if (choice.matches("^(-1|[0-9]),(-1|[0-9]):(-1|[0-9]),(-1|[0-9])$")) {
+				if (this.actualGrid.moveTile(choice)) {
+					this.actualGrid.moveTile(choice);
+					turnFinished = true;
+				}
+>>>>>>> felixienny
+			}
+
+		} while(!(choice1done && turnFinished));
 	}
 
-	public void computeBestMove(Card victoryCard, Card cardToPlace)//classic
-	{
+	public void computeBestMove(Card victoryCard, Card cardToPlace) {//classic
 		System.out.println("Ta carte victoire est "+victoryCard+".");
 		
 		this.actualGrid.display();
@@ -86,11 +114,12 @@ class StrategyHuman extends Strategy {
 		System.out.println();
 		
 		boolean choice1done=false;
-		boolean choice2done=false;
 		boolean turnFinished=false;
 		
-		int choice=-1;
+		String choice;
+
 		do {
+<<<<<<< HEAD
 			if(choice1done)
 			{
 				do {
@@ -147,6 +176,35 @@ class StrategyHuman extends Strategy {
 			}
 		}while(!(choice1done && turnFinished));
 		
+=======
+			if (!choice1done) {
+				System.out.println("\t0,1 - Poser ta carte sur le jeu");
+			}
+			else {
+				this.actualGrid.display();
+				System.out.println("\t1,2:2,1 - Déplacer une carte déjà sur le jeu");
+				System.out.println("\tq - Finir ton tour");
+			}
+			
+			choice = ShapUp.scanner.next().trim();
+
+			if (choice.matches("^q$") && choice1done) turnFinished = true;
+
+			else if (choice.matches("^(-1|[0-9]),(-1|[0-9])$")) {
+				if (this.actualGrid.testSettingTile(choice)) {
+					this.actualGrid.setTile(choice, cardToPlace);
+					choice1done = true;
+				}
+			}
+
+			else if (choice.matches("^(-1|[0-9]),(-1|[0-9]):(-1|[0-9]),(-1|[0-9])$")) {
+				if (this.actualGrid.moveTile(choice)) {
+					this.actualGrid.moveTile(choice);
+					turnFinished = true;
+				}
+			}
+		} while(!(choice1done && turnFinished));
+>>>>>>> felixienny
 	}
 	
 }

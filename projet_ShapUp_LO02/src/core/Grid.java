@@ -32,6 +32,103 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		return new GridIterator(this, false, true, row);
 	}
 
+<<<<<<< HEAD
+=======
+	
+	/** 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// String[] gridDeadTiles = {"0,0","1,1","2,2","3,3","4,4","6,6","7,7","5,5"};
+		// Grid g = new Grid(6,8);
+		Deck d = new Deck(40);
+		// Grid g = new Grid(11,11,gridDeadTiles);
+		// Grid g = new Grid(11,11,"CIRCLE");
+		Grid g = new Grid(11,11,"DIAMOND");
+		// Grid g = new Grid(8,8,"TRIANGLE"); 
+		// Grid g = new Grid(6,8,"WRAP"); 
+
+		g.display();
+		
+		// g.setTile(0, 0, d.pickNextCard());
+		// g.setTile(0, 1, d.pickNextCard());
+		// g.setTile(0, 2, d.pickNextCard());
+		// g.setTile(0, 3, d.pickNextCard());
+		// g.setTile(0, 4, d.pickNextCard());
+		// g.setTile(0, 5, d.pickNextCard());
+		// g.setTile(0, 6, d.pickNextCard());
+		// g.setTile(0, 7, d.pickNextCard());
+		// g.setTile(1, 0, d.pickNextCard());
+		// g.setTile(1, 1, d.pickNextCard());
+		// g.setTile(1, 2, d.pickNextCard());
+		// g.setTile(1, 3, d.pickNextCard());
+		// g.setTile(1, 4, d.pickNextCard());
+		// g.setTile(1, 5, d.pickNextCard());
+		// g.setTile(1, 6, d.pickNextCard());
+		// g.setTile(1, 7, d.pickNextCard());
+		// g.setTile(2, 0, d.pickNextCard());
+		// g.setTile(2, 1, d.pickNextCard());
+		// g.setTile(2, 2, d.pickNextCard());
+		// g.setTile(2, 3, d.pickNextCard());
+		// g.setTile(2, 4, d.pickNextCard());
+		// g.setTile(2, 5, d.pickNextCard());
+		// g.setTile(2, 6, d.pickNextCard());
+		// g.setTile(2, 7, d.pickNextCard());
+		// g.setTile(3, 0, d.pickNextCard());
+		// g.setTile(3, 1, d.pickNextCard());
+		// g.setTile(3, 2, d.pickNextCard());
+		// g.setTile(3, 3, d.pickNextCard());
+		// g.setTile(3, 4, d.pickNextCard());
+		// g.setTile(3, 5, d.pickNextCard());
+		// g.setTile(3, 6, d.pickNextCard());
+		// g.setTile(3, 7, d.pickNextCard());
+		// g.setTile(4, 0, d.pickNextCard());
+		// g.setTile(4, 1, d.pickNextCard());
+		// g.setTile(4, 2, d.pickNextCard());
+		// g.setTile(4, 3, d.pickNextCard());
+		// g.setTile(4, 4, d.pickNextCard());
+		// g.setTile(4, 5, d.pickNextCard());
+		// g.setTile(4, 6, d.pickNextCard());
+		// g.setTile(4, 7, d.pickNextCard());
+		// g.setTile(5, 0, d.pickNextCard());
+		// g.setTile(5, 1, d.pickNextCard());
+		// g.setTile(5, 2, d.pickNextCard());
+		// g.setTile(5, 3, d.pickNextCard());
+		// g.setTile(5, 4, d.pickNextCard());
+		// g.setTile(5, 5, d.pickNextCard());
+		// g.setTile(5, 6, d.pickNextCard());
+		// g.setTile(5, 7, d.pickNextCard());
+
+		g.display();
+
+
+		g.moveTile("2,7:1,2");
+		g.display();
+
+		// System.out.println("\nit over row");
+		// Iterator<Tile> itr = g.rowIterator(0);
+		// while (itr.hasNext()){
+		// 	System.out.println(itr.next().card);
+		// }
+
+		// System.out.println("\nit over col");
+		// Iterator<Tile> itc = g.columnIterator(1);
+		// while (itc.hasNext()){
+		// 	Tile tile = itc.next();
+		// 	if (tile != null) System.out.println(tile.card);
+		// 	else System.out.println(tile);
+		// }
+
+		// System.out.println("\nit over all");
+		// Iterator<Tile> ita = g.iterator();
+		// while (ita.hasNext()){
+		// 	System.out.println(ita.next().card);
+		// }
+
+		System.out.println(g.calculateScore(new Card(Color.RED,Shape.CIRCLE,true)));
+	}
+
+>>>>>>> felixienny
 	public Grid(int height, int width){
 		this.height=height;
 		this.width=width;
@@ -252,6 +349,8 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		if (this.shiftable){
 			if (!checkBounds(x, y)){
 				boolean result = false;
+				if (x==-1 && y==-1) return false;
+
 				if (x>=0 && x<=this.getHeight() && this.getHeight()<=this.height) result = true;
 				else if (x==-1 && this.getHeight()<this.height) result = true;
 				else result = false;
@@ -512,7 +611,11 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @return boolean
 	 */
 	public boolean testMovingTile(String coordinates) {
+<<<<<<< HEAD
 		if (coordinates.matches("^(-1|[0-9]),(-1|[0-9]):(-1|[0-9]),(-1|[0-9])$")) {
+=======
+		if (coordinates.matches("^[0-9],[0-9]:(-1|[0-9]),(-1|[0-9])$")) {
+>>>>>>> felixienny
 			int xSrc = Integer.valueOf(coordinates.split(":")[0].split(",")[0]);
 			int ySrc = Integer.valueOf(coordinates.split(":")[0].split(",")[1]);
 			int xDest = Integer.valueOf(coordinates.split(":")[1].split(",")[0]);
@@ -528,7 +631,11 @@ public class Grid implements Cloneable, Iterable<Tile> {
 	 * @return boolean
 	 */
 	public boolean moveTile(String coordinates) {
+<<<<<<< HEAD
 		if (coordinates.matches("^(-1|[0-9]),(-1|[0-9]):(-1|[0-9]),(-1|[0-9])$")) {
+=======
+		if (coordinates.matches("^[0-9],[0-9]:(-1|[0-9]),(-1|[0-9])$")) {
+>>>>>>> felixienny
 			int xSrc = Integer.valueOf(coordinates.split(":")[0].split(",")[0]);
 			int ySrc = Integer.valueOf(coordinates.split(":")[0].split(",")[1]);
 			int xDest = Integer.valueOf(coordinates.split(":")[1].split(",")[0]);
