@@ -8,13 +8,11 @@ public class Player {
 	//private
 	//common
 	private int currentScore;
-	private ArrayList<Integer> scores = new ArrayList<Integer>();
+	private ArrayList<Integer> scores = new ArrayList<>();
 	private final String name;
 	private Strategy strategyType;
 	private Grid playingGridAdress;
 	boolean isAdvancedGame;
-	
-	//advanced
 	private ArrayList<Card> playerHand = new ArrayList<Card>();
 	
 //methods
@@ -27,8 +25,17 @@ public class Player {
 	}
 	
 	//getter
-	public String getName() {return name;};
+	public String getName() {return name;}
 	public int getCurrentScore() { return currentScore; }
+	public int getFinalScore() { 
+		int total=0;
+		for (Integer score : this.scores) {
+			total += score;
+		}
+		return total;
+	}
+	public ArrayList<Integer> getScores() { return this.scores; }
+	public ArrayList<Card> getPlayerHand() { return this.playerHand; }
 	
 	//job specific
 	public void askMove() {
@@ -62,8 +69,8 @@ public class Player {
 		scores.add(this.currentScore);
 		currentScore=0;
 		
-		playingGridAdress=null;
-		
+		this.playingGridAdress=null;
+		this.playerHand.clear();
 		this.strategyType.forgetGrid();
 	}
 }

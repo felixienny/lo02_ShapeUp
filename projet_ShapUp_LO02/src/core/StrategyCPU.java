@@ -33,10 +33,6 @@ class StrategyCPU extends Strategy {//decision tree
 				bestJ = jTemp;
 			}
 		}
-
-		System.out.println("best solution : "+bestSolution);
-		
-
 		
 		if (bestSolution==0) {
 			bestSet = this.doBestCardSet(this.actualGrid, victoryCards.get(bestI), victoryCards.get(bestJ));
