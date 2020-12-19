@@ -426,7 +426,7 @@ public class Grid implements Cloneable, Iterable<Tile> {
 
 	
 
-	private boolean checkForDiconnectingGraphByMovingCard(int xSrc, int ySrc, int xDest, int yDest) {
+	public boolean checkForDiconnectingGraphByMovingCard(int xSrc, int ySrc, int xDest, int yDest) {
 		AtomicInteger countedCards = new AtomicInteger(0);
 
 		Grid computer = this.clone();
@@ -495,9 +495,10 @@ public class Grid implements Cloneable, Iterable<Tile> {
 		Grid clonedGrid = new Grid(this.height, this.width, this.shiftable, this.isAdvancedGame);
 		
 		for(int x=0;x<this.getHeight();x++){
-			clonedGrid.gridTiles.add(new ArrayList<Tile>());
+			if(this.shiftable) clonedGrid.gridTiles.add(new ArrayList<Tile>());
 			for(int y=0;y<this.getWidthOnSpecificLine(x);y++){
-				clonedGrid.gridTiles.get(x).add(this.gridTiles.get(x).get(y).clone());
+				if(this.shiftable) clonedGrid.gridTiles.get(x).add(this.gridTiles.get(x).get(y).clone());
+				else clonedGrid.gridTiles.get(x).set(y, this.gridTiles.get(x).get(y).clone());
 			}
 		}
 		

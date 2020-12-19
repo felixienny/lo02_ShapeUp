@@ -3,9 +3,8 @@ package core;
 import java.util.Scanner;
 
 public class Console implements Observer {
-	private Scanner scanner;
+	private Scanner scanner = new Scanner(System.in);
 	private GameMaster gameMaster;
-	 
 
     public Console(GameMaster gameMaster){
 		this.gameMaster = gameMaster;
@@ -98,4 +97,8 @@ public class Console implements Observer {
         }
         else return new Grid(width, height, true, isAdvancedGame);
     }
+
+
+
+
 }

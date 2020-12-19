@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class ShapUp {
 	public static Scanner scanner = new Scanner(System.in);
     public static void main(String args[]) {
-        
     	char playing;
     	
     	System.out.println("Bienvenue dans le jeu Shap'Up !");
@@ -15,7 +14,9 @@ public class ShapUp {
     		playing = scanner.next().charAt(0);
     		
     		if(playing=='y') {
-    			GameMaster currentGame = new GameMaster();
+				GameMaster currentGame = new GameMaster();
+				GameController gameController = new GameController(currentGame, currentGame.console, currentGame.graphical);
+				currentGame.instantiatePlayers(gameController);
     			currentGame.play();
     			currentGame=null;
     		}

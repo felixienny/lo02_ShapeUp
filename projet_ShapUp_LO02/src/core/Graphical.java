@@ -1,84 +1,90 @@
 package core;
 
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.border.Border;
 
 import java.awt.*;
-import java.awt.Graphics;
+import java.awt.event.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.awt.event.*;
 
 
-public class Graphical implements Observer {
+public class Graphical extends JFrame implements Observer {
+    private static final long serialVersionUID = 1234567890;
     private final String dir = new File("").getAbsolutePath();
-    private final String[] cards = {
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\FBC.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\FBS.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\FBT.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\FGC.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\FGS.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\FGT.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\FRC.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\FRS.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\FRT.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\HBC.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\HBS.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\HBT.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\HGC.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\HGS.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\HGT.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\HRC.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\HRS.JPG",
-        dir + "\\projet_ShapUp_LO02\\img\\cards\\HRT.JPG",
-    };
+    private final String[] cards = {dir + "\\projet_ShapUp_LO02\\img\\cards\\FBC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FBS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FBT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRT.JPG",};
     private final HashMap<String,Image> cardsImg = new HashMap<>();
     
     private GameMaster gameMaster;
 
-
-
-    private JFrame window;
-    private JPanel table;
-    private JPanel player;
+    private JPanel top;
+    protected JPanel player;
     private JPanel situation;
     private JPanel turn;
     private JPanel match;
-    
-    private JPanel top;
+    protected JPanel table;
+    protected JButton turnFinished;
+    protected JButton wantToMove;
 
+    // protected JTextField height;
+    // protected JTextField width;
+    // protected JPanel grid;
+
+    // public Graphical() {
+    //     JPanel dimensions = new JPanel();
+    //     this.height = new JTextField();
+    //     this.width = new JTextField();
+    //     dimensions.add(this.height);
+    //     dimensions.add(this.width);
+    //     dimensions.addKeyListener(new KeyAdapter() {
+    //         public void keyTyped(KeyEvent e) {
+    //             if (height.getText().matches("^[0-9]$") && width.getText().matches("^[0-9]$")) {
+    //                 grid.setLayout(new GridLayout(Integer.valueOf(width.getText())+2,0));
+    //                 for (int x = 0; x < this.gameMaster.getGridAddress().getHeight(); x++) {
+    //                     this.table.add(new JButton("---"));
+            
+    //                     for (int y = 0; y < this.gameMaster.getGridAddress().getWidth(); y++)
+    //                         this.table.add(createButtonWithScaledImage(height, width, this.gameMaster.getGridAddress().tileToString(x, y)));
+            
+    //                     this.table.add(new JButton("---"));
+    //                 }
+    //             }
+    //         }
+    //     });
+    //     this.grid = new JPanel();
+    // }
 
     public Graphical(GameMaster gameMaster) {
         this.gameMaster = gameMaster;
         this.gameMaster.addObserver(this);
 
-        this.window = new JFrame("ShapeUp");
-        this.window.setSize(1500, 900);
-        this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle("ShapeUp");
+        this.setSize(1500, 900);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
         this.top = new JPanel();
-
         this.player = new JPanel();
         this.situation = new JPanel();
         this.turn = new JPanel();
         this.match = new JPanel();
-
         this.table = new JPanel();
+        this.turnFinished = new JButton("Turn Finished");
+        this.wantToMove = new JButton("want to move a card");
 
-        this.top.setPreferredSize(new Dimension(this.window.getSize().width, this.window.getSize().height*2/10));
-                
-        this.table.setSize(new Dimension(this.window.getSize().width*7/10, this.window.getSize().height*8/10));
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new GridLayout(1,2));
+        buttons.add(this.wantToMove);
+        buttons.add(this.turnFinished);
+
+        this.top.setPreferredSize(new Dimension(this.getSize().width, this.getSize().height*2/10));       
+        this.table.setSize(new Dimension(this.getSize().width*7/10, this.getSize().height*8/10));
 
         this.top.setLayout(new BoxLayout(this.top, BoxLayout.X_AXIS));
-
         this.player.setLayout(new FlowLayout());
         this.situation.setLayout(new FlowLayout());
         this.turn.setLayout(new BoxLayout(this.turn, BoxLayout.Y_AXIS));
         this.match.setLayout(new BoxLayout(this.match, BoxLayout.Y_AXIS));
-
 
         this.player.setSize(new Dimension(this.top.getSize().width*4/10, this.top.getSize().height));
         this.situation.setSize(new Dimension(this.top.getSize().width*1/10, this.top.getSize().height));
@@ -91,12 +97,13 @@ public class Graphical implements Observer {
         this.top.add(this.turn);
         this.top.add(this.match);
 
-        this.window.add(this.top, BorderLayout.NORTH);
-        this.window.add(this.table, BorderLayout.CENTER);
+        this.add(this.top, BorderLayout.NORTH);
+        this.add(this.table, BorderLayout.CENTER);
+        this.add(buttons, BorderLayout.SOUTH);
 
         for (int c=0; c<cards.length; c++) cardsImg.put(cards[c].split("\\\\")[cards[c].split("\\\\").length-1].split("\\.")[0], new ImageIcon(cards[c]).getImage());
 
-        this.window.setVisible(true);
+        this.setVisible(true);
     }
 
     public void update(GameMaster gameMaster, Update update) {
@@ -212,6 +219,12 @@ public class Graphical implements Observer {
             this.table.add(new JButton("---"));
     }
 
+    
+    public void run() {
+        
+    }
+
+
     public JLabel createJLabel(String text) {
         StringBuffer sb = new StringBuffer();
         sb.append("<html><div style='text-align:center;display:flex;'>");
@@ -254,9 +267,7 @@ public class Graphical implements Observer {
         return jbutton;
     }
 
-
-
-    public static void main(String[] args) {
-    }
+    public JPanel getTable() { return this.table; }
+    public JPanel getPlayerHand() { return this.player; }
 
 }

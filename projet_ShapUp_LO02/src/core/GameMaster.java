@@ -4,24 +4,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import core.Player.StrategyType;
+
 public class GameMaster {
 	public GameMaster() {
 		this.currentTurn = 0;
 		this.observers = new ArrayList<>();
-		new Console(this);
-		// new Graphical(this);
+		this.console = new Console(this);
+		this.graphical = new Graphical(this);
 		System.out.println("Combien de joueur humain ?");
 		nPlayerH = ShapUp.scanner.nextInt();
 		System.out.println("Combien de joueur ordi ?");
 		nPlayerCPU = ShapUp.scanner.nextInt();
 		System.out.println("Combien de matchs ?");
 		numberOfMatch = ShapUp.scanner.nextInt();
-
-		instantiatePlayers();
 	}
-
-	// methods
-	// job specific
 
 	public void play() {
 		for (this.currentMatch = 1; this.currentMatch <= numberOfMatch; this.currentMatch++) {
@@ -58,7 +55,8 @@ public class GameMaster {
 			notifyObservers(Update.PLAYER);
 			currentPlayer.askMove();
 			currentPlayer.giveCard(this.deck.pickNextCard());
-		} else {
+		} 
+		else {
 			currentPlayer.giveCard(this.deck.pickNextCard());
 			notifyObservers(Update.PLAYER);
 			currentPlayer.askMove();
@@ -76,18 +74,18 @@ public class GameMaster {
 		}
 	}
 	
-	private void instantiatePlayers() {
+	public void instantiatePlayers(GameController gc) {
     	for(int i=1;i<=nPlayerH;i++) {
     		System.out.println("Nom du joueur humain n°"+String.valueOf(i)+" ?");
     		String playerName=ShapUp.scanner.next();
-    		players.add(new Player(playerName, "Human"));
+			players.add(new Player(playerName, StrategyType.HUMAN, gc));
     	}
     	
-    	for(int i=1;i<=nPlayerCPU;i++) players.add(new Player("Bot"+String.valueOf(i), "Bot"));    	
+    	for(int i=1;i<=nPlayerCPU;i++) players.add(new Player("Bot"+String.valueOf(i), StrategyType.CPU, null));    	
 	}
 	
     private void instantiatePlayArea() {
-		this.grid = new Grid(8, 5, true, true);
+		this.grid = console.instantiateGrid();
 		this.deck = new Deck();
 	}	
 
@@ -119,5 +117,11 @@ public class GameMaster {
     private List<Player> players = new ArrayList<>();
     private Deck deck;
 	private Grid grid;
+
 	private ArrayList<Observer> observers;
+	public Console console;
+	public Graphical graphical;
+
+
+	private Thread threadGraphical;
 }
