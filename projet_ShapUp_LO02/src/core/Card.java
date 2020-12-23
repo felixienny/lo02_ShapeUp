@@ -40,8 +40,7 @@ class Card implements Cloneable{
 		}
 		return returnString;
     }
-    public void display()  {System.out.print(this.toString());}
-    public Card clone() {return new Card(color,shape,hollow);}
+	public Card clone() { return new Card(color,shape,hollow); }
     
 //attributes
     //private

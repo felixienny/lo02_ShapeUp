@@ -12,8 +12,10 @@ public class Tile implements Cloneable {
     /** 
      * @return Card
      */
-    public Card getAndRemoveCard(){ 
-        Card cardToRemove = this.card.clone();
+    public Card getAndRemoveCard(){
+        Card cardToRemove;
+        if (this.getCard() == null) cardToRemove = null;
+        else cardToRemove = this.card.clone();
         this.card = null;
         return cardToRemove; 
     }
@@ -48,5 +50,8 @@ public class Tile implements Cloneable {
     /** 
      * @return Tile
      */
-    public Tile clone(){ return new Tile(this.card.clone(), this.alive); }
+    public Tile clone(){ 
+        if (this.card != null) return new Tile(this.card.clone(), this.alive); 
+        else return new Tile(null, this.alive); 
+    }
 }

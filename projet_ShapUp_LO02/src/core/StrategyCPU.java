@@ -2,105 +2,83 @@ package core;
 
 import java.util.ArrayList;
 
-class StrategyCPU extends Strategy {//decision tree
+class StrategyCPU extends Strategy {
 
-	public void makeBestMove(ArrayList<Card> victoryCards) {
-		int bestScore=-1,bestSolution=-1, bestI=-1, bestJ=-1, jTemp=-1,maxIndex=0,maxValue=-1;
+	public void makeBestMove(ArrayList<Card> playerHand) {
 		String bestMove, bestSet;
-
-		for(int i=0;i<victoryCards.size();i++) {
-			int[] scores = new int[3];
-
-			for(int j=0;j<victoryCards.size();j++) {
-				if(j != i) {
-					scores[0] += this.getScoreSet(victoryCards.get(i), victoryCards.get(j));
-					scores[1] += this.getScoreSetFirst(victoryCards.get(i), victoryCards.get(j));
-					scores[2] += this.getScoreMoveFirst(victoryCards.get(i), victoryCards.get(j));
-					jTemp=j;
+		if (this.actualGrid.isAdvancedGame()) {
+			int bestScore=-1,bestSolution=-1, bestI=-1, bestJ=-1, jTemp=-1,maxIndex=0,maxValue=-1;
+			for(int i=0;i<playerHand.size();i++) {
+				int[] scores = new int[3];
+				for(int j=0;j<playerHand.size();j++) {
+					if(j != i) {
+						scores[0] += this.getScoreSet(playerHand.get(i), playerHand.get(j));
+						scores[1] += this.getScoreSetFirst(playerHand.get(i), playerHand.get(j));
+						scores[2] += this.getScoreMoveFirst(playerHand.get(i), playerHand.get(j));
+						jTemp=j;
+					}
+				}
+				for(int k=0; k<scores.length; k++) {
+					if(scores[k]>maxValue) {
+					  maxIndex = k;
+				   }
+				}
+				if (scores[maxIndex] > bestScore) {
+					bestScore = scores[maxIndex];
+					bestSolution = maxIndex;
+					bestI = i;
+					bestJ = jTemp;
 				}
 			}
 
-			for(int k=0; k<scores.length; k++) {
-				if(scores[k]>maxValue) {
-				  maxIndex = k;
-			   }
+			if (bestSolution==0) {
+				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(bestI), playerHand.get(bestJ));
+				// System.out.println(bestSet);
+				this.actualGrid.setTile(bestSet, playerHand.remove(bestI));
 			}
-
-			if (scores[maxIndex] > bestScore) {
-				bestScore = scores[maxIndex];
-				bestSolution = maxIndex;
-				bestI = i;
-				bestJ = jTemp;
+			else if (bestSolution==1) {
+				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(bestI), playerHand.get(bestJ));
+				// System.out.println(bestSet);
+				this.actualGrid.setTile(bestSet, playerHand.remove(bestI));
+				bestMove = this.doBestCardMove(this.actualGrid, playerHand.get(bestJ));
+				// System.out.println(bestMove);
+				this.actualGrid.moveTile(bestMove);
+			}
+			else if (bestSolution==2) {
+				bestMove = this.doBestCardMove(this.actualGrid, playerHand.get(bestJ));
+				// System.out.println(bestMove);			
+				this.actualGrid.moveTile(bestMove);
+				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(bestI), playerHand.get(bestJ));
+				// System.out.println(bestSet);
+				this.actualGrid.setTile(bestSet, playerHand.remove(bestI));
+			}
+		}
+		else {
+			if(this.getScoreSet(playerHand.get(1), playerHand.get(0)) >= Math.max(this.getScoreSetFirst(playerHand.get(1), playerHand.get(0)),this.getScoreMoveFirst(playerHand.get(1), playerHand.get(0)))) {
+				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(1), playerHand.get(0));
+				// System.out.println(bestSet);
+				this.actualGrid.setTile(bestSet, playerHand.remove(1));
+			}
+			else if(this.getScoreSetFirst(playerHand.get(1), playerHand.get(0)) >= Math.max(this.getScoreSet(playerHand.get(1), playerHand.get(0)),this.getScoreMoveFirst(playerHand.get(1), playerHand.get(0)))) {
+				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(1), playerHand.get(0));
+				// System.out.println(bestSet);
+				this.actualGrid.setTile(bestSet, playerHand.remove(1));
+				bestMove = this.doBestCardMove(this.actualGrid, playerHand.get(0));
+				// System.out.println(bestMove);			
+				this.actualGrid.moveTile(bestMove);
+			
+			}
+			else if(this.getScoreMoveFirst(playerHand.get(1), playerHand.get(0)) >= Math.max(this.getScoreSet(playerHand.get(1), playerHand.get(0)),this.getScoreSetFirst(playerHand.get(1), playerHand.get(0)))) {
+				bestMove = this.doBestCardMove(this.actualGrid, playerHand.get(0));
+				// System.out.println(bestMove);			
+				this.actualGrid.moveTile(bestMove);
+				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(1), playerHand.get(0));
+				// System.out.println(bestSet);
+				this.actualGrid.setTile(bestSet, playerHand.remove(1));
 			}
 		}
 
-		System.out.println("best solution : "+bestSolution);
-		
-
-		
-		if (bestSolution==0) {
-			bestSet = this.doBestCardSet(this.actualGrid, victoryCards.get(bestI), victoryCards.get(bestJ));
-			System.out.println(bestSet);
-			this.actualGrid.setTile(bestSet, victoryCards.remove(bestI));
-		}
-		else if (bestSolution==1) {
-			bestSet = this.doBestCardSet(this.actualGrid, victoryCards.get(bestI), victoryCards.get(bestJ));
-			System.out.println(bestSet);
-			this.actualGrid.setTile(bestSet, victoryCards.remove(bestI));
-
-			this.actualGrid.display();
-			
-			bestMove = this.doBestCardMove(this.actualGrid, victoryCards.get(bestJ));
-			System.out.println(bestMove);			
-			this.actualGrid.moveTile(bestMove);
-		}
-		else if (bestSolution==2) {
-			bestMove = this.doBestCardMove(this.actualGrid, victoryCards.get(bestJ));
-			System.out.println(bestMove);			
-			this.actualGrid.moveTile(bestMove);
-
-			this.actualGrid.display();
-			
-			bestSet = this.doBestCardSet(this.actualGrid, victoryCards.get(bestI), victoryCards.get(bestJ));
-			System.out.println(bestSet);
-			this.actualGrid.setTile(bestSet, victoryCards.remove(bestI));
-		}
-		
 	}
-	
-	public void makeBestMove(Card victoryCard, Card cardToPlace) {
-		String bestMove, bestSet;
-
-		if(this.getScoreSet(cardToPlace, victoryCard) >= Math.max(this.getScoreSetFirst(cardToPlace, victoryCard),this.getScoreMoveFirst(cardToPlace, victoryCard))) {
-			bestSet = this.doBestCardSet(this.actualGrid, victoryCard, cardToPlace);
-			System.out.println(bestSet);
-			this.actualGrid.setTile(bestSet, cardToPlace);
-		}
-		else if(this.getScoreSetFirst(cardToPlace, victoryCard) >= Math.max(this.getScoreSet(cardToPlace, victoryCard),this.getScoreMoveFirst(cardToPlace, victoryCard))) {
-			bestSet = this.doBestCardSet(this.actualGrid, victoryCard, cardToPlace);
-			System.out.println(bestSet);
-			this.actualGrid.setTile(bestSet, cardToPlace);
-
-			this.actualGrid.display();
-
-			bestMove = this.doBestCardMove(this.actualGrid, victoryCard);
-			System.out.println(bestMove);			
-			this.actualGrid.moveTile(bestMove);
-
-		}
-		else if(this.getScoreMoveFirst(cardToPlace, victoryCard) >= Math.max(this.getScoreSet(cardToPlace, victoryCard),this.getScoreSetFirst(cardToPlace, victoryCard))) {
-			bestMove = this.doBestCardMove(this.actualGrid, victoryCard);
-			System.out.println(bestMove);			
-			this.actualGrid.moveTile(bestMove);
-
-			this.actualGrid.display();
-
-			bestSet = this.doBestCardSet(this.actualGrid, victoryCard, cardToPlace);
-			System.out.println(bestSet);
-			this.actualGrid.setTile(bestSet, cardToPlace);
-		}
-	}
-	
 
 	private int getScoreSet(Card cardToPlace, Card victoryCard) {
 		Grid computer = this.actualGrid.clone();
