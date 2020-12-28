@@ -1,8 +1,17 @@
 package core;
 import java.lang.Cloneable;
 
-
-class Card implements Cloneable{  
+/**
+ * Provides a simple class implementation to represent a card of the ShapUp game.
+ *
+ */
+class Card implements Cloneable{
+	/**
+	 * Constructor for this class. Given parameters are finals.
+	 * @param newColor
+	 * @param newShape
+	 * @param newHollow
+	 */
     public Card(Color newColor, Shape newShape, boolean newHollow)
 	{
 		color=newColor;
@@ -14,11 +23,27 @@ class Card implements Cloneable{
     //setter
     
     //getter
+    /**
+     * 
+     * @return The color of the card.
+     */
     public Color getColor() {return color;}
+    /**
+     * 
+     * @return The shape of the card.
+     */
     public Shape getShape() {return shape;}
+    /**
+     * 
+     * @return The hollowness of the card.
+     */
     public boolean getHollow() {return hollow;}
     
     //job specific
+    /**
+     * 
+     * @return A String formatted to display the card on 3 characters.
+     */
     public String toString() {
     	String returnString = new String();
 
@@ -40,11 +65,23 @@ class Card implements Cloneable{
 		}
 		return returnString;
     }
+    /**
+     * @return A deep copy of the card.
+     */
 	public Card clone() { return new Card(color,shape,hollow); }
     
 //attributes
     //private
+	/**
+	 * The color of this card.
+	 */
     private Color color;
+    /**
+     * The shape of this card.
+     */
     private Shape shape;
+    /**
+     * The hollowness of this card.
+     */
     private boolean hollow;
 }
