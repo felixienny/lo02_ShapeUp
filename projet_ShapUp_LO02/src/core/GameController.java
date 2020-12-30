@@ -8,18 +8,28 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-
+/**
+ * Controller in the MVC design pattern to handle the interaction with the classes Graphical, Console and GameMaster.
+ * 
+ */
 public class GameController {
     private Graphical graphicalView;
     private Console consoleView;
     private GameMaster game;
-
+    /**
+     * Enters the addresses of the objects necessary for operation of the MVC.
+     * @param gameMaster
+     * @param console
+     * @param graphical
+     */
     public GameController(GameMaster gameMaster, Console console, Graphical graphical) {
         this.game = gameMaster;
         this.consoleView = console;
         this.graphicalView = graphical;
     }
-
+    /**
+     * 
+     */
     private class TurnOfPlayerHuman implements Runnable, ActionListener {
         private int xTemp;
         private int yTemp;
@@ -158,7 +168,10 @@ public class GameController {
         }
     }
 
-    
+    /**
+     * Used to handle the two potential inputs (Console & Graphical) for a human player. 
+     * @param playerHand Cards of the player to play his turn.
+     */
     public void makeTurnOfPlayer(ArrayList<Card> playerHand) {
         Thread turn = new Thread(new TurnOfPlayerHuman(playerHand));
         turn.start();

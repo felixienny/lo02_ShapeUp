@@ -1,11 +1,17 @@
 package core;
 
 import java.util.Scanner;
-
+/**
+ * Provides a formatted input/output console observing a given Grid.
+ *
+ */
 public class Console implements Observer {
 	private Scanner scanner = new Scanner(System.in);
 	private GameMaster gameMaster;
-
+	/**
+	 * 
+	 * @param gameMaster The Grid to be observed and displayed for output.
+	 */
     public Console(GameMaster gameMaster){
 		this.gameMaster = gameMaster;
 		gameMaster.addObserver(this);
@@ -46,7 +52,9 @@ public class Console implements Observer {
 				break;
 		}
 	}
-
+	/**
+	 * Starts the interactive prompt to give the constructing parameters to the Grid class.
+	 */
     public Grid instantiateGrid() {
         boolean isAdvancedGame;
         int height, width;
@@ -97,8 +105,4 @@ public class Console implements Observer {
         }
         else return new Grid(width, height, true, isAdvancedGame);
     }
-
-
-
-
 }

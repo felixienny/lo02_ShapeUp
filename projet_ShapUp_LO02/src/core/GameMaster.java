@@ -5,8 +5,34 @@ import java.util.Iterator;
 import java.util.List;
 
 import core.Player.StrategyType;
-
+/**
+ * Handles the interactions between the players and the Grid. Manages the creation of the players, the game chronology and gives access to the 
+ * most important informations about the current game.
+ * 
+ */
 public class GameMaster {
+//attributes
+	//private
+	private Player currentPlayer;
+	private int currentTurn;
+	private int currentMatch;
+
+	private int nPlayerH;
+	private int nPlayerCPU;
+	private int numberOfMatch;
+    private List<Player> players = new ArrayList<>();
+    private Deck deck;
+	private Grid grid;
+
+	private ArrayList<Observer> observers;
+	public Console console;
+	public Graphical graphical;
+
+	private Thread threadGraphical;
+
+	/**
+	 * Prompts the player for the types and number of players for the tournament.
+	 */
 	public GameMaster() {
 		this.currentTurn = 0;
 		this.observers = new ArrayList<>();
@@ -105,23 +131,5 @@ public class GameMaster {
 	public int getNumberOfMatchs() { return this.numberOfMatch; }
 	
     
-//attributes
-	//private
-	private Player currentPlayer;
-	private int currentTurn;
-	private int currentMatch;
 
-	private int nPlayerH;
-	private int nPlayerCPU;
-	private int numberOfMatch;
-    private List<Player> players = new ArrayList<>();
-    private Deck deck;
-	private Grid grid;
-
-	private ArrayList<Observer> observers;
-	public Console console;
-	public Graphical graphical;
-
-
-	private Thread threadGraphical;
 }
