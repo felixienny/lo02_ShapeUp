@@ -3,7 +3,6 @@ package core;
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,7 +11,7 @@ import java.util.Iterator;
 public class Graphical extends JFrame implements Observer {
     private static final long serialVersionUID = 1234567890;
     private final String dir = new File("").getAbsolutePath();
-    private final String[] cards = {dir + "\\projet_ShapUp_LO02\\img\\cards\\FBC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FBS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FBT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRT.JPG",};
+    private final String[] cards = {dir + "\\projet_ShapUp_LO02\\img\\cards\\FBC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FBS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FBT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\XXX.JPG",};
     private final HashMap<String,Image> cardsImg = new HashMap<>();
     
     private GameMaster gameMaster;
@@ -26,33 +25,6 @@ public class Graphical extends JFrame implements Observer {
     protected JButton turnFinished;
     protected JButton wantToMove;
 
-    // protected JTextField height;
-    // protected JTextField width;
-    // protected JPanel grid;
-
-    // public Graphical() {
-    //     JPanel dimensions = new JPanel();
-    //     this.height = new JTextField();
-    //     this.width = new JTextField();
-    //     dimensions.add(this.height);
-    //     dimensions.add(this.width);
-    //     dimensions.addKeyListener(new KeyAdapter() {
-    //         public void keyTyped(KeyEvent e) {
-    //             if (height.getText().matches("^[0-9]$") && width.getText().matches("^[0-9]$")) {
-    //                 grid.setLayout(new GridLayout(Integer.valueOf(width.getText())+2,0));
-    //                 for (int x = 0; x < this.gameMaster.getGridAddress().getHeight(); x++) {
-    //                     this.table.add(new JButton("---"));
-            
-    //                     for (int y = 0; y < this.gameMaster.getGridAddress().getWidth(); y++)
-    //                         this.table.add(createButtonWithScaledImage(height, width, this.gameMaster.getGridAddress().tileToString(x, y)));
-            
-    //                     this.table.add(new JButton("---"));
-    //                 }
-    //             }
-    //         }
-    //     });
-    //     this.grid = new JPanel();
-    // }
 
     public Graphical(GameMaster gameMaster) {
         this.gameMaster = gameMaster;
@@ -109,20 +81,10 @@ public class Graphical extends JFrame implements Observer {
     public void update(GameMaster gameMaster, Update update) {
         switch (update) {
             case ALL:
-                this.table.removeAll();
-                this.player.removeAll();
-                this.situation.removeAll();
-                this.turn.removeAll();
-                this.match.removeAll();
-                this.displayGrid();
-                this.displaySituation();
-                this.displayTurn();
-                this.displayMatch();
-                this.table.validate();
-                this.player.validate();
-                this.situation.validate();
-                this.turn.validate();
-                this.match.validate();
+                this.update(gameMaster, Update.GRID);
+                this.update(gameMaster, Update.PLAYER);
+                this.update(gameMaster, Update.TURN);
+                this.update(gameMaster, Update.MATCH);
                 break;
             case GRID:
                 this.table.removeAll();
@@ -133,6 +95,7 @@ public class Graphical extends JFrame implements Observer {
                 this.player.removeAll();
                 this.displayPlayer();
                 this.player.validate();
+                this.player.repaint();
                 this.situation.removeAll();
                 this.displaySituation();
                 this.situation.validate();
@@ -219,11 +182,6 @@ public class Graphical extends JFrame implements Observer {
             this.table.add(new JButton("---"));
     }
 
-    
-    public void run() {
-        
-    }
-
 
     public JLabel createJLabel(String text) {
         StringBuffer sb = new StringBuffer();
@@ -254,14 +212,11 @@ public class Graphical extends JFrame implements Observer {
         JButton jbutton = new JButton();
         jbutton.setBackground(java.awt.Color.WHITE);
 
-        Insets insets = jbutton.getInsets();
-        height -= insets.top + insets.bottom;
-        width -= insets.left + insets.right;
-
         if (width > height) width = -1;
         else height = -1;
 
-        if (tile.matches("^[A-Z]{3}$")) jbutton.setIcon(new ImageIcon(cardsImg.get(tile).getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH)));
+        if (tile.matches("^(H|F)(R|G|B)(T|C|S)$")) jbutton.setIcon(new ImageIcon(cardsImg.get(tile).getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH)));
+        else if (tile.matches("^XXX$")) jbutton.setIcon(new ImageIcon(cardsImg.get(tile).getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH)));
         else jbutton.setText(tile); 
 
         return jbutton;
