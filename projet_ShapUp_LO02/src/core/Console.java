@@ -8,7 +8,7 @@ public class Console implements Observer {
 
     public Console(GameMaster gameMaster){
 		this.gameMaster = gameMaster;
-		gameMaster.addObserver(this);
+		gameMaster.addObserver(this); 
 
         this.scanner = new Scanner(System.in);
 	}
@@ -98,7 +98,7 @@ public class Console implements Observer {
         else return new Grid(width, height, true, isAdvancedGame);
     }
 
-
+	
 
 
 }

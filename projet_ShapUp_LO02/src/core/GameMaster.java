@@ -85,7 +85,7 @@ public class GameMaster {
 	}
 	
     private void instantiatePlayArea() {
-		this.grid = console.instantiateGrid();
+		this.grid = new Grid(8, 5, false, false);//console.instantiateGrid();
 		this.deck = new Deck();
 	}	
 
@@ -122,6 +122,4 @@ public class GameMaster {
 	public Console console;
 	public Graphical graphical;
 
-
-	private Thread threadGraphical;
 }

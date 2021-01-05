@@ -4,10 +4,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+
 
 public class GameController {
     private Graphical graphicalView;
@@ -47,6 +44,8 @@ public class GameController {
             graphicalView.wantToMove.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     wantToMove = !wantToMove;
+                    if (wantToMove) graphicalView.wantToMove.setBackground(java.awt.Color.GREEN);
+                    else graphicalView.wantToMove.setBackground(java.awt.Color.LIGHT_GRAY);
                 }
             });
         }
@@ -109,11 +108,8 @@ public class GameController {
             }
         }
 
-        public void consoleTyping() {
-            if (this.turnFinished && this.setDone) return;
-            Scanner scanner = new Scanner(System.in);
-            if (scanner.hasNextLine()) {
-                String text = scanner.nextLine();
+        public void consoleTyping(String text) {
+            if (text != null && !text.isEmpty()) {
                 if (!setDone) {
                     if (game.getGridAddress().isAdvancedGame()) {
                         if (text.matches("^[0-2]$")) vCardToUse = (int) Integer.valueOf(text);
@@ -125,14 +121,12 @@ public class GameController {
                             this.addListenersOnTiles();
                         }
                     }
-                    else {
-                        if (game.getGridAddress().testSettingTile(text)) {
-                            game.getGridAddress().setTile(text, playerHand.remove(1));
-                            this.setDone = true;
-                            game.notifyObservers(Update.GRID);
-                            game.notifyObservers(Update.PLAYER);
-                            this.addListenersOnTiles();
-                        }
+                    else if (game.getGridAddress().testSettingTile(text)) {
+                        game.getGridAddress().setTile(text, playerHand.remove(1));
+                        this.setDone = true;
+                        game.notifyObservers(Update.GRID);
+                        game.notifyObservers(Update.PLAYER);
+                        this.addListenersOnTiles();
                     }
                 }
                 if (!this.moveDone && game.getGridAddress().moveTile(text)) {
@@ -142,19 +136,16 @@ public class GameController {
                 }
                 if (text.matches("^q$")) this.turnFinished = true;
             }
-            else {
-                scanner.close();
-            }
         }
 
         public void run() {
             this.addListenersOnTiles();
+            Scanner scanner = new Scanner(System.in);
             while (!(this.turnFinished && this.setDone)) {
+                this.consoleTyping(scanner.next().trim());
                 if (this.setDone && this.moveDone) this.turnFinished = true;
-                this.consoleTyping();
-                System.out.print("");
             }
-            System.out.println(turnFinished+" "+setDone);
+            scanner.close();
         }
     }
 

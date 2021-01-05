@@ -26,7 +26,7 @@ public class GridIterator implements Iterator<Tile> {
         this.iterateOverY = iterateOverY;
         this.gridAdress=gridAdress;
         
-		if(iterateOverX) {
+		if (iterateOverX) {
 			this.x=0;
             this.y=line;
 		}
