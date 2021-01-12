@@ -10,8 +10,8 @@ public class GameMaster {
 	public GameMaster() {
 		this.currentTurn = 0;
 		this.observers = new ArrayList<>();
-		this.console = new Console(this);
-		this.graphical = new Graphical(this);
+		this.console = new GameConsole(this);
+		this.graphical = new GameGraphical(this);
 		System.out.println("Combien de joueur humain ?");
 		nPlayerH = ShapUp.scanner.nextInt();
 		System.out.println("Combien de joueur ordi ?");
@@ -85,7 +85,7 @@ public class GameMaster {
 	}
 	
     private void instantiatePlayArea() {
-		this.grid = new Grid(8, 5, false, false);//console.instantiateGrid();
+		this.grid = console.instantiateGrid();
 		this.deck = new Deck();
 	}	
 
@@ -119,7 +119,7 @@ public class GameMaster {
 	private Grid grid;
 
 	private ArrayList<Observer> observers;
-	public Console console;
-	public Graphical graphical;
+	public GameConsole console;
+	public GameGraphical graphical;
 
 }

@@ -2,11 +2,11 @@ package core;
 
 import java.util.Scanner;
 
-public class Console implements Observer {
-	private Scanner scanner = new Scanner(System.in);
+public class GameConsole implements Observer {
+	public Scanner scanner = new Scanner(System.in);
 	private GameMaster gameMaster;
 
-    public Console(GameMaster gameMaster){
+    public GameConsole(GameMaster gameMaster){
 		this.gameMaster = gameMaster;
 		gameMaster.addObserver(this); 
 
@@ -96,9 +96,5 @@ public class Console implements Observer {
 			return new Grid(width, height, false, isAdvancedGame, deadTiles.toString());
         }
         else return new Grid(width, height, true, isAdvancedGame);
-    }
-
-	
-
-
+	}
 }
