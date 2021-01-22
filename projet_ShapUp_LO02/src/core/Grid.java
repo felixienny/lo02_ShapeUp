@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
-
+/**
+ * Provides the implementation of a play area composed of {@link core.Tile} containing {@link core.Card}. Checks the respect of
+ * the rules of the Shape Up game.
+ *
+ */
 public class Grid implements Cloneable, Iterable<Tile> {
 	private int width;
 	private int height;

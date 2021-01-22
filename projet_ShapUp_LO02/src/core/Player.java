@@ -15,6 +15,10 @@ public class Player {
 	private Grid grid;
 	private ArrayList<Integer> scores = new ArrayList<>();
 	private ArrayList<Card> playerHand = new ArrayList<Card>();
+	/**
+	 * Internal enumeration to be able to give a unambiguous choice for a {@link core.StrategyHuman} or {@link core.StrategyCPU}.
+	 *
+	 */
 	protected enum StrategyType {
 		HUMAN,
 		CPU,
@@ -23,7 +27,7 @@ public class Player {
 	 * Puts in place the necessary reference to the other objects necessary to operation of the class.
 	 * @param name Final name for the Player.
 	 * @param strategyType Human if played by a actual user, CPU otherwise.
-	 * @param gameController Controller object in the MVC design pattern, necessary for the corrent operation of the graphic interface.
+	 * @param gameController Controller object in the MVC design pattern, necessary for the correct operation of the graphic interface.
 	 */
 	public Player(String name, StrategyType strategyType, GameController gameController) {
 		this.name=name;
