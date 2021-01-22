@@ -17,11 +17,6 @@ class Card implements Cloneable{
 		shape=newShape;
 		hollow=newHollow;
 	}
-//methods
-    
-    //setter
-    
-    //getter
     /**
      * 
      * @return The color of the card.
@@ -38,7 +33,6 @@ class Card implements Cloneable{
      */
     public boolean getHollow() {return hollow;}
     
-    //job specific
     /**
      * 
      * @return A String formatted to display the card on 3 characters.
@@ -69,8 +63,6 @@ class Card implements Cloneable{
      */
 	public Card clone() { return new Card(color,shape,hollow); }
     
-//attributes
-    //private
 	/**
 	 * The color of this card.
 	 */
