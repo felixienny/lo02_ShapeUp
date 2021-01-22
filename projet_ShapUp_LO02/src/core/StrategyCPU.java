@@ -1,9 +1,19 @@
 package core;
 
 import java.util.ArrayList;
-
+/**
+ * Given a hand of cards, computes the best move to do and does it.
+ * This is the mother function, each function goes down in the tree of possibilities, and then goes back up evaluating the move that we bring the 
+ * most points. A move is :
+ * 	if advanced game, which victory card to use
+ * 	then if at first/after/at all move a car
+ * 	which card to use
+ * 	where to put
+ */
 class StrategyCPU extends Strategy {
-
+	/**
+	 * Mother function called to compute the best move possible
+	 */
 	public void makeBestMove(ArrayList<Card> playerHand) {
 		String bestMove, bestSet;
 		if (this.actualGrid.isAdvancedGame()) {
@@ -33,74 +43,84 @@ class StrategyCPU extends Strategy {
 
 			if (bestSolution==0) {
 				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(bestI), playerHand.get(bestJ));
-				// System.out.println(bestSet);
 				this.actualGrid.setTile(bestSet, playerHand.remove(bestI));
 			}
 			else if (bestSolution==1) {
 				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(bestI), playerHand.get(bestJ));
-				// System.out.println(bestSet);
 				this.actualGrid.setTile(bestSet, playerHand.remove(bestI));
 				bestMove = this.doBestCardMove(this.actualGrid, playerHand.get(bestJ));
-				// System.out.println(bestMove);
 				this.actualGrid.moveTile(bestMove);
 			}
 			else if (bestSolution==2) {
 				bestMove = this.doBestCardMove(this.actualGrid, playerHand.get(bestJ));
-				// System.out.println(bestMove);			
 				this.actualGrid.moveTile(bestMove);
 				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(bestI), playerHand.get(bestJ));
-				// System.out.println(bestSet);
 				this.actualGrid.setTile(bestSet, playerHand.remove(bestI));
 			}
 		}
 		else {
 			if(this.getScoreSet(playerHand.get(1), playerHand.get(0)) >= Math.max(this.getScoreSetFirst(playerHand.get(1), playerHand.get(0)),this.getScoreMoveFirst(playerHand.get(1), playerHand.get(0)))) {
 				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(1), playerHand.get(0));
-				// System.out.println(bestSet);
 				this.actualGrid.setTile(bestSet, playerHand.remove(1));
 			}
 			else if(this.getScoreSetFirst(playerHand.get(1), playerHand.get(0)) >= Math.max(this.getScoreSet(playerHand.get(1), playerHand.get(0)),this.getScoreMoveFirst(playerHand.get(1), playerHand.get(0)))) {
 				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(1), playerHand.get(0));
-				// System.out.println(bestSet);
 				this.actualGrid.setTile(bestSet, playerHand.remove(1));
 				bestMove = this.doBestCardMove(this.actualGrid, playerHand.get(0));
-				// System.out.println(bestMove);			
 				this.actualGrid.moveTile(bestMove);
 			
 			}
 			else if(this.getScoreMoveFirst(playerHand.get(1), playerHand.get(0)) >= Math.max(this.getScoreSet(playerHand.get(1), playerHand.get(0)),this.getScoreSetFirst(playerHand.get(1), playerHand.get(0)))) {
 				bestMove = this.doBestCardMove(this.actualGrid, playerHand.get(0));
-				// System.out.println(bestMove);			
 				this.actualGrid.moveTile(bestMove);
 				bestSet = this.doBestCardSet(this.actualGrid, playerHand.get(1), playerHand.get(0));
-				// System.out.println(bestSet);
 				this.actualGrid.setTile(bestSet, playerHand.remove(1));
 			}
 		}
 
 	}
-
+	/**
+	 * See {@link #makeBestMove(ArrayList)}
+	 * @param cardToPlace card to put down to consider for computation
+	 * @param victoryCard victory card to consider for computation
+	 * @return the associated score of the best move given the card and victory card given
+	 */
 	private int getScoreSet(Card cardToPlace, Card victoryCard) {
 		Grid computer = this.actualGrid.clone();
 		computer.setTile(this.doBestCardSet(computer, cardToPlace, victoryCard), cardToPlace);
 		return computer.calculateScore(victoryCard);
 	}
-	
+	/**
+	 * Gives back the score when the card is placed first
+	 * @param cardToPlace card to put down to consider for computation
+	 * @param victoryCard victory card to consider for computation
+	 * @return the associated score of the best move given the card and victory card given
+	 */
 	private int getScoreSetFirst(Card cardToPlace, Card victoryCard) {
 		Grid computer = this.actualGrid.clone();
 		computer.setTile(doBestCardSet(computer, cardToPlace, victoryCard), cardToPlace);
 		computer.moveTile(doBestCardMove(computer, victoryCard));
 		return computer.calculateScore(victoryCard);
 	}
-
+	/**
+	 * Gives back the score when the card is moved first
+	 * @param cardToPlace card to put down to consider for computation
+	 * @param victoryCard victory card to consider for computation
+	 * @return the associated score of the best move given the card and victory card given
+	 */
 	private int getScoreMoveFirst(Card cardToPlace, Card victoryCard) {
 		Grid computer = this.actualGrid.clone();
 		computer.moveTile(this.doBestCardMove(computer, victoryCard));
 		computer.setTile(this.doBestCardSet(computer, cardToPlace, victoryCard), cardToPlace);
 		return computer.calculateScore(victoryCard);
 	}
-  
-
+  /**
+   * Returns the best card set possible in a String
+   * @param grid grid to make the best set on
+   * @param cardToPlace card to put down to consider for computation
+   * @param victoryCard victory card to consider for computation
+   * @return the String containing the best card set to do
+   */
 	private String doBestCardSet(Grid grid, Card cardToPlace, Card victoryCard) {
 		StringBuffer answer = new StringBuffer();
 
@@ -137,7 +157,12 @@ class StrategyCPU extends Strategy {
 
 		return answer.toString();
 	}
-
+	/**
+	   * Returns the best card move possible in a String
+	   * @param grid grid to make the best move on
+	   * @param victoryCard victory card to consider for computation
+	   * @return the String containing the best card move to do
+	   */
 	private String doBestCardMove(Grid grid, Card victoryCard) {
 		StringBuffer answer = new StringBuffer();
 		
@@ -192,6 +217,4 @@ class StrategyCPU extends Strategy {
 		
 		return answer.toString();
 	}
-	
-
 }

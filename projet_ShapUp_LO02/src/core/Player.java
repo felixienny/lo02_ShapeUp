@@ -4,48 +4,27 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Representation of an actual player in the game, real or not. A player handles the score keeping for itself. A player can be assigned a HumanStrategy if
- * it's going to be used by an actual human, otherwise it will resort a predefined algorithm defining a "computer strategy".
+ * Representation of an actual player in the game, real or not. A player handles the score keeping for itself. A player can be assigned a {@link core.StrategyHuman} if
+ * it's going to be used by an actual human, otherwise it will resort a predefined algorithm defining a "computer strategy" with {@link core.StrategyCPU}.
  *
  */
 public class Player {
-	/**
-	 * Cannot be changed. Necessary for all players.
-	 */
 	private final String name;
-	/**
-	 * Score of the player for this specific game at a specific turn.
-	 */
 	private int currentScore;
-	/**
-	 * Keeps a link to the chosen strategy for the object.
-	 */
 	private Strategy strategyType;
-	/**
-	 * Keeps a link to the Grid used for the current game.
-	 */
 	private Grid grid;
-	/**
-	 * List of the scores for the current game in a tournament. Added in the list at the end of a game, otherwise kept in the currentScore variable.
-	 */
 	private ArrayList<Integer> scores = new ArrayList<>();
-	/**
-	 * List of the cards "in the hands" of the Player. In a basic game, the card nï¿½0 is the victory cards and the nï¿½1 is the pickedCard ; in a advanced game, 
-	 * all the cards are in the hand of the Player.
-	 */
 	private ArrayList<Card> playerHand = new ArrayList<Card>();
-
 	protected enum StrategyType {
 		HUMAN,
 		CPU,
 	}
 	/**
-	 * Puts in place the necessaryr reference to the other objects necessary to operation of the class.
+	 * Puts in place the necessary reference to the other objects necessary to operation of the class.
 	 * @param name Final name for the Player.
 	 * @param strategyType Human if played by a actual user, CPU otherwise.
 	 * @param gameController Controller object in the MVC design pattern, necessary for the corrent operation of the graphic interface.
 	 */
-	
 	public Player(String name, StrategyType strategyType, GameController gameController) {
 		this.name=name;
 		if(strategyType == StrategyType.HUMAN) {
@@ -68,27 +47,23 @@ public class Player {
 	}
 	/**
 	 * Gives a new card to the player. 
-	 * @param pickedCard
+	 * @param pickedCard card to give the player
 	 */
 	public void giveCard(Card pickedCard) {
 		this.playerHand.add(pickedCard);
 		if(this.grid.isAdvancedGame() && playerHand.size() > 3) throw new RuntimeException("Player has too many cards : Advanced");
 		if(!this.grid.isAdvancedGame() && playerHand.size() > 2) throw new RuntimeException("Player has too many cards : Classic");
 	}
-
-	
 	/**
-	 * Called to give to a player the address of the grid for the new game.
-	 * @param newGrid
+	 * updates the attribute containing the reference to the grid. Called when a new game is started the grid is new.
+	 * @param newGrid Grid to now work on
 	 */
 	public void gameStarts(Grid newGrid) {
 		this.grid = newGrid;
 		this.strategyType.actualGrid = this.grid;
 	}
-
 	/**
-	 * Called to end a game, by adding player's score at the current match and reset his score after.
-	 * The grid is pointing to null and the player hand is set to empty, because the game is finished.
+	 * Sets some attributes to null for the time in between two games.
 	 */
 	public void gameEnds() {
 		scores.add(this.currentScore);
@@ -99,25 +74,27 @@ public class Player {
 
 		this.playerHand.clear();
 	}
-
 	/**
-	 * Return true if the strategy type of the player is human.
+	 * Checks if {@link #strategyType} is {@link core.StrategyHuman} and so if it is controlled by a real user.
+	 * @return if {@link #strategyType} is {@link core.StrategyHuman}
 	 */
 	public boolean isHuman() {
 		if (StrategyHuman.class.isInstance(this.strategyType)) return true;
 		else return false;
 	}
-
 	/**
-	 * @return name the player's name
+	 * Getter of the String containing the given name of the player.
+	 * @return the name of the player
 	 */
 	public String getName() { return name; }
 	/**
-	 * @return score the current score of the player, in the current match.
+	 * Getter of the score the player has now.
+	 * @return the score the player has
 	 */
 	public int getCurrentScore() { return currentScore; }
 	/**
-	 * @return finalscore the final score of the player, at all the matches.
+	 * Getter of the total score of the player for all the tournament.
+	 * @return the total score of the player.
 	 */
 	public int getFinalScore() { 
 		int total=0;
@@ -127,18 +104,18 @@ public class Player {
 		return total;
 	}
 	/**
-	 * @return scores an arraylist of all scores ordered by match.
+	 * Getter of the {@link java.util.ArrayList} of scores during the tournament.
+	 * @return the list of scores of the player
 	 */
 	public ArrayList<Integer> getScores() { return this.scores; }
-
 	/**
-	 * @return playerHand an arraylist of all cards in the player's hand.
+	 * Getter of the {@link java.util.ArrayList} of {@link core.Card} hand of the player.
+	 * @return
 	 */
 	public ArrayList<Card> getPlayerHand() { return this.playerHand; }
-
-	
 	/**
-	 * @return Card the card to place in non-advanced game.
+	 * In a basic game the card to put down is kept in the index n°1 of the player hand. Getter to retrieve it. Actually removes it from the {@link java.util.ArrayList}.
+	 * @return the {@link core.Card} the player has to play
 	 */
 	public Card getCardToPlace() { return this.playerHand.remove(1); }
 

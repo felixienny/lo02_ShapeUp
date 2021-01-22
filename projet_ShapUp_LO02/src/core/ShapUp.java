@@ -1,7 +1,9 @@
 package core;
 
 import java.util.Scanner;
-
+/**
+ * Starts the Shape Up game. Provides a clean exit to the user.
+ */
 public class ShapUp {
 	public static Scanner scanner = new Scanner(System.in);
     public static void main(String args[]) {

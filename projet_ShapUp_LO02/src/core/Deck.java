@@ -1,13 +1,12 @@
 package core;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Provides a simple implementation for a deck made of cards @see core.Card . The deck is never empty.
- * When the @see core.Deck#pickNextCard() is called on an empty deck, it resets itself before picking the next card.
+ * Provides a simple implementation for a deck made of {@link Card}. The deck is never empty.
+ * When the {@link #pickNextCard()} is called on an empty deck, it resets itself before picking the next card.
  * A generated deck is always shuffled randomly and made of all different combinations of the cards.
  */
 class Deck {
@@ -35,7 +34,7 @@ class Deck {
     	Collections.shuffle(this.cards, new Random(System.currentTimeMillis()));
 	}
 	/**
-	 * List representing the stack of cards of the deck.
+	 * {@link java.util.ArrayList} representing the stack of cards of the deck.
 	 */
-	private List<Card> cards = new ArrayList<Card> ();
+	private ArrayList<Card> cards = new ArrayList<Card> ();
 }
