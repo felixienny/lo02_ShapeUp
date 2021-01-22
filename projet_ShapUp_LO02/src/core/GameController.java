@@ -224,7 +224,7 @@ public class GameController {
         
         /**
          * Method called when thread starts.
-         * It runs until the player has finished the turn and at least set a card on the @see core.Grid.
+         * It runs until the player has finished the turn and at least set a card on the {@link core.Grid}.
          */
         public void run() {
             this.addListenersOnTiles();

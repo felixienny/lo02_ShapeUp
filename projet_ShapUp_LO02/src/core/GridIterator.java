@@ -3,7 +3,7 @@ package core;
 import java.util.Iterator;
 
 /**
- * Class created to be able to iterate over a @see core.Grid .
+ * Class created to be able to iterate over a {@link core.Grid}.
  * There are three types of iterator availables : all, row or column iterator.
  * The aim of this class is to make easy all the grid courses makes in Grid class for example.
  */

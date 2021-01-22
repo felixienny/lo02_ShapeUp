@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * The GameGraphical class extends the JFrame class and implements observer to observes the model in the MVC, @see core.GameMaster . 
+ * The GameGraphical class extends the JFrame class and implements observer to observes the model in the MVC, {@link core.GameMaster}. 
  */
 public class GameGraphical extends JFrame implements Observer {
     private static final long serialVersionUID = 1234567890;
@@ -99,7 +99,7 @@ public class GameGraphical extends JFrame implements Observer {
 
     /**
      * @param gameMaster The Observable sending the update.
-     * @param update The update type @see core.Update .
+     * @param update The update type {@link core.Update}.
      * Method implemented to be an observer of the model.
      * It process multiple type of updates : all, grid, player, turn and match.
      */

@@ -1,6 +1,6 @@
 package core;
 /**
- * Provides an implementation for the visitor pattern. This class implement the interface @see core.Visitor .
+ * Provides an implementation for the visitor pattern. This class implement the interface {@link core.Visitor}.
  * When the function {@link core.Grid#calculateScore(Card)} is called, it creates an object to go along the map
  * and count points for one victory card attributes.
  */

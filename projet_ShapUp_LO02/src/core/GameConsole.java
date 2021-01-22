@@ -29,7 +29,7 @@ public class GameConsole implements Observer {
 
 	/**
      * @param gameMaster The Observable sending the update.
-     * @param update The update type @see core.Update .
+     * @param update The update type {@link core.Update}.
      * Method implemented to be an observer of the model.
      * It process multiple type of updates : all, grid, player, turn and match.
      */
@@ -69,7 +69,7 @@ public class GameConsole implements Observer {
 
 	/**
 	 * Starts the interactive prompt to give the constructing parameters to the Grid class.
-	 * @return Grid the grid used further for all the game by the @see core.GameMaster .
+	 * @return Grid the grid used further for all the game by the {@link core.GameMaster}.
 	 */
     public Grid instantiateGrid() {
         boolean isAdvancedGame;
