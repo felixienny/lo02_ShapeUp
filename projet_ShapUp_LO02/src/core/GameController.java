@@ -10,7 +10,6 @@ import javax.swing.JButton;
 
 public class GameController {
     private GameGraphical graphicalView;
-    private GameConsole consoleView;
     private GameMaster game;
     /**
      * Enters the addresses of the objects necessary for operation of the MVC.
@@ -21,7 +20,6 @@ public class GameController {
     public GameController(GameMaster gameMaster, GameConsole console, GameGraphical graphical) {
 
         this.game = gameMaster;
-        this.consoleView = console;
         this.graphicalView = graphical;
     }
     /**

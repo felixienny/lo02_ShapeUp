@@ -28,8 +28,6 @@ public class GameMaster {
 	public GameConsole console;
 	public GameGraphical graphical;
 
-	private Thread threadGraphical;
-
 	/**
 	 * Prompts the player for the types and number of players for the tournament.
 	 */
