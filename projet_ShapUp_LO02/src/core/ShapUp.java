@@ -15,7 +15,7 @@ public class ShapUp {
     		
     		if(playing=='y') {
 				GameMaster currentGame = new GameMaster();
-				GameController gameController = new GameController(currentGame, currentGame.console, currentGame.graphical);
+				GameController gameController = new GameController(currentGame, currentGame.graphical);
 				currentGame.instantiatePlayers(gameController);
     			currentGame.play();
     			currentGame=null;

@@ -3,7 +3,6 @@ import java.lang.Cloneable;
 
 /**
  * Provides a simple class implementation to represent a card of the ShapUp game.
- *
  */
 class Card implements Cloneable{
 	/**

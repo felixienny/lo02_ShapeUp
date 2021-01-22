@@ -2,15 +2,33 @@ package core;
 
 import java.util.Iterator;
 
+/**
+ * Class created to be able to iterate over a @see core.Grid .
+ * There are three types of iterator availables : all, row or column iterator.
+ * The aim of this class is to make easy all the grid courses makes in Grid class for example.
+ */
 public class GridIterator implements Iterator<Tile> {
+	/**
+	 * Boolean to iterate over all the rows of the grid.
+	 */
 	boolean iterateOverEverything;
+	/**
+	 * Boolean to iterate on a specific row.
+	 */
     boolean iterateOverX;
+	/**
+	 * Boolean to iterate on a specific column.
+	 */
     boolean iterateOverY;
 
     
-	int x,y;	
+	int x,y;
 	Grid gridAdress;
+
 	
+	/**
+	 * Contructor that just takes in argument the current grid, and set iterate over all as default value.
+	 */
 	public GridIterator(Grid gridAdress) {
 		this.iterateOverEverything=true;
 		this.iterateOverX=false;
@@ -20,6 +38,9 @@ public class GridIterator implements Iterator<Tile> {
 		this.gridAdress=gridAdress;
     }
     
+	/**
+	 * Contructor that takes in arguments the current grid, two booleans and one int which is the index of the row or column to iterate over.
+	 */
 	public GridIterator(Grid gridAdress, boolean iterateOverX, boolean iterateOverY, int line) {
         this.iterateOverEverything = false;
         this.iterateOverX = iterateOverX;
@@ -38,6 +59,7 @@ public class GridIterator implements Iterator<Tile> {
 	
 	
 	/** 
+	 * Returns true if the actual tile observed has a neighbor tile in row or column.
 	 * @return boolean
 	 */
 	public boolean hasNext() {
@@ -45,7 +67,7 @@ public class GridIterator implements Iterator<Tile> {
 		
 		if(iterateOverEverything) {
 			if(x<this.gridAdress.getHeight() && y+1<this.gridAdress.getWidthOnSpecificLine(x)) {
-				answer = true;//this.gridAdress.containsACard(x, y+1);
+				answer = true;
             }
             else if (x+1<this.gridAdress.getHeight()) {
                 answer = true;
@@ -64,6 +86,7 @@ public class GridIterator implements Iterator<Tile> {
 	}
 	
 	/** 
+	 * Returns the neighbor tile in row or column of the actual tile observed.
 	 * @return Tile
 	 */
 	public Tile next() {

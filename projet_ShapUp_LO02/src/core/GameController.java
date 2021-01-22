@@ -7,35 +7,76 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.swing.JButton;
 
-
+/**
+* This class provides an implementation of the Model View Controller pattern.
+* It represents the Controller in the MVC.
+*/
 public class GameController {
+    /**
+     * An attribute pointing on the graphical view of the game.
+     */
     private GameGraphical graphicalView;
+    /**
+     * An attribute pointing on the model of the game, the GameMaster object.
+     */
     private GameMaster game;
+
     /**
      * Enters the addresses of the objects necessary for operation of the MVC.
      * @param gameMaster
-     * @param console
      * @param graphical
      */
-    public GameController(GameMaster gameMaster, GameConsole console, GameGraphical graphical) {
-
+    public GameController(GameMaster gameMaster, GameGraphical graphical) {
         this.game = gameMaster;
         this.graphicalView = graphical;
     }
     /**
-     * 
+     * This private class serves the humans players's turns.
+     * It is an implementation of Runnable in order to be a thread and ActionListener in order to process the clicks on the graphical view.
+     * It gives also a console typing function.
      */
     private class TurnOfPlayerHuman implements Runnable, ActionListener {
+        /**
+        * The x value when user wants moving a card, in graphical by clicking on first card and then the second.
+        */
         private int xTemp;
+        /**
+        * The y value when user wants moving a card, in graphical by clicking on first card and then the second.
+        */
         private int yTemp;
+        /**
+        * A boolean to make sure that user don't move a card twice.
+        */
         private boolean moveDone;
+        /**
+        * A boolean to make sure that user don't set a card twice.
+        */
         private boolean setDone;
+        /**
+        * A boolean to know if player wants to finish his turn.
+        */
         private boolean turnFinished;
+        /**
+        * A boolean, in Graphical to know if player wants to move a card or set a card.
+        */
         private boolean wantToMove;
+        /**
+        * This attribute is for moving a card and know if user has clicked on the card to move.
+        */
         private boolean oneClickAlreadyDone;
+        /**
+        * The player's hand of cards, in advanced or classic game it's the same.
+        */
         private ArrayList<Card> playerHand;
+        /**
+        * For advanced game only, when player must choose a card to place.
+        */
         private int vCardToUse;
 
+        
+        /**
+        * The contructor of the class, taking in the player's hand of cards and place action listner on buttons wantToMove and turnFinished of graphical view object.
+        */
         private TurnOfPlayerHuman(ArrayList<Card> playerHand) {
             this.setDone = false;
             this.moveDone = false;
@@ -58,7 +99,9 @@ public class GameController {
             });
         }
 
-
+        /**
+        * Method called to place action listeners on all tiles of the grid and, if the game is in advanced mode, to place listeners on victory cards of the current player.
+        */
         public void addListenersOnTiles() {
             if (game.getGridAddress().isAdvancedGame()) {
                 for (int i = 0; i < game.getCurrentPlayer().getPlayerHand().size(); i++) {
@@ -72,6 +115,9 @@ public class GameController {
             }
         }
 
+        /**
+        * Function of the interface ActionListener, the class must implement, used to make action when the differents buttons are clicked in graphical.
+        */
         public void actionPerformed(ActionEvent event) {
             if (game.getGridAddress().isAdvancedGame()) {
                 for (int i = 0; i < game.getCurrentPlayer().getPlayerHand().size(); i++)
@@ -115,8 +161,15 @@ public class GameController {
                 }
             }
         }
-
+        /**
+        * Private class to run a thread for the console typing.
+        */
         private class GameConsoleTyping implements Runnable {
+
+            /**
+             * Method called to get a String if user has typed something, else in returns a null String.
+             * @return String the text typed
+             */
             private String getTextTyped() {
                 BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
                 String resultat = null;
@@ -128,7 +181,12 @@ public class GameController {
                 }
                 return resultat;	
             }
-
+            
+            /**
+             * Method called when this second thread is executed.
+             * It updates the TurnOfPlayerHuman attributes in order to make changes as on the graphical view.
+             * So the player can type text to play.
+             */
             public void run() {
                 while (!(turnFinished && setDone)) {
                     String text = this.getTextTyped();
@@ -164,7 +222,10 @@ public class GameController {
         }
 
         
-
+        /**
+         * Method called when thread starts.
+         * It runs until the player has finished the turn and at least set a card on the @see core.Grid.
+         */
         public void run() {
             this.addListenersOnTiles();
             Thread gameConsoleTyping = new Thread(new GameConsoleTyping(),"GameConsoleThread");
@@ -179,6 +240,7 @@ public class GameController {
 
     /**
      * Used to handle the two potential inputs (Console & Graphical) for a human player. 
+     * The main is waiting for this new thread to continue. 
      * @param playerHand Cards of the player to play his turn.
      */
     public void makeTurnOfPlayer(ArrayList<Card> playerHand) {

@@ -7,13 +7,27 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 
-
+/**
+ * The GameGraphical class extends the JFrame class and implements observer to observes the model in the MVC, @see core.GameMaster . 
+ */
 public class GameGraphical extends JFrame implements Observer {
     private static final long serialVersionUID = 1234567890;
+    /**
+     * The current folder of the project
+     */
     private final String dir = new File("").getAbsolutePath();
+    /**
+     * An array of path to the differents cards images.
+     */
     private final String[] cards = {dir + "\\projet_ShapUp_LO02\\img\\cards\\FBC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FBS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FBT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\XXX.JPG",};
+    /**
+     * A collection of string keys and image values.
+     */
     private final HashMap<String,Image> cardsImg = new HashMap<>();
     
+    /**
+     * @param gameMaster The curent GameMaster object
+     */
     private GameMaster gameMaster;
 
     private JPanel top;
@@ -26,6 +40,11 @@ public class GameGraphical extends JFrame implements Observer {
     protected JButton wantToMove;
 
 
+    /**
+     * @param gameMaster The curent GameMaster object
+     * Constructor of the class, use to create a view in the MVC that observes the model.
+     * Also used to initialise all elements in the view for the user.
+     */
     public GameGraphical(GameMaster gameMaster) {
         this.gameMaster = gameMaster;
         this.gameMaster.addObserver(this);
@@ -78,6 +97,12 @@ public class GameGraphical extends JFrame implements Observer {
         this.setVisible(true);
     }
 
+    /**
+     * @param gameMaster The Observable sending the update.
+     * @param update The update type @see core.Update .
+     * Method implemented to be an observer of the model.
+     * It process multiple type of updates : all, grid, player, turn and match.
+     */
     public void update(GameMaster gameMaster, Update update) {
         switch (update) {
             case ALL:
@@ -117,6 +142,9 @@ public class GameGraphical extends JFrame implements Observer {
         }
     }
 
+    /**
+     * Updates the current player section by displaying his hand.
+     */
     public void displayPlayer() {
         Iterator<Card> iterator = this.gameMaster.getCurrentPlayer().getPlayerHand().iterator();
         while (iterator.hasNext()) {
@@ -130,11 +158,17 @@ public class GameGraphical extends JFrame implements Observer {
         }
     }
 
+    /**
+     * Updates the current player section by displaying his name and current score.
+     */
     public void displaySituation() {
         this.situation.add(createJLabelHeader(this.gameMaster.getCurrentPlayer().getName()));
         this.situation.add(createJLabel("\nMap = "+(this.gameMaster.getGridAddress().getNumberOfPlacedCards()*100 / ((this.gameMaster.getGridAddress().getRealHeight()*(this.gameMaster.getGridAddress().getRealWidth())-this.gameMaster.getGridAddress().getNumberOfDeadTiles()))+"%")));
     }
 
+    /**
+     * Displays in graphical, the turn number and all the players score at the moment
+     */
     public void displayTurn() {
         this.turn.add(createJLabelHeader("TURN "+this.gameMaster.getCurrentTurn()));
 
@@ -147,6 +181,9 @@ public class GameGraphical extends JFrame implements Observer {
         this.turn.add(playerTurns);
     }
 
+    /**
+     * This method displays the current match and all the scores at the previous matchs.
+     */
     public void displayMatch() {
         this.match.add(createJLabelHeader("MATCH "+this.gameMaster.getCurrentMatch()));
         
@@ -164,6 +201,9 @@ public class GameGraphical extends JFrame implements Observer {
         this.match.add(playerScores);
     }
 
+    /**
+     * A function which updates the grid content and tiles.
+     */
     public void displayGrid() {
         this.table.setLayout(new GridLayout(0, this.gameMaster.getGridAddress().getWidth() + 2));
 
@@ -187,6 +227,12 @@ public class GameGraphical extends JFrame implements Observer {
     }
 
 
+    
+    /** 
+     * This method is used to create a formatted JLabel to display in the top section of the view.
+     * @param text
+     * @return JLabel
+     */
     public JLabel createJLabel(String text) {
         StringBuffer sb = new StringBuffer();
         sb.append("<html><div style='text-align:center;display:flex;'>");
@@ -200,6 +246,12 @@ public class GameGraphical extends JFrame implements Observer {
         return jLabel;
     }
 
+    
+    /** 
+     * This method is used to create a formatted JLabel to display in the top section of the view as a title.
+     * @param text
+     * @return JLabel
+     */
     public JLabel createJLabelHeader(String text) {
         JLabel jLabel = new JLabel(text);
         
@@ -212,6 +264,14 @@ public class GameGraphical extends JFrame implements Observer {
         return jLabel;
     }
 
+    
+    /** 
+     * This method is used to create a formatted JButton with a scaled image to display cards in tiles on the view.
+     * @param height
+     * @param width
+     * @param tile
+     * @return JButton
+     */
     private JButton createButtonWithScaledImage(int height, int width, String tile) {
         JButton jbutton = new JButton();
         jbutton.setBackground(java.awt.Color.WHITE);

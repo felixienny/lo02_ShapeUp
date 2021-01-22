@@ -30,7 +30,7 @@ public class Player {
 	 */
 	private ArrayList<Integer> scores = new ArrayList<>();
 	/**
-	 * List of the cards "in the hands" of the Player. In a basic game, the card n°0 is the victory cards and the n°1 is the pickedCard ; in a advanced game, 
+	 * List of the cards "in the hands" of the Player. In a basic game, the card nï¿½0 is the victory cards and the nï¿½1 is the pickedCard ; in a advanced game, 
 	 * all the cards are in the hand of the Player.
 	 */
 	private ArrayList<Card> playerHand = new ArrayList<Card>();
@@ -76,11 +76,20 @@ public class Player {
 		if(!this.grid.isAdvancedGame() && playerHand.size() > 2) throw new RuntimeException("Player has too many cards : Classic");
 	}
 
+	
+	/**
+	 * Called to give to a player the address of the grid for the new game.
+	 * @param newGrid
+	 */
 	public void gameStarts(Grid newGrid) {
 		this.grid = newGrid;
 		this.strategyType.actualGrid = this.grid;
 	}
 
+	/**
+	 * Called to end a game, by adding player's score at the current match and reset his score after.
+	 * The grid is pointing to null and the player hand is set to empty, because the game is finished.
+	 */
 	public void gameEnds() {
 		scores.add(this.currentScore);
 		this.currentScore=0;
@@ -91,13 +100,25 @@ public class Player {
 		this.playerHand.clear();
 	}
 
-
+	/**
+	 * Return true if the strategy type of the player is human.
+	 */
 	public boolean isHuman() {
 		if (StrategyHuman.class.isInstance(this.strategyType)) return true;
 		else return false;
 	}
+
+	/**
+	 * @return name the player's name
+	 */
 	public String getName() { return name; }
+	/**
+	 * @return score the current score of the player, in the current match.
+	 */
 	public int getCurrentScore() { return currentScore; }
+	/**
+	 * @return finalscore the final score of the player, at all the matches.
+	 */
 	public int getFinalScore() { 
 		int total=0;
 		for (Integer score : this.scores) {
@@ -105,8 +126,20 @@ public class Player {
 		}
 		return total;
 	}
+	/**
+	 * @return scores an arraylist of all scores ordered by match.
+	 */
 	public ArrayList<Integer> getScores() { return this.scores; }
+
+	/**
+	 * @return playerHand an arraylist of all cards in the player's hand.
+	 */
 	public ArrayList<Card> getPlayerHand() { return this.playerHand; }
+
+	
+	/**
+	 * @return Card the card to place in non-advanced game.
+	 */
 	public Card getCardToPlace() { return this.playerHand.remove(1); }
 
 }

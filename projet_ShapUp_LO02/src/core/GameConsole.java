@@ -2,13 +2,23 @@ package core;
 
 import java.util.Scanner;
 /**
- * Provides a formatted input/output console observing a given Grid.
- *
+ * Provides a formatted input/output console observing a given game.
  */
 public class GameConsole implements Observer {
+	/**
+	 * Attribute to get the typed text by the user.
+	 */
 	public Scanner scanner = new Scanner(System.in);
+   	/**
+     * @param gameMaster The curent GameMaster object and the model.
+     */
 	private GameMaster gameMaster;
 
+    /**
+     * @param gameMaster The curent GameMaster object
+     * Constructor of the class, use to create a view in the MVC that observes the model.
+     * Also used to initialise the input in console from the user.
+     */
     public GameConsole(GameMaster gameMaster){
 
 		this.gameMaster = gameMaster;
@@ -16,7 +26,13 @@ public class GameConsole implements Observer {
 
         this.scanner = new Scanner(System.in);
 	}
-	
+
+	/**
+     * @param gameMaster The Observable sending the update.
+     * @param update The update type @see core.Update .
+     * Method implemented to be an observer of the model.
+     * It process multiple type of updates : all, grid, player, turn and match.
+     */
 	public void update(GameMaster gameMaster, Update update) {
 		switch (update) {
 			case ALL:
@@ -50,8 +66,10 @@ public class GameConsole implements Observer {
 				break;
 		}
 	}
+
 	/**
 	 * Starts the interactive prompt to give the constructing parameters to the Grid class.
+	 * @return Grid the grid used further for all the game by the @see core.GameMaster .
 	 */
     public Grid instantiateGrid() {
         boolean isAdvancedGame;
