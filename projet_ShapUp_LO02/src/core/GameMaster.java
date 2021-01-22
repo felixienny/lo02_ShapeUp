@@ -36,8 +36,8 @@ public class GameMaster {
 	public GameMaster() {
 		this.currentTurn = 0;
 		this.observers = new ArrayList<>();
-		this.console = new Console(this);
-		this.graphical = new Graphical(this);
+		this.console = new GameConsole(this);
+		this.graphical = new GameGraphical(this);
 		System.out.println("Combien de joueur humain ?");
 		nPlayerH = ShapUp.scanner.nextInt();
 		System.out.println("Combien de joueur ordi ?");
@@ -111,7 +111,7 @@ public class GameMaster {
 	}
 	
     private void instantiatePlayArea() {
-		this.grid = new Grid(8, 5, false, false);//console.instantiateGrid();
+		this.grid = console.instantiateGrid();
 		this.deck = new Deck();
 	}	
 
@@ -131,5 +131,24 @@ public class GameMaster {
 	public int getNumberOfMatchs() { return this.numberOfMatch; }
 	
     
+<<<<<<< HEAD
+=======
+//attributes
+	//private
+	private Player currentPlayer;
+	private int currentTurn;
+	private int currentMatch;
+
+	private int nPlayerH;
+	private int nPlayerCPU;
+	private int numberOfMatch;
+    private List<Player> players = new ArrayList<>();
+    private Deck deck;
+	private Grid grid;
+
+	private ArrayList<Observer> observers;
+	public GameConsole console;
+	public GameGraphical graphical;
+>>>>>>> felixienny
 
 }

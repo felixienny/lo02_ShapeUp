@@ -1,15 +1,18 @@
 package core;
 
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 import javax.swing.JButton;
 
 
 public class GameController {
-    private Graphical graphicalView;
-    private Console consoleView;
+    private GameGraphical graphicalView;
+    private GameConsole consoleView;
     private GameMaster game;
+<<<<<<< HEAD
     /**
      * Enters the addresses of the objects necessary for operation of the MVC.
      * @param gameMaster
@@ -17,6 +20,10 @@ public class GameController {
      * @param graphical
      */
     public GameController(GameMaster gameMaster, Console console, Graphical graphical) {
+=======
+
+    public GameController(GameMaster gameMaster, GameConsole console, GameGraphical graphical) {
+>>>>>>> felixienny
         this.game = gameMaster;
         this.consoleView = console;
         this.graphicalView = graphical;
@@ -115,44 +122,64 @@ public class GameController {
             }
         }
 
-        public void consoleTyping(String text) {
-            if (text != null && !text.isEmpty()) {
-                if (!setDone) {
-                    if (game.getGridAddress().isAdvancedGame()) {
-                        if (text.matches("^[0-2]$")) vCardToUse = (int) Integer.valueOf(text);
-                        if (this.vCardToUse != -1 && game.getGridAddress().testSettingTile(text)) {
-                            game.getGridAddress().setTile(text, playerHand.remove(vCardToUse));
-                            this.setDone = true;
-                            game.notifyObservers(Update.GRID);
-                            game.notifyObservers(Update.PLAYER);
-                            this.addListenersOnTiles();
+        private class GameConsoleTyping implements Runnable {
+            private String getTextTyped() {
+                BufferedReader br = new BufferedReader (new InputStreamReader(System.in));
+                String resultat = null;
+                try {
+                    System.out.print(">");
+                    resultat = br.readLine();
+                } catch (IOException e) {
+                    System.err.println(e.getMessage());
+                }
+                return resultat;	
+            }
+
+            public void run() {
+                while (!(turnFinished && setDone)) {
+                    String text = this.getTextTyped();
+                    if (text != null) {
+                        if (!setDone) {
+                            if (game.getGridAddress().isAdvancedGame()) {
+                                if (text.matches("^[0-2]$")) vCardToUse = (int) Integer.valueOf(text);
+                                if (vCardToUse != -1 && game.getGridAddress().testSettingTile(text)) {
+                                    game.getGridAddress().setTile(text, playerHand.remove(vCardToUse));
+                                    setDone = true;
+                                    game.notifyObservers(Update.GRID);
+                                    game.notifyObservers(Update.PLAYER);
+                                    addListenersOnTiles();
+                                }
+                            }
+                            else if (game.getGridAddress().testSettingTile(text)) {
+                                game.getGridAddress().setTile(text, playerHand.remove(1));
+                                setDone = true;
+                                game.notifyObservers(Update.GRID);
+                                game.notifyObservers(Update.PLAYER);
+                                addListenersOnTiles();
+                            }
                         }
-                    }
-                    else if (game.getGridAddress().testSettingTile(text)) {
-                        game.getGridAddress().setTile(text, playerHand.remove(1));
-                        this.setDone = true;
-                        game.notifyObservers(Update.GRID);
-                        game.notifyObservers(Update.PLAYER);
-                        this.addListenersOnTiles();
+                        if (!moveDone && game.getGridAddress().moveTile(text)) {
+                            moveDone = true;
+                            game.notifyObservers(Update.GRID);
+                            addListenersOnTiles();
+                        }
+                        if (text.matches("^q$")) turnFinished = true;
                     }
                 }
-                if (!this.moveDone && game.getGridAddress().moveTile(text)) {
-                    this.moveDone = true;
-                    game.notifyObservers(Update.GRID);
-                    this.addListenersOnTiles();
-                }
-                if (text.matches("^q$")) this.turnFinished = true;
             }
         }
 
+        
+
         public void run() {
             this.addListenersOnTiles();
-            Scanner scanner = new Scanner(System.in);
+            Thread gameConsoleTyping = new Thread(new GameConsoleTyping(),"GameConsoleThread");
+            gameConsoleTyping.start();
             while (!(this.turnFinished && this.setDone)) {
-                this.consoleTyping(scanner.next().trim());
                 if (this.setDone && this.moveDone) this.turnFinished = true;
+                try { Thread.sleep(10); } catch (InterruptedException e) { e.printStackTrace(); }
             }
-            scanner.close();
+            gameConsoleTyping.interrupt();
         }
     }
 
@@ -161,7 +188,7 @@ public class GameController {
      * @param playerHand Cards of the player to play his turn.
      */
     public void makeTurnOfPlayer(ArrayList<Card> playerHand) {
-        Thread turn = new Thread(new TurnOfPlayerHuman(playerHand));
+        Thread turn = new Thread(new TurnOfPlayerHuman(playerHand),"TurnThread");
         turn.start();
         try { turn.join(); } catch (InterruptedException e) { e.printStackTrace(); }
         turn = null;

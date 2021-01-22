@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 
-public class Graphical extends JFrame implements Observer {
+public class GameGraphical extends JFrame implements Observer {
     private static final long serialVersionUID = 1234567890;
     private final String dir = new File("").getAbsolutePath();
     private final String[] cards = {dir + "\\projet_ShapUp_LO02\\img\\cards\\FBC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FBS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FBT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FGT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\FRT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HBT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HGT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRC.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRS.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\HRT.JPG",dir + "\\projet_ShapUp_LO02\\img\\cards\\XXX.JPG",};
@@ -26,7 +26,7 @@ public class Graphical extends JFrame implements Observer {
     protected JButton wantToMove;
 
 
-    public Graphical(GameMaster gameMaster) {
+    public GameGraphical(GameMaster gameMaster) {
         this.gameMaster = gameMaster;
         this.gameMaster.addObserver(this);
 
@@ -90,6 +90,7 @@ public class Graphical extends JFrame implements Observer {
                 this.table.removeAll();
                 this.displayGrid();
                 this.table.validate();
+                this.player.repaint();
                 break;
             case PLAYER:
                 this.player.removeAll();
@@ -99,16 +100,19 @@ public class Graphical extends JFrame implements Observer {
                 this.situation.removeAll();
                 this.displaySituation();
                 this.situation.validate();
+                this.player.repaint();
                 break;
             case TURN:
                 this.turn.removeAll();
                 this.displayTurn();
                 this.turn.validate();
+                this.player.repaint();
                 break;
             case MATCH:
                 this.match.removeAll();
                 this.displayMatch();
                 this.match.validate();
+                this.player.repaint();
                 break;
         }
     }
