@@ -90,6 +90,7 @@ public class GameGraphical extends JFrame implements Observer {
                 this.table.removeAll();
                 this.displayGrid();
                 this.table.validate();
+                this.player.repaint();
                 break;
             case PLAYER:
                 this.player.removeAll();
@@ -99,16 +100,19 @@ public class GameGraphical extends JFrame implements Observer {
                 this.situation.removeAll();
                 this.displaySituation();
                 this.situation.validate();
+                this.player.repaint();
                 break;
             case TURN:
                 this.turn.removeAll();
                 this.displayTurn();
                 this.turn.validate();
+                this.player.repaint();
                 break;
             case MATCH:
                 this.match.removeAll();
                 this.displayMatch();
                 this.match.validate();
+                this.player.repaint();
                 break;
         }
     }

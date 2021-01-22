@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 import javax.swing.JButton;
 
 
@@ -30,8 +29,6 @@ public class GameController {
         private boolean oneClickAlreadyDone;
         private ArrayList<Card> playerHand;
         private int vCardToUse;
-
-        private String textTyped;
 
         private TurnOfPlayerHuman(ArrayList<Card> playerHand) {
             this.setDone = false;
