@@ -12,18 +12,14 @@ public class GameController {
     private GameGraphical graphicalView;
     private GameConsole consoleView;
     private GameMaster game;
-<<<<<<< HEAD
     /**
      * Enters the addresses of the objects necessary for operation of the MVC.
      * @param gameMaster
      * @param console
      * @param graphical
      */
-    public GameController(GameMaster gameMaster, Console console, Graphical graphical) {
-=======
-
     public GameController(GameMaster gameMaster, GameConsole console, GameGraphical graphical) {
->>>>>>> felixienny
+
         this.game = gameMaster;
         this.consoleView = console;
         this.graphicalView = graphical;

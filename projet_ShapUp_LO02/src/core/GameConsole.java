@@ -1,27 +1,16 @@
 package core;
 
 import java.util.Scanner;
-<<<<<<< HEAD:projet_ShapUp_LO02/src/core/Console.java
 /**
  * Provides a formatted input/output console observing a given Grid.
  *
  */
-public class Console implements Observer {
-	private Scanner scanner = new Scanner(System.in);
-	private GameMaster gameMaster;
-	/**
-	 * 
-	 * @param gameMaster The Grid to be observed and displayed for output.
-	 */
-    public Console(GameMaster gameMaster){
-=======
-
 public class GameConsole implements Observer {
 	public Scanner scanner = new Scanner(System.in);
 	private GameMaster gameMaster;
 
     public GameConsole(GameMaster gameMaster){
->>>>>>> felixienny:projet_ShapUp_LO02/src/core/GameConsole.java
+
 		this.gameMaster = gameMaster;
 		gameMaster.addObserver(this); 
 

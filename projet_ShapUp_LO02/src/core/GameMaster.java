@@ -25,8 +25,8 @@ public class GameMaster {
 	private Grid grid;
 
 	private ArrayList<Observer> observers;
-	public Console console;
-	public Graphical graphical;
+	public GameConsole console;
+	public GameGraphical graphical;
 
 	private Thread threadGraphical;
 
@@ -130,25 +130,5 @@ public class GameMaster {
 	public int getNumberOfCPUPlayers() { return this.nPlayerCPU; }
 	public int getNumberOfMatchs() { return this.numberOfMatch; }
 	
-    
-<<<<<<< HEAD
-=======
-//attributes
-	//private
-	private Player currentPlayer;
-	private int currentTurn;
-	private int currentMatch;
-
-	private int nPlayerH;
-	private int nPlayerCPU;
-	private int numberOfMatch;
-    private List<Player> players = new ArrayList<>();
-    private Deck deck;
-	private Grid grid;
-
-	private ArrayList<Observer> observers;
-	public GameConsole console;
-	public GameGraphical graphical;
->>>>>>> felixienny
 
 }
